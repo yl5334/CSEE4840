@@ -11,3 +11,5 @@ Using C, Linux, Sockets, and usb
 
 ## Project 3
 VGA Ball
+
+## Final Project
