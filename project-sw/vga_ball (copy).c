@@ -51,65 +51,32 @@ struct vga_ball_dev {
 
 static void write_game_state(vga_ball_game_state_t *state) 
 {
+	int i;
 	iowrite32(state->player1.x, dev.virtbase);
         iowrite32(state->player1.y, dev.virtbase + 4);
-        iowrite32(state->player2.x, dev.virtbase + 8);
-        iowrite32(state->player2.y, dev.virtbase + 12);
+        iowrite32(state->player1.alive, dev.virtbase + 8);
+        iowrite32(state->player2.x, dev.virtbase + 12);
+        iowrite32(state->player2.y, dev.virtbase + 16);
+	iowrite32(state->player2.alive, dev.virtbase + 20);
          
-        for (int i = 0; i < MAX_BOMBS; i++){
+        for (i = 0; i < MAX_BOMBS; i++){
             const bomb_t *bomb = &state->bombs[i];
-            iowrite32(bomb->active, dev.virtbase + 16);
-            iowrite32(bomb->x, dev.virtbase + 20);
-            iowrite32(bomb->y, dev.virtbase + 24);
-            iowrite32(bomb->timer, dev.virtbase + 28);
-            iowrite32(bomb->exploded, dev.virtbase + 32);
-            iowrite32(bomb->fire_center, dev.virtbase + 36);
-            iowrite32(bomb->fire_up, dev.virtbase + 40);
-            iowrite32(bomb->fire_down, dev.virtbase + 44);
-            iowrite32(bomb->fire_left, dev.virtbase + 48);
-            iowrite32(bomb->fire_right, dev.virtbase + 52);
+            iowrite32(bomb->active, dev.virtbase + 24);
+            iowrite32(bomb->x, dev.virtbase + 28);
+            iowrite32(bomb->y, dev.virtbase + 32);
+            iowrite32(bomb->timer, dev.virtbase + 36);
+            iowrite32(bomb->exploded, dev.virtbase + 40); 
+            iowrite32(bomb->fire_center, dev.virtbase + 44);
+            iowrite32(bomb->fire_up, dev.virtbase + 48);
+            iowrite32(bomb->fire_down, dev.virtbase + 52);
+            iowrite32(bomb->fire_left, dev.virtbase + 56);
+            iowrite32(bomb->fire_right, dev.virtbase + 60);
 
         dev.game_state = *state;
 
 }
 
-static void check_explosions(vga_ball_arg_t *state) {
-    for (int i = 0; i < MAX_BOMBS; i++) {
-        bomb_t *bomb = &state->bombs[i];
-        if (bomb->active && bomb->timer == 0 && !bomb->exploded) {
-            bomb->exploded = 1;
-            bomb->fire_center = 1;
-            bomb->fire_up = bomb->y > 0 ? 1 : 0;
-            bomb->fire_down = bomb->y < (BOARD_HEIGHT - 1) ? 1 : 0;
-            bomb->fire_left = bomb->x > 0 ? 1 : 0;
-            bomb->fire_right = bomb->x < (BOARD_WIDTH - 1) ? 1 : 0;
-            
-            // Check if any player is affected by the explosion
-            
-            //needed to be fixed here
-            if (player1 ->alive || player1 ->alive && player1->x == bomb->x && player1->y == bomb->y || player2->x == bomb->x && player2->y == bomb->y ) {
-                player1->alive = 0; // Player dies if on the bomb
-                player2->alive = 0;
-            }
-        }
-    }
-}
 
-// Update the timer for all bombs
-static void update_bombs(vga_ball_arg_t *state) {
-    for (int i = 0; i < MAX_BOMBS; i++) {
-        bomb_t *bomb = &state->bombs[i];
-        if (bomb->active && bomb->timer > 0) {
-            bomb->timer--;
-        }
-    }
-}
-
-// Main game update function called every game tick
-static void update_game_state(vga_ball_arg_t *state) {
-    update_bombs(state);
-    check_explosions(state);
-}
 
 /*
  * Handle ioctl() calls from userspace:
@@ -188,6 +155,19 @@ static int __init vga_ball_probe(struct platform_device *pdev)
 		goto out_release_mem_region;
 	}
         
+        /* Initialize game state */
+        dev.game_state.player1.x = 0;  // top-left corner
+        dev.game_state.player1.y = 0;
+        dev.game_state.player1.alive = 1;  // Player is alive
+
+        dev.game_state.player2.x = 639;  // bottom-right corner
+        dev.game_state.player2.y = 479; 
+        dev.game_state.player2.alive = 1;  // Player is alive
+
+        for (int i = 0; i < 2; i++) {
+                dev.game_state.bombs[i].active = 0; // No bombs are active initially
+                dev.game_state.bombs[i].exploded = 0;
+        }
 
 	return 0;
 
