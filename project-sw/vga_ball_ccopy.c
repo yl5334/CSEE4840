@@ -71,6 +71,7 @@ static void write_game_state(vga_ball_game_state_t *state)
             iowrite32(bomb->fire_down, dev.virtbase + 52);
             iowrite32(bomb->fire_left, dev.virtbase + 56);
             iowrite32(bomb->fire_right, dev.virtbase + 60);
+         }
 
         dev.game_state = *state;
 
@@ -156,16 +157,16 @@ static int __init vga_ball_probe(struct platform_device *pdev)
 	}
         
         /* Initialize game state */
-        dev.game_state.player1.x = 0;  // top-left corner
-        dev.game_state.player1.y = 0;
+        dev.game_state.player1.x = 15;  // top-left corner
+        dev.game_state.player1.y = 15;  //Assuming the size of the player is 15 pixels
         dev.game_state.player1.alive = 1;  // Player is alive
 
-        dev.game_state.player2.x = 639;  // bottom-right corner
-        dev.game_state.player2.y = 479; 
+        dev.game_state.player2.x = 625;  // bottom-right corner
+        dev.game_state.player2.y = 465; 
         dev.game_state.player2.alive = 1;  // Player is alive
 
-        for (int i = 0; i < 2; i++) {
-                dev.game_state.bombs[i].active = 0; // No bombs are active initially
+        for (int i = 0; i < MAX_BOMBS; i++) {
+                dev.game_state.bombs[i].active = 0; // No bombs are placed
                 dev.game_state.bombs[i].exploded = 0;
         }
 

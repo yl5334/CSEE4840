@@ -29,7 +29,7 @@ typedef struct {
 
 
 typedef struct {
-    player_t player1 player2;
+    player_t player1, player2;
     bomb_t bombs[MAX_BOMBS];
 } game_state_t;
 

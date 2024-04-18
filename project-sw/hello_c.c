@@ -17,6 +17,7 @@
 #include <controller.h> 
 
 
+//struct controller_list open_controllers();
 int vga_ball_fd;
 
 /* Read and print the game state */
@@ -69,6 +70,7 @@ void handle_controller_input(controller_button buttons, int player_index) {
     ioctl(vga_ball_fd, VGA_BALL_READ_STATE, &vla);
 
     // Handling direction buttons
+
     if (buttons & dir_U) vla.game_state.players[player_index].y--;
     if (buttons & dir_D) vla.game_state.players[player_index].y++;
     if (buttons & dir_L) vla.game_state.players[player_index].x--;
