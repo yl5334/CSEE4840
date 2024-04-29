@@ -19,7 +19,7 @@ player_id playRound(void) {
             updateTimebar((double) ((double) frames / (double) FRAMES_IN_A_ROUND));
         }
 
-        applyPlayerInput();
+      apply  PlayerInput();
         applyAIMovement();
         if (applyItems()) {
             snd_play_pickup();

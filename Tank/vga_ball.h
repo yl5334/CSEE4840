@@ -4,8 +4,9 @@
 #include <linux/ioctl.h>
 
 typedef struct {
-	unsigned short wall, misc, p1_tankl, p1_tankd, p2_tankl, p2_tankd,
-  p1_bulletl, p1_bulletd, p2_bulletl, p2_bulletd;
+	uint32_t p1_coordinate, p1_state, p2_coordinate, p2_status,
+  p1_bomb, p1_firecenter, p1_fireup, p1_firedown, p1_fireleft, p1_fireright,
+  p2_bomb, p2_firecenter, p2_fireup, p2_firedown, p2_fireleft, p2_fireright;
   
 } vga_ball_color_t;
 
