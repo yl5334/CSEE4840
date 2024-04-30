@@ -10,12 +10,12 @@ else
 	KERNEL_SOURCE := /usr/src/linux-headers-$(shell uname -r)
         PWD := $(shell pwd)
 
-default: module hello
+default: module main
 
-hello: hello.o controller.o
-	cc -Wall -o hello hello.o controller.o -lusb-1.0 -pthread -lm
+main: main.o controller.o
+	cc -Wall -o main main.o controller.o -lusb-1.0 -pthread -lm
 
-hello.o: hello.c controller.h
+main.o: main.c main.h controller.h
 controller.o: controller.c controller.h
 
 module:
@@ -23,9 +23,9 @@ module:
 
 clean:
 	${MAKE} -C ${KERNEL_SOURCE} SUBDIRS=${PWD} clean
-	${RM} hello
+	${RM} main
 
-TARFILES = Makefile README vga_ball.h vga_ball.c hello.c controller.h controller.c
+TARFILES = Makefile README vga_ball.h vga_ball.c main.c controller.h controller.c
 TARFILE = lab3-sw.tar.gz
 .PHONY : tar
 tar : $(TARFILE)
