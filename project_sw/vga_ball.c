@@ -52,7 +52,7 @@ struct vga_ball_dev {
 static void write_game_state(vga_ball_color_t *game_state) 
 {
 	iowrite32(game_state->p1_coordinate, dev.virtbase);
-    iowrite32(game_state->p1_state, dev.virtbase + 4);
+        iowrite32(game_state->p1_state, dev.virtbase + 4);
 	iowrite32(game_state->p1_bomb, dev.virtbase + 8);
 	iowrite32(game_state->p1_firecenter, dev.virtbase + 12);
 	iowrite32(game_state->p1_fireup, dev.virtbase + 16);
@@ -60,7 +60,7 @@ static void write_game_state(vga_ball_color_t *game_state)
 	iowrite32(game_state->p1_fireleft, dev.virtbase + 24);
 	iowrite32(game_state->p1_fireright, dev.virtbase + 28);
 	iowrite32(game_state->p2_coordinate, dev.virtbase + 32);
-    iowrite32(game_state->p2_state, dev.virtbase + 36);
+        iowrite32(game_state->p2_state, dev.virtbase + 36);
 	iowrite32(game_state->p2_bomb, dev.virtbase + 40);
 	iowrite32(game_state->p2_firecenter, dev.virtbase + 44);
 	iowrite32(game_state->p2_fireup, dev.virtbase + 48);

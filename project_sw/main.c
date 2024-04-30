@@ -14,7 +14,7 @@ vga_ball_color_t color;
 pthread_t p1b, p2b;
 
 // TODO : add a 0(ground), 1(unbreakable), 2(breakable) map to this
-int map[ROWS][COLS] = {
+int map[30][40] = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
@@ -48,13 +48,17 @@ int map[ROWS][COLS] = {
     };
 
 Terrain terrain_grid[MAP_SIZE_H][MAP_SIZE_V];
-Bomb bomb_grid[MAP_SIZE_H][MAP_SIZE];
-item_type items_grid[MAP_SIZE_H][MAP_SIZE_V];
-Explosion explosion_grid[MAP_SIZE_H][MAP_SIZE];
-bool changed_tiles[MAP_SIZE_H][MAP_SIZE];
+Bomb bomb_grid[MAP_SIZE_H][MAP_SIZE_V];
+//item_type items_grid[MAP_SIZE_H][MAP_SIZE_V];
+Explosion explosion_grid[MAP_SIZE_H][MAP_SIZE_V];
+bool changed_tiles[MAP_SIZE_H][MAP_SIZE_V];
 Player players[PLAYER_NUM];
 
-
+struct controller_list devices;
+struct controller_pkt controller1, controller2;
+int fields1, fields2;
+int size1 = sizeof(controller1);
+int size2 = sizeof(controller2);
 
 int main(){
 
@@ -73,6 +77,9 @@ int main(){
     { 0x00, 0x00, 0x00 }, /* Black */
     { 0xff, 0xff, 0xff }  /* White */
   };
+  devices = open_controllers();
+  size1 = sizeof(controller1);
+  size2 = sizeof(controller2);
 
 
   # define COLORS 9
@@ -87,12 +94,7 @@ int main(){
 
 
 
-    struct controller_list devices = open_controllers();
-
-    struct controller_pkt controller1, controller2;
-    int fields1, fields2;
-    int size1 = sizeof(pkt1);
-    int size2 = sizeof(pkt2);
+    
 
     for(;;){
         runGame();
@@ -137,8 +139,8 @@ bool readyScreen(void) {
 
     while(!(player1_ready && player2_ready)) {
         updateControls();
-        unit8_t p1_ab = controller1.ab;
-        unit8_t p2_ab = controller2.ab;
+        uint8_t p1_ab = controller1.ab;
+        uint8_t p2_ab = controller2.ab;
         
         if(!player1_ready && (p1_ab == 79 || p1_ab == 95 || p1_ab == 207 || p1_ab == 223)) {
             //drawPlayerReady(PLAYER_ONE);
@@ -215,7 +217,7 @@ void setupGrids(void) {
 
             changed_tiles[i][j] = false;
 
-            items_grid[i][j] = ITEM_EMPTY;
+            //items_grid[i][j] = ITEM_EMPTY;
         }
     }
 }
@@ -251,15 +253,15 @@ void setupPlayers(void) {
         players[i].max_bomb_number     = DEFAULT_MAX_BOMBS;
         players[i].current_bomb_number = 0;
 
-        players[i].current_frame = A_MOVE_DOWN_FRAMES * i;
+        //players[i].current_frame = A_MOVE_DOWN_FRAMES * i;
     }
     }
 
 void set_background_color(const vga_ball_color_t *c)
 {
   vga_ball_arg_t vla;
-  vla.background = *c;
-  if (ioctl(vga_ball_fd, VGA_BALL_WRITE_BACKGROUND, &vla)) {
+  vla.game_state = *c;
+  if (ioctl(vga_ball_fd, VGA_BALL_WRITE_STATE, &vla)) {
       perror("ioctl(VGA_BALL_SET_BACKGROUND) failed");
       return;
   }

@@ -1,3 +1,6 @@
+#ifndef _MAIN_H
+#define _MAIN_H
+
 #include <stdio.h>
 #include "vga_ball.h"
 #include <sys/ioctl.h>
@@ -22,12 +25,7 @@
 #define PLAYER_NUM 2
 //#define CONTROLLER_SIGNALS_NUM 10
 
-extern Terrain terrain_grid[MAP_SIZE_H][MAP_SIZE_V];
-extern Bomb bomb_grid[MAP_SIZE_H][MAP_SIZE];
-extern item_type items_grid[MAP_SIZE_H][MAP_SIZE_V];
-extern Explosion explosion_grid[MAP_SIZE_H][MAP_SIZE];
-extern bool changed_tiles[MAP_SIZE_H][MAP_SIZE];
-extern Player players[PLAYER_NUM];
+
 
 typedef enum {
     TERRAIN_GROUND,
@@ -49,25 +47,7 @@ typedef enum {
     PLAYER_NONE
 } player_id;
 
-typedef struct {
-    player_id id;
-    bool alive;
-    Position tile_position;
-    Position screen_position;
-    Bomb bomb;
-
-    bool moving;
-    int8_t move_speed;
-    direction move_direction;
-
-    bool plant_bomb;
-    int8_t max_bomb_number;
-    int8_t current_bomb_number;
-
-    uint8_t current_frame;
-
-    uint8_t number_of_wins;
-} Player;
+player_id playRound(void);
 
 /*position.h*/
 
@@ -98,6 +78,20 @@ typedef enum {
     BOMB_TYPE_NORMAL
 } bomb_type;
 
+/*explosition.h*/
+typedef enum {
+    EXPLOSION_EMPTY,
+    EXPLOSION_TYPE_NORMAL,
+    EXPLOSION_TYPE_PERMANENT,
+} explosion_type;
+
+
+typedef struct {
+    explosion_type type;
+    int32_t timer;
+} Explosion;
+
+
 typedef struct {
     int owner;       // todo make a player_id
     int32_t timer;   // 0 when out of time
@@ -109,14 +103,32 @@ typedef struct {
     bool current_frame;
 } Bomb;
 
-/*explosition.h*/
-typedef enum {
-    EXPLOSION_EMPTY,
-    EXPLOSION_TYPE_NORMAL,
-    EXPLOSION_TYPE_PERMANENT,
-} explosion_type;
 
 typedef struct {
-    explosion_type type;
-    int32_t timer;
-} Explosion;
+    player_id id;
+    bool alive;
+    Position tile_position;
+    Position screen_position;
+    Bomb bomb;
+
+    bool moving;
+    int8_t move_speed;
+    direction move_direction;
+
+    bool plant_bomb;
+    int8_t max_bomb_number;
+    int8_t current_bomb_number;
+
+    uint8_t current_frame;
+
+    uint8_t number_of_wins;
+} Player;
+
+
+extern Terrain terrain_grid[MAP_SIZE_H][MAP_SIZE_V];
+extern Bomb bomb_grid[MAP_SIZE_H][MAP_SIZE_V];
+//extern item_type items_grid[MAP_SIZE_H][MAP_SIZE_V];
+extern Explosion explosion_grid[MAP_SIZE_H][MAP_SIZE_V];
+extern bool changed_tiles[MAP_SIZE_H][MAP_SIZE_V];
+extern Player players[PLAYER_NUM];
+#endif
