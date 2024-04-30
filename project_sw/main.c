@@ -94,7 +94,9 @@ int main(){
     int size1 = sizeof(pkt1);
     int size2 = sizeof(pkt2);
 
-
+    for(;;){
+        runGame();
+    }
     
 
 }
