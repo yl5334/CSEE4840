@@ -429,7 +429,7 @@ void redrawTile(uint32_t x, uint32_t y) {
 
             break;
         case TERRAIN_WALL_UNBREAKABLE:
-            drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_terrain, 2);
+            //drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_terrain, 2);
             break;
     }
 
@@ -464,11 +464,12 @@ void redrawTile(uint32_t x, uint32_t y) {
 
     /* Draw bombs */
     int32_t timer = bomb_grid[x][y].timer;
-    uint8_t* bomb_sprite = a_bomb_neutral;
-
+    //uint8_t* bomb_sprite = a_bomb_neutral;
+    /*
     if (timer <= BOMB_EXPLODING_THRESHOLD) {
         bomb_sprite = a_bomb_exploding;
     }
+    */
 
     switch (bomb_grid[x][y].type) {
         case BOMB_EMPTY:
