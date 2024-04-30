@@ -12,10 +12,7 @@
 #include <pthread.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include "game_state.h"
-#include "position.h"
-#include "bomb.h"
-#include "direction.h"
+
 
 
 /*game_state.h*/
@@ -90,4 +87,35 @@ typedef enum {
     DIRECTION_IDLE
 } direction;
 
+/*Bomb.h*/
+#define DEFAULT_BOMB_TIMER 100
+#define DEFAULT_BOMB_RANGE 1
+#define DEFAULT_BOMB_TYPE BOMB_TYPE_NORMAL
 
+typedef enum {
+    BOMB_EMPTY,
+    BOMB_TYPE_NORMAL
+} bomb_type;
+
+typedef struct {
+    int owner;       // todo make a player_id
+    int32_t timer;   // 0 when out of time
+    int8_t range;    // number of grid units for the explosion
+    bomb_type type;
+    Position position;
+    Explosion explosion;
+
+    bool current_frame;
+} Bomb;
+
+/*explosition.h*/
+typedef enum {
+    EXPLOSION_EMPTY,
+    EXPLOSION_TYPE_NORMAL,
+    EXPLOSION_TYPE_PERMANENT,
+} explosion_type;
+
+typedef struct {
+    explosion_type type;
+    int32_t timer;
+} Explosion;
