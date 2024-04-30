@@ -31,7 +31,7 @@
 #include <linux/of_address.h>
 #include <linux/fs.h>
 #include <linux/uaccess.h>
-#include "vga_ball_c.h"
+#include "vga_ball.h"
 
 #define DRIVER_NAME "vga_ball"
 
@@ -41,7 +41,7 @@
 struct vga_ball_dev {
 	struct resource res; /* Resource: our registers */
 	void __iomem *virtbase; /* Where registers can be accessed in memory */
-        vga_ball_arg_t game_state;
+        vga_ball_color_t game_state;
 } dev;
 
 /*
@@ -49,24 +49,24 @@ struct vga_ball_dev {
  * Assumes digit is in range and the device information has been set up
  */
 
-static void write_game_state(vga_ball_arg_t *game_state) 
+static void write_game_state(vga_ball_color_t *game_state) 
 {
-	iowrite32(state->game_state.p1_coordinate, dev.virtbase);
-        iowrite32(state->game_state.p1_state, dev.virtbase + 4);
-	iowrite32(state->game_state.p1_bomb, dev.virtbase + 8);
-	iowrite32(state->game_state.p1_firecenter, dev.virtbase + 12);
-	iowrite32(state->game_state.p1_fireup, dev.virtbase + 16);
-	iowrite32(state->game_state.p1_firedown, dev.virtbase + 20);
-	iowrite32(state->game_state.p1_fireleft, dev.virtbase + 24);
-	iowrite32(state->game_state.p1_fireright, dev.virtbase + 28);
-	iowrite32(state->game_state.p2_coordinate, dev.virtbase + 32);
-        iowrite32(state->game_state.p2_state, dev.virtbase + 36);
-	iowrite32(state->game_state.p2_bomb, dev.virtbase + 40);
-	iowrite32(state->game_state.p2_firecenter, dev.virtbase + 44);
-	iowrite32(state->game_state.p2_fireup, dev.virtbase + 48);
-	iowrite32(state->game_state.p2_firedown, dev.virtbase + 52);
-	iowrite32(state->game_state.p2_fireleft, dev.virtbase + 56);
-	iowrite32(state->game_state.p2_fireright, dev.virtbase + 60);
+	iowrite32(game_state->p1_coordinate, dev.virtbase);
+    iowrite32(game_state->p1_state, dev.virtbase + 4);
+	iowrite32(game_state->p1_bomb, dev.virtbase + 8);
+	iowrite32(game_state->p1_firecenter, dev.virtbase + 12);
+	iowrite32(game_state->p1_fireup, dev.virtbase + 16);
+	iowrite32(game_state->p1_firedown, dev.virtbase + 20);
+	iowrite32(game_state->p1_fireleft, dev.virtbase + 24);
+	iowrite32(game_state->p1_fireright, dev.virtbase + 28);
+	iowrite32(game_state->p2_coordinate, dev.virtbase + 32);
+    iowrite32(game_state->p2_state, dev.virtbase + 36);
+	iowrite32(game_state->p2_bomb, dev.virtbase + 40);
+	iowrite32(game_state->p2_firecenter, dev.virtbase + 44);
+	iowrite32(game_state->p2_fireup, dev.virtbase + 48);
+	iowrite32(game_state->p2_firedown, dev.virtbase + 52);
+	iowrite32(game_state->p2_fireleft, dev.virtbase + 56);
+	iowrite32(game_state->p2_fireright, dev.virtbase + 60);
         
         dev.game_state = *game_state;
 
