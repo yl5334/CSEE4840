@@ -47,8 +47,12 @@ int map[ROWS][COLS] = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     };
 
-
-
+Terrain terrain_grid[MAP_SIZE_H][MAP_SIZE_V];
+Bomb bomb_grid[MAP_SIZE_H][MAP_SIZE];
+item_type items_grid[MAP_SIZE_H][MAP_SIZE_V];
+Explosion explosion_grid[MAP_SIZE_H][MAP_SIZE];
+bool changed_tiles[MAP_SIZE_H][MAP_SIZE];
+Player players[PLAYER_NUM];
 
 
 
