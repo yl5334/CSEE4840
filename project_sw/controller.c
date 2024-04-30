@@ -105,21 +105,21 @@ void detect_presses(struct controller_pkt pkt, char *buttons, int mode) {
         }
 
         // Check left/right arrows (can only be one at a time)
-        if (pkt.h_arrows == 0) {
+        if (pkt.dir_x == 0) {
                 buttons[0] = vals[0];
-        } else if (pkt.h_arrows == 0xff) {
+        } else if (pkt.dir_x == 0xff) {
                 buttons[1] = vals[1];
         }
 
         // Check up/down arrows (can only be one at a time)
-        if (pkt.v_arrows == 0x00) {
+        if (pkt.dir_y == 0x00) {
                 buttons[2] = vals[2];
-        } else if (pkt.v_arrows == 0xff) {
+        } else if (pkt.dir_y == 0xff) {
                 buttons[3] = vals[3];
         }
 
         // Check if shoot button (A) is pressed
-        uint8_t a = pkt.xyab;
+        uint8_t a = pkt.ab;
         if (a == 47 || a == 63 || a == 111 || a == 127 || a == 175 || a == 191 || a == 239 || a == 255) {
                 buttons[4] = vals[4];
         }

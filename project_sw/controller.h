@@ -19,9 +19,9 @@ struct controller_pkt {
         uint8_t const1;
         uint8_t const2;
         uint8_t const3;
-        uint8_t h_arrows;
-        uint8_t v_arrows;
-        uint8_t xyab;
+        uint8_t dir_x;
+        uint8_t dir_y;
+        uint8_t ab;
         uint8_t rl;
 
 };
