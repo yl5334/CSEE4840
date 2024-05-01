@@ -36,7 +36,7 @@ typedef enum {
 
 
 #define DEFAULT_MOVE_SPEED 2
-#define DEFAULT_DIRECTION DIRECTION_DOWN
+#define DEFAULT_DIRECTION DIRECTION_RIGHT
 #define DEFAULT_MAX_BOMBS 1
 
 typedef enum {
@@ -60,8 +60,8 @@ typedef struct {
 
 /*direction.h*/
 typedef enum {
-    DIRECTION_UP,
     DIRECTION_DOWN,
+    DIRECTION_UP,
     DIRECTION_LEFT,
     DIRECTION_RIGHT,
     DIRECTION_IDLE
@@ -131,4 +131,44 @@ extern Bomb bomb_grid[MAP_SIZE_H][MAP_SIZE_V];
 extern Explosion explosion_grid[MAP_SIZE_H][MAP_SIZE_V];
 extern bool changed_tiles[MAP_SIZE_H][MAP_SIZE_V];
 extern Player players[PLAYER_NUM];
+
+/*movelogic.h*/
+void move(Player *player, direction dir);
+bool checkWalkable(int32_t x, int32_t y);
+
+void getOccupiedTiles(Player* player, Position* tile1, Position* tile2);
+void screenToTile(Position *pos);
+bool isAligned(int32_t x, int32_t y);
+void setPlayerTilePos(Player* player);
+void setPlayerPosition(Player* player, int32_t x, int32_t y);
+bool snapToGrid(Player* player, direction dir);
+void clamp_x(int32_t* i);
+void clamp_y(int32_t* i);
+bool walkingOutOfBounds(Player* player, direction dir);
+
+void getPixelOffset(Position* result, direction dir);
+void getNextStep(Position* pos, direction dir);
+void getOffsets(Position* next_pos, Position* pixel_offset, Player* player, direction dir);
+
+
+/*bomb_logic.h*/
+#define BOMB_ANIMATION_CYCLES 5
+
+void countdownExplosions(void);
+
+bool plantBombs(void);
+
+bool countdownBombs(void);
+
+void plantBomb(Player *player);
+
+void explodeBomb(Bomb *bomb);
+
+void explodeTile(int8_t x, int8_t y, Explosion *explosion);
+
+void killPlayersInExplosion(void);
+
+
+player_id playRound(void);
+
 #endif
