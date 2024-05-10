@@ -242,8 +242,8 @@ void setupPlayers(void) {
     for (int i = 0; i < PLAYER_NUM; i++) {
         if (i == 0)
         {
-            players[i].screen_position.x = 100;
-            players[i].screen_position.y = 100;
+            players[i].screen_position.x = 0;
+            players[i].screen_position.y = 0;
         }
         else
         {
