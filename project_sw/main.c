@@ -103,7 +103,8 @@ int main(){
   }
 
 
-
+    initialisePlayers();
+    setupRound();
 
     
 
@@ -116,8 +117,8 @@ int main(){
 
 void runGame(void){
 
-    initialisePlayers();
-    setupRound();
+    //initialisePlayers();
+    //setupRound();
     player_id winner = playRound();
    /*
     while(ready_screen()){
@@ -330,6 +331,7 @@ void drawPlayers(void){
             //set_background_color(&color);
         }
         set_background_color(&color);
+        printf("x position = %d, y position = %d", players[i].screen_position.x, players[i].screen_position.y);
 	/*
 	if (ioctl(vga_ball_fd, VGA_BALL_WRITE_STATE, &vla)) {
              perror("ioctl(VGA_BALL_SET_BACKGROUND) failed");
