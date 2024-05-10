@@ -331,7 +331,8 @@ void drawPlayers(void){
             //set_background_color(&color);
         }
         set_background_color(&color);
-        printf("x position = %d, y position = %d", players[i].screen_position.x, players[i].screen_position.y);
+        usleep(10000);
+        printf("x position = %d, y position = %d\n", players[i].screen_position.x, players[i].screen_position.y);
 	/*
 	if (ioctl(vga_ball_fd, VGA_BALL_WRITE_STATE, &vla)) {
              perror("ioctl(VGA_BALL_SET_BACKGROUND) failed");
@@ -353,7 +354,7 @@ void drawPlayers(void){
 
 
 player_id playRound(void) {
-    setupRound(); 
+    //setupRound(); 
 
     int frames = 0;
     int players_alive = PLAYER_NUM;
