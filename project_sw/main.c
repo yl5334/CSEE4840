@@ -43,7 +43,7 @@ int map[30][40] = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     };
 
@@ -331,7 +331,7 @@ void drawPlayers(void){
             //set_background_color(&color);
         }
         set_background_color(&color);
-        usleep(10000);
+        usleep(80000);
         printf("player %d, x position = %d, y position = %d\n", i, players[i].screen_position.x, players[i].screen_position.y);
 	
 	if (ioctl(vga_ball_fd, VGA_BALL_WRITE_STATE, &vla)) {
@@ -409,27 +409,27 @@ void applyPlayerInput(void) {
   
     if (controller1.dir_x == 255) {
         move(&players[PLAYER_ONE], DIRECTION_RIGHT);
-    } else if (controller1.dir_y == 0) {
+    } else if (controller1.dir_y == 255) {
         move(&players[PLAYER_ONE], DIRECTION_UP);
     } else if (controller1.dir_x == 0) {
         move(&players[PLAYER_ONE], DIRECTION_LEFT);
-    } else if (controller1.dir_y == 255) {
+    } else if (controller1.dir_y == 0) {
         move(&players[PLAYER_ONE], DIRECTION_DOWN);
     } else {
         move(&players[PLAYER_ONE], DIRECTION_IDLE);
     }
   
-    if (controller1.ab == 47 | controller1.ab == 63 | controller1.ab == 175 | controller1.ab == 191) {
+    if (controller2.ab == 47 | controller2.ab == 63 | controller2.ab == 175 | controller2.ab == 191) {
         players[PLAYER_TWO].plant_bomb = true;
     }
   
-    if (controller1.dir_x == 255) {
+    if (controller2.dir_x == 255) {
         move(&players[PLAYER_TWO], DIRECTION_RIGHT);
-    } else if (controller1.dir_y == 0) {
+    } else if (controller2.dir_y == 255) {
         move(&players[PLAYER_TWO], DIRECTION_UP);
-    } else if (controller1.dir_x == 0) {
+    } else if (controller2.dir_x == 0) {
         move(&players[PLAYER_TWO], DIRECTION_LEFT);
-    } else if (controller1.dir_y == 255) {
+    } else if (controller2.dir_y == 0) {
         move(&players[PLAYER_TWO], DIRECTION_DOWN);
     } else {
         move(&players[PLAYER_TWO], DIRECTION_IDLE);
