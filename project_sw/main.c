@@ -332,7 +332,7 @@ void drawPlayers(void){
         }
         set_background_color(&color);
         usleep(80000);
-        printf("player %d, x position = %d, y position = %d\n", i, players[i].screen_position.x, players[i].screen_position.y);
+        printf("player %d, x position = %x, y position = %x\n", i, color.p1_coordinate, color.p2_coordinate);
 	
 	if (ioctl(vga_ball_fd, VGA_BALL_WRITE_STATE, &vla)) {
              perror("ioctl(VGA_BALL_SET_BACKGROUND) failed");
