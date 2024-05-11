@@ -1114,6 +1114,7 @@ void killPlayersInExplosion(void) {
     for (int i = 0; i < PLAYER_NUM; i++) {
         if (explosion_grid[players[i].tile_position.x][players[i].tile_position.y].type != EXPLOSION_EMPTY) {
             players[i].alive = false;
+            printf("players die");
 
             getOccupiedTiles(&(players[i]), &pos_1, &pos_2);
 
