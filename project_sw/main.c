@@ -106,13 +106,16 @@ int main(){
     initialisePlayers();
     setupRound();
 
-    
+    while(ready_screen){
+        runGame();
 
+   }
+/*
     for(;;){
         runGame();
     }
     
-
+*/
 }
 
 void runGame(void){
@@ -168,8 +171,10 @@ bool readyScreen(void) {
         //update_sound();
     }
 
-    while(player1_ready || player2_ready) {
+
+    while(player1_ready && player2_ready) {
         updateControls();
+        return ture;
         /*
         if(player1_ready && controller_signals[CONTROLLER_ONE_IND_TRIGGER] == 0) {
             //drawPlayerReady(PLAYER_ONE);
@@ -182,7 +187,7 @@ bool readyScreen(void) {
         //update_sound();
         */
     }
-    return true;
+    //return true;
 
 }
 
