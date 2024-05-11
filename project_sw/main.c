@@ -171,7 +171,7 @@ bool readyScreen(void) {
     }
 
 
-    while(player1_ready && player2_ready) {
+    while(player1_ready || player2_ready) {
         updateControls();
         /*
         if(player1_ready && controller_signals[CONTROLLER_ONE_IND_TRIGGER] == 0) {
