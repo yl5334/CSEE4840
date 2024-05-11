@@ -171,10 +171,10 @@ bool readyScreen(void) {
         //update_sound();
     }
 
-
+/*
     while(player1_ready || player2_ready) {
         updateControls();
-        /*
+        
         if(player1_ready && controller_signals[CONTROLLER_ONE_IND_TRIGGER] == 0) {
             //drawPlayerReady(PLAYER_ONE);
             player1_ready = false;
@@ -184,8 +184,9 @@ bool readyScreen(void) {
             player2_ready = false;
         }
         //update_sound();
-        */
+        
     }
+    */
     return true;
 
 }
