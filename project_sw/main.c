@@ -106,7 +106,7 @@ int main(){
     initialisePlayers();
     setupRound();
 
-    while(ready_screen){
+    while(ready_screen()){
         runGame();
 
    }
@@ -174,7 +174,6 @@ bool readyScreen(void) {
 
     while(player1_ready && player2_ready) {
         updateControls();
-        return ture;
         /*
         if(player1_ready && controller_signals[CONTROLLER_ONE_IND_TRIGGER] == 0) {
             //drawPlayerReady(PLAYER_ONE);
@@ -187,7 +186,7 @@ bool readyScreen(void) {
         //update_sound();
         */
     }
-    //return true;
+    return true;
 
 }
 
