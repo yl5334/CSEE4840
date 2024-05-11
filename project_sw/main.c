@@ -392,11 +392,11 @@ player_id playRound(void) {
             //snd_play_plant();
         }
 
-        /*
+        
         if (countdownBombs()) {
-            snd_play_explosion();
+            //snd_play_explosion();
         }
-        */
+        
 
         render();
         //players_alive = countPlayers();
