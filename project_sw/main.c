@@ -977,7 +977,7 @@ void plantBomb(Player *player) {
     Bomb bomb = player->bomb;
     bomb.position = player->tile_position;
     bomb_grid[x][y] = bomb;
-    printf("bomb x position = %d, bomb y position = %d", x, y);
+    printf("bomb x position = %d, bomb y position = %d\n", x, y);
     /* Update the changed tiles so bomb is rendered */
     changed_tiles[x][y] = true;
 
