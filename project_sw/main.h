@@ -35,7 +35,7 @@ typedef enum {
 
 
 
-#define DEFAULT_MOVE_SPEED 2
+#define DEFAULT_MOVE_SPEED 1
 #define DEFAULT_DIRECTION DIRECTION_RIGHT
 #define DEFAULT_MAX_BOMBS 1
 

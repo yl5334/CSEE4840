@@ -9,7 +9,7 @@ int vga_ball_fd;
 unsigned short coords;
 unsigned short coords2;
 
-vga_ball_color_t color;
+vga_ball_color_t color = {0};
 
 pthread_t p1b, p2b;
 
@@ -224,6 +224,7 @@ void setupGrids(void) {
             
 
             bomb_grid[i][j].type = BOMB_EMPTY;
+
             bomb_grid[i][j].timer = 0;
             bomb_grid[i][j].range = 0;
 
@@ -287,7 +288,6 @@ void set_background_color(const vga_ball_color_t *c)
 
 
 void drawPlayers(void){
-    vga_ball_arg_t vla;
     for (int i = 0; i < PLAYER_NUM; i++) {
         
         if (!(players[i].alive)) {
@@ -320,6 +320,7 @@ void drawPlayers(void){
                 state |= ((0x0 & 0x3) | (players[i].alive << 2));
                 break;
         }
+
         if (i==0){
             color.p1_coordinate = coordinate;
             color.p1_state = state;
@@ -331,13 +332,9 @@ void drawPlayers(void){
             //set_background_color(&color);
         }
         set_background_color(&color);
-        usleep(80000);
-        printf("player %d, x position = %x, y position = %x\n", i, color.p1_coordinate, color.p2_coordinate);
-	
-	if (ioctl(vga_ball_fd, VGA_BALL_WRITE_STATE, &vla)) {
-             perror("ioctl(VGA_BALL_SET_BACKGROUND) failed");
-             return;
- 	}
+        usleep(300000);
+
+        printf("player %d, x position = %d, y position = %d, dir = %u\n", i, players[i].screen_position.x, players[i].screen_position.y, players[i].move_direction);
 	
         /*
         uint8_t anim_frame_offset = num_of_frames * i;
@@ -359,6 +356,9 @@ player_id playRound(void) {
     int frames = 0;
     int players_alive = PLAYER_NUM;
     int final_countdown_count = 0;
+    color.p1_bomb = 0x100;
+
+    
     while(players_alive > 1) {
 
         updateControls();
@@ -372,6 +372,7 @@ player_id playRound(void) {
             updateTimebar((double) ((double) frames / (double) FRAMES_IN_A_ROUND));
         }
     */
+	set_background_color(&color);
         applyPlayerInput();
         //applyAIMovement();
         /*
@@ -409,11 +410,11 @@ void applyPlayerInput(void) {
   
     if (controller1.dir_x == 255) {
         move(&players[PLAYER_ONE], DIRECTION_RIGHT);
-    } else if (controller1.dir_y == 255) {
+    } else if (controller1.dir_y == 0) {
         move(&players[PLAYER_ONE], DIRECTION_UP);
     } else if (controller1.dir_x == 0) {
         move(&players[PLAYER_ONE], DIRECTION_LEFT);
-    } else if (controller1.dir_y == 0) {
+    } else if (controller1.dir_y == 255) {
         move(&players[PLAYER_ONE], DIRECTION_DOWN);
     } else {
         move(&players[PLAYER_ONE], DIRECTION_IDLE);
@@ -425,11 +426,11 @@ void applyPlayerInput(void) {
   
     if (controller2.dir_x == 255) {
         move(&players[PLAYER_TWO], DIRECTION_RIGHT);
-    } else if (controller2.dir_y == 255) {
+    } else if (controller2.dir_y == 0) {
         move(&players[PLAYER_TWO], DIRECTION_UP);
     } else if (controller2.dir_x == 0) {
         move(&players[PLAYER_TWO], DIRECTION_LEFT);
-    } else if (controller2.dir_y == 0) {
+    } else if (controller2.dir_y == 255) {
         move(&players[PLAYER_TWO], DIRECTION_DOWN);
     } else {
         move(&players[PLAYER_TWO], DIRECTION_IDLE);
@@ -443,13 +444,16 @@ void render(void) {
     /* Render the tiles that have changed */
     for (int i = 0; i < MAP_SIZE_H; i++) {
         for (int j = 0; j < MAP_SIZE_V; j++) {
+		redrawTile(i, j);
+	/*
             if (changed_tiles[i][j]) {
                 redrawTile(i, j);
                 changed_tiles[i][j] = false;
             }
+		*/
         }
     }
-
+    
     drawPlayers();
 
     /* Call renderFrame at the end of each frame to draw results on screen */
@@ -460,6 +464,7 @@ void redrawTile(uint32_t x, uint32_t y) {
     /* Draw terrain */
     if (x >= MAP_SIZE_H || y >= MAP_SIZE_V) { return; }
 
+    uint32_t bomb_coordinate = 0;
     /* Draw ground regardless */
     //drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_terrain, (x+y)%2);
 
@@ -473,7 +478,17 @@ void redrawTile(uint32_t x, uint32_t y) {
             //drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_terrain, 2);
             break;
     }
-
+/*
+    switch (bomb_grid[x][y].type) {
+	case BOMB_TYPE_NORMAL:
+		bomb_coordinate = ((y << 10) | x);
+		break;
+	case BOMB_EMPTY:
+		break;
+	}
+	color.p1_bomb = bomb_coordinate;
+        set_background_color(&color);
+*/
     /* Draw items */
     /*
     switch (items_grid[x][y]) {
@@ -545,10 +560,13 @@ void redrawTile(uint32_t x, uint32_t y) {
 void move(Player *player, direction dir) {
 
     /* Check for out of bounds movement */
+    
     if (walkingOutOfBounds(player, dir)) {
         dir = DIRECTION_IDLE;
     }
+	
 
+    //player.move_direction = dir;
     Position pixel_offset = {0, 0};
     Position next_pos = {0, 0};
     getOffsets(&next_pos, &pixel_offset, player, dir);
@@ -765,7 +783,7 @@ void getPixelOffset(Position* result, direction dir) {
             break;
         case DIRECTION_DOWN:
             result->x = 0;
-            result->y = TILE_SIZE; 
+            result->y = +TILE_SIZE; 
             break;
     }
 }

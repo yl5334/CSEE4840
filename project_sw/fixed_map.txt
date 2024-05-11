@@ -49,3 +49,6 @@ int main() {
     return 0;
 }
 
+
+printk("%d %d player 1 2  \n", game_state->p1_coordinate, game_state->p2_coordinate);
+
