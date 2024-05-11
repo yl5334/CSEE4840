@@ -361,7 +361,7 @@ player_id playRound(void) {
     int frames = 0;
     int players_alive = PLAYER_NUM;
     int final_countdown_count = 0;
-    color.p1_bomb = 0x100;
+    //color.p1_bomb = 0x100;
 
     
     while(players_alive > 1) {
@@ -484,17 +484,17 @@ void redrawTile(uint32_t x, uint32_t y) {
             //drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_terrain, 2);
             break;
     }
-/*
+
     switch (bomb_grid[x][y].type) {
 	case BOMB_TYPE_NORMAL:
 		bomb_coordinate = ((y << 10) | x);
+        color.p1_bomb = bomb_coordinate;
+        set_background_color(&color);
 		break;
 	case BOMB_EMPTY:
 		break;
 	}
-	color.p1_bomb = bomb_coordinate;
-        set_background_color(&color);
-*/
+	    
     /* Draw items */
     /*
     switch (items_grid[x][y]) {
@@ -1114,7 +1114,7 @@ void killPlayersInExplosion(void) {
     for (int i = 0; i < PLAYER_NUM; i++) {
         if (explosion_grid[players[i].tile_position.x][players[i].tile_position.y].type != EXPLOSION_EMPTY) {
             players[i].alive = false;
-            printf("players die");
+            printf("players die\n");
 
             getOccupiedTiles(&(players[i]), &pos_1, &pos_2);
 
