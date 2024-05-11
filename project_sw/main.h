@@ -135,6 +135,7 @@ extern Player players[PLAYER_NUM];
 /*movelogic.h*/
 void move(Player *player, direction dir);
 bool checkWalkable(int32_t x, int32_t y);
+bool readyScreen(void);
 
 void getOccupiedTiles(Player* player, Position* tile1, Position* tile2);
 void screenToTile(Position *pos);

@@ -106,9 +106,8 @@ int main(){
     initialisePlayers();
     setupRound();
 
-    while(readyScreen()){
+    while (readyScreen()) {
         runGame();
-
    }
 /*
     for(;;){
