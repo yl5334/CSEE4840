@@ -143,6 +143,9 @@ void initialisePlayers(void) {
     for (int i = 0; i < PLAYER_NUM; i++) {
         players[i].id = i;
         players[i].number_of_wins = 0;
+	players[i].alive = true;
+	players[i].plant_bomb = false;
+
     }
 }
 
@@ -488,8 +491,15 @@ void redrawTile(uint32_t x, uint32_t y) {
     switch (bomb_grid[x][y].type) {
 	case BOMB_TYPE_NORMAL:
 		bomb_coordinate = ((y << 10) | x);
-        color.p1_bomb = bomb_coordinate;
-        set_background_color(&color);
+	if(color.p1_bomb == 0x0){
+		color.p1_bomb = bomb_coordinate;
+        	set_background_color(&color);
+	}
+	else {
+		color.p2_bomb = bomb_coordinate;
+        	set_background_color(&color);
+	}
+        
 		break;
 	case BOMB_EMPTY:
 		break;
@@ -720,7 +730,7 @@ bool snapToGrid(Player* player, direction dir) {
 
 /* Returns whether tile at given *tile* position can be walked on */
 bool checkWalkable(int32_t x, int32_t y) {
-
+    
     if (x < 0 || y < 0 || x >= MAP_SIZE_H || y >= MAP_SIZE_V) { return false; }
     if (bomb_grid[x][y].type != BOMB_EMPTY) { return false; } 
     if (terrain_grid[x][y] != TERRAIN_GROUND) { return false; }
