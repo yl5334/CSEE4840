@@ -106,22 +106,23 @@ int main(){
     initialisePlayers();
     setupRound();
 
-    while (readyScreen()) {
-        runGame();
-   }
-/*
+    
+
     for(;;){
         runGame();
     }
     
-*/
+
 }
 
 void runGame(void){
 
+
+    while (readyScreen()) {
+        player_id winner = playRound();
+   }
     //initialisePlayers();
     //setupRound();
-    player_id winner = playRound();
    /*
     while(ready_screen()){
         player_id winner = playRound();
