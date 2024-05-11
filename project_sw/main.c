@@ -389,7 +389,7 @@ player_id playRound(void) {
         //countdownExplosions();
     
         if (plantBombs()) {
-            snd_play_plant();
+            //snd_play_plant();
         }
 
         /*
