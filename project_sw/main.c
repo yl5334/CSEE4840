@@ -245,6 +245,7 @@ void setupGrids(void) {
             bomb_grid[i][j].type = BOMB_EMPTY;
 
             bomb_grid[i][j].timer = 0;
+            bomb_grid[i][i].used = 0;
             bomb_grid[i][j].range = 0;
 
             explosion_grid[i][j].type = EXPLOSION_EMPTY;
