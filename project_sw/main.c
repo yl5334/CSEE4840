@@ -145,8 +145,8 @@ void initialisePlayers(void) {
     for (int i = 0; i < PLAYER_NUM; i++) {
         players[i].id = i;
         players[i].number_of_wins = 0;
-	players[i].alive = true;
-	players[i].plant_bomb = false;
+	    players[i].alive = true;
+	    players[i].plant_bomb = false;
 
     }
 }
@@ -495,10 +495,12 @@ void redrawTile(uint32_t x, uint32_t y) {
 		bomb_coordinate = ((y << 10) | x);
 	if(color.p1_bomb == 0x0){
 		color.p1_bomb = bomb_coordinate;
+        color.p1_state |= 0x8;
         	set_background_color(&color);
 	}
 	else {
 		color.p2_bomb = bomb_coordinate;
+        color.p2_state |= 0x8;
         	set_background_color(&color);
 	}
         
@@ -544,7 +546,7 @@ void redrawTile(uint32_t x, uint32_t y) {
         bomb_sprite = a_bomb_exploding;
     }
     */
-
+   /*
     switch (bomb_grid[x][y].type) {
         case BOMB_EMPTY:
             break;
@@ -556,6 +558,7 @@ void redrawTile(uint32_t x, uint32_t y) {
             /* This shouldn't happen */
             break;
     }
+    */
 
     /* Draw explosions */
     switch (explosion_grid[x][y].type) {
