@@ -55,22 +55,22 @@ static void write_game_state(vga_ball_color_t *game_state)
 	printk("%d bomb 1 \n", game_state->p1_bomb);
 	printk("%d bomb 2 \n", game_state->p2_bomb);
 	printk("%d %d player 2  \n", game_state->p2_coordinate, game_state->p2_state);
-	iowrite32(game_state->p1_coordinate, dev.virtbase);
-        iowrite32(game_state->p1_state, dev.virtbase + 4);
-	iowrite32(game_state->p1_bomb, dev.virtbase + 8);
-	iowrite32(game_state->p1_firecenter, dev.virtbase + 12);
-	iowrite32(game_state->p1_fireup, dev.virtbase + 16);
-	iowrite32(game_state->p1_firedown, dev.virtbase + 20);
-	iowrite32(game_state->p1_fireleft, dev.virtbase + 24);
-	iowrite32(game_state->p1_fireright, dev.virtbase + 28);
-	iowrite32(game_state->p2_coordinate, dev.virtbase + 32);
-        iowrite32(game_state->p2_state, dev.virtbase + 36);
-	iowrite32(game_state->p2_bomb, dev.virtbase + 40);
-	iowrite32(game_state->p2_firecenter, dev.virtbase + 44);
-	iowrite32(game_state->p2_fireup, dev.virtbase + 48);
-	iowrite32(game_state->p2_firedown, dev.virtbase + 52);
-	iowrite32(game_state->p2_fireleft, dev.virtbase + 56);
-	iowrite32(game_state->p2_fireright, dev.virtbase + 60);
+	iowrite32(game_state->p1_coordinate, dev.virtbase + 0x04);
+        iowrite32(game_state->p1_state, dev.virtbase + 0x08);
+	iowrite32(game_state->p1_bomb, dev.virtbase + 0x0C);
+	iowrite32(game_state->p1_firecenter, dev.virtbase + 0x10);
+	iowrite32(game_state->p1_fireup, dev.virtbase + 0x14);
+	iowrite32(game_state->p1_firedown, dev.virtbase + 0x18);
+	iowrite32(game_state->p1_fireleft, dev.virtbase + 0x1C);
+	iowrite32(game_state->p1_fireright, dev.virtbase + 0x20);
+	iowrite32(game_state->p2_coordinate, dev.virtbase + 0x24);
+        iowrite32(game_state->p2_state, dev.virtbase + 0x28);
+	iowrite32(game_state->p2_bomb, dev.virtbase + 0x2C);
+	iowrite32(game_state->p2_firecenter, dev.virtbase + 0x30);
+	iowrite32(game_state->p2_fireup, dev.virtbase + 0x34);
+	iowrite32(game_state->p2_firedown, dev.virtbase + 0x38);
+	iowrite32(game_state->p2_fireleft, dev.virtbase + 0x3C);
+	iowrite32(game_state->p2_fireright, dev.virtbase + 0x40);
         
         dev.game_state = *game_state;
 

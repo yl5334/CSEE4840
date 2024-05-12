@@ -1004,6 +1004,9 @@ void explodeBomb(Bomb *bomb) {
     int8_t y = bomb->position.y;
     int8_t range = bomb->range;
     Explosion *explosion = &(bomb->explosion);
+    Explosion *explosion_L = &(bomb->explosion);
+    Explosion *explosion_R = &(bomb->explosion);
+    Explosion *explosion_D = &(bomb->explosion);
     
     /* Decrement corresponding player bomb count */
     //players[bomb->owner].current_bomb_number--;
@@ -1028,6 +1031,7 @@ void explodeBomb(Bomb *bomb) {
                     up_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
+
                     explodeTile(x, y + i, explosion);
                     up_blocked = true;
                     break;
