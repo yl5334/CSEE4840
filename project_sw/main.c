@@ -282,6 +282,7 @@ void setupPlayers(void) {
         players[i].bomb.current_frame  = 0;
         players[i].bomb.explosion.type = EXPLOSION_TYPE_NORMAL;
         players[i].bomb.explosion.timer = 40;
+        players[i].bomb.used = 0;
 
         players[i].moving          = false;
         players[i].move_speed      = DEFAULT_MOVE_SPEED;
@@ -343,12 +344,12 @@ void drawPlayers(void){
 
         if (i==0){
             color.p1_coordinate = coordinate;
-            color.p1_state = state;
+            color.p1_state |= state;
             //set_background_color(&color);
         }
         else{
             color.p2_coordinate = coordinate;
-            color.p2_state = state;
+            color.p2_state |= state;
             //set_background_color(&color);
         }
         set_background_color(&color);
