@@ -104,6 +104,7 @@ typedef struct {
     bomb_type type;
     Position position;
     Explosion explosion;
+    bool sent;
 
     bool current_frame;
 } Bomb;
