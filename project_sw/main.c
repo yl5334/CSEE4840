@@ -563,18 +563,61 @@ void redrawTile(uint32_t x, uint32_t y) {
     }
     */
     
-    
-
+    uint32_t explosion_coordinate = 0;
+    Explosion *explosion;
     /* Draw explosions */
     switch (explosion_grid[x][y].type) {
+	explosion_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
         case EXPLOSION_EMPTY:
             break;
-        case EXPLOSION_TYPE_NORMAL:
-            //drawSprite(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_explosion);
+        case EXPLOSION_TYPE_CENTER:
+	    if (explosion->id == 0) {
+                    color.p1_firecenter = explosion_coordinate;
+		    set_background_color(&color);
+                } else {
+                    color.p2_firecenter = explosion_coordinate;
+		    set_background_color(&color);
+                }
             break;
 
-        case EXPLOSION_TYPE_PERMANENT:
-            //drawSprite(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_explosion);
+        case EXPLOSION_TYPE_UP:
+            if (explosion->id == 0) {
+                    color.p1_fireup = explosion_coordinate;
+		    set_background_color(&color);
+                } else {
+                    color.p2_fireup = explosion_coordinate;
+		    set_background_color(&color);
+                }
+            break;
+	
+	case EXPLOSION_TYPE_DOWN:
+            if (explosion->id == 0) {
+                    color.p1_firedown = explosion_coordinate;
+		    set_background_color(&color);
+                } else {
+                    color.p2_firedown = explosion_coordinate;
+		    set_background_color(&color);
+                }
+            break;
+
+	case EXPLOSION_TYPE_LEFT:
+            if (explosion->id == 0) {
+                    color.p1_fireleft = explosion_coordinate;
+		    set_background_color(&color);
+                } else {
+                    color.p2_fireleft = explosion_coordinate;
+		    set_background_color(&color);
+                }
+            break;
+
+	case EXPLOSION_TYPE_RIGHT:
+            if (explosion->id == 0) {
+                    color.p1_fireright = explosion_coordinate;
+		    set_background_color(&color);
+                } else {
+                    color.p2_fireright = explosion_coordinate;
+		    set_background_color(&color);
+                }
             break;
         
         default:
