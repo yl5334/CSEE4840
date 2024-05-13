@@ -122,6 +122,10 @@ int main(){
     for(;;){
         runGame();
     }
+    free(explosion_L);
+    free(explosion_R);
+    free(explosion_D);
+    free(explosion_U);
     
 
 }
@@ -1073,16 +1077,29 @@ void explodeBomb(Bomb *bomb) {
     int8_t x = bomb->position.x;
     int8_t y = bomb->position.y;
     int8_t range = bomb->range;
-    Explosion explosion = &(bomb->explosion);
-    Explosion explosion_L = bomb->explosion;
-    Explosion explosion_R = bomb->explosion;
-    Explosion explosion_D = bomb->explosion;
-    Explosion explosion_U = bomb->explosion;
 
-    explosion_L->type = EXPLOSION_TYPE_LEFT;
-    explosion_R->type = EXPLOSION_TYPE_RIGHT;
-    explosion_U->type = EXPLOSION_TYPE_UP;
-    explosion_D->type = EXPLOSION_TYPE_DOWN;
+
+    Explosion *explosion = &(bomb->explosion);
+    
+    
+    //Explosion *explosion = malloc(sizeof(Explosion));
+    Explosion *explosion_L = malloc(sizeof(Explosion));
+    Explosion *explosion_R = malloc(sizeof(Explosion));
+    Explosion *explosion_D = malloc(sizeof(Explosion));
+    Explosion *explosion_U = malloc(sizeof(Explosion));
+
+    Explosion *explosion_L = bomb->explosion;
+    Explosion *explosion_R = bomb->explosion;
+    Explosion *explosion_D = bomb->explosion;
+    Explosion *explosion_U = bomb->explosion;
+      
+    explosion_L.type = EXPLOSION_TYPE_LEFT;
+    explosion_R.type = EXPLOSION_TYPE_RIGHT;
+    explosion_U.type = EXPLOSION_TYPE_UP;
+    explosion_D.type = EXPLOSION_TYPE_DOWN;
+
+
+    
 
 
     
@@ -1187,7 +1204,7 @@ void explodeBomb(Bomb *bomb) {
     }
 }
 
-void explodeTile(int8_t x, int8_t y, Explosion explosion) {
+void explodeTile(int8_t x, int8_t y, Explosion *explosion) {
     bool isCoordinateInRange(int8_t x, int8_t y) {
     	return ((x >= 0) && (x < MAP_SIZE_H)  &&  (y >= 0) && (y < MAP_SIZE_V));
     }
@@ -1200,7 +1217,7 @@ void explodeTile(int8_t x, int8_t y, Explosion explosion) {
 
     /* Set the explosion, overwriting any existing explosions */
     if (explosion_grid[x][y].type != EXPLOSION_TYPE_PERMANENT) {
-        explosion_grid[x][y] = explosion;
+        explosion_grid[x][y] = *explosion;
     }
 
     /* Set any bombs on this tile to explode on the next round */
@@ -1244,6 +1261,8 @@ void killPlayersInExplosion(void) {
             /* Render both tiles the player occupied */
             changed_tiles[pos_1.x][pos_1.y] = true;
             changed_tiles[pos_2.x][pos_2.y] = true;
+
+        
 
             /* Render changes in sidebar */
 	    /*
