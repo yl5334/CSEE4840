@@ -1065,10 +1065,10 @@ void explodeBomb(Bomb *bomb) {
     Explosion *explosion_D = &(bomb->explosion);
     Explosion *explosion_U = &(bomb->explosion);
 
-    *explosion_L->type = EXPLOSION_TYPE_LEFT;
-    *explosion_R->type = EXPLOSION_TYPE_RIGHT;
-    *explosion_U->type = EXPLOSION_TYPE_UP;
-    *explosion_D->type = EXPLOSION_TYPE_DOWN;
+    explosion_L->type = EXPLOSION_TYPE_LEFT;
+    explosion_R->type = EXPLOSION_TYPE_RIGHT;
+    explosion_U->type = EXPLOSION_TYPE_UP;
+    explosion_D->type = EXPLOSION_TYPE_DOWN;
 
 
     
