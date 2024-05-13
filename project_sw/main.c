@@ -1197,7 +1197,7 @@ void explodeTile(int8_t x, int8_t y, Explosion *explosion) {
     /* Set the explosion, overwriting any existing explosions */
     if (explosion_grid[x][y].type != EXPLOSION_TYPE_PERMANENT) {
         explosion_grid[x][y] = *explosion;
-        printf("explosition type = %d\n", explosion.type);
+        printf("explosition type = %d\n", explosion->type);
     }
 
     /* Set any bombs on this tile to explode on the next round */
