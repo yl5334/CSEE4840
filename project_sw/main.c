@@ -1187,7 +1187,7 @@ void explodeBomb(Bomb *bomb) {
     }
 }
 
-void explodeTile(int8_t x, int8_t y, Explosion *explosion) {
+void explodeTile(int8_t x, int8_t y, Explosion explosion) {
     bool isCoordinateInRange(int8_t x, int8_t y) {
     	return ((x >= 0) && (x < MAP_SIZE_H)  &&  (y >= 0) && (y < MAP_SIZE_V));
     }
@@ -1200,7 +1200,7 @@ void explodeTile(int8_t x, int8_t y, Explosion *explosion) {
 
     /* Set the explosion, overwriting any existing explosions */
     if (explosion_grid[x][y].type != EXPLOSION_TYPE_PERMANENT) {
-        explosion_grid[x][y] = *explosion;
+        explosion_grid[x][y] = explosion;
     }
 
     /* Set any bombs on this tile to explode on the next round */
