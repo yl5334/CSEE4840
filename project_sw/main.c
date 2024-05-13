@@ -513,7 +513,7 @@ void redrawTile(uint32_t x, uint32_t y) {
             bomb_grid[x][y].used = 1;
             set_background_color(&color);
         }
-        else if((!bomb_grid[x][y].used) && (bomb_grid[x][y].owner == 1) && ((color.p1_state & 0x8) != 0x8 ))
+        else if((!bomb_grid[x][y].used) && (bomb_grid[x][y].owner == 1) && ((color.p2_state & 0x8) != 0x8 ))
             {
             color.p2_bomb = bomb_coordinate;
             color.p2_state |= 0x8;
