@@ -1073,11 +1073,11 @@ void explodeBomb(Bomb *bomb) {
     int8_t x = bomb->position.x;
     int8_t y = bomb->position.y;
     int8_t range = bomb->range;
-    Explosion *explosion = &(bomb->explosion);
-    Explosion *explosion_L = &(bomb->explosion);
-    Explosion *explosion_R = &(bomb->explosion);
-    Explosion *explosion_D = &(bomb->explosion);
-    Explosion *explosion_U = &(bomb->explosion);
+    Explosion explosion = &(bomb->explosion);
+    Explosion explosion_L = bomb->explosion;
+    Explosion explosion_R = bomb->explosion;
+    Explosion explosion_D = bomb->explosion;
+    Explosion explosion_U = bomb->explosion;
 
     explosion_L->type = EXPLOSION_TYPE_LEFT;
     explosion_R->type = EXPLOSION_TYPE_RIGHT;
