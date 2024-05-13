@@ -505,13 +505,13 @@ void redrawTile(uint32_t x, uint32_t y) {
 	case BOMB_TYPE_NORMAL:
 		//bomb_coordinate = (((y << 4 - y) << 10) | (x << 4 - x));
 		bomb_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
-        if((!bomb_grid[x][y].used) && (bomb_grid[x][y]->owner == 0)){
+        if((!bomb_grid[x][y].used) && (bomb_grid[x][y].owner == 0)){
             color.p1_bomb = bomb_coordinate;
             color.p1_state |= 0x8;
             bomb_grid[x][y].used = 1;
             set_background_color(&color);
         }
-        else if((!bomb_grid[x][y].used) && (bomb_grid[x][y]->owner == 1))
+        else if((!bomb_grid[x][y].used) && (bomb_grid[x][y].owner == 1))
             {
             color.p2_bomb = bomb_coordinate;
             color.p2_state |= 0x8;
@@ -1068,14 +1068,14 @@ void explodeBomb(Bomb *bomb) {
     /* Remove bomb and explode tile */
     bomb_grid[x][y].type = BOMB_EMPTY;
     unsigned int mask = ~(1 << 3); 
-    if (bomb_grid[x][y]->owner == 0)
+    if (bomb_grid[x][y].owner == 0)
     {
         color.p1_bomb = 0x0;
         color.p1_state &= mask;
         bomb_grid[x][y].used = 0;
         set_background_color(&color);
     }
-    else if (bomb_grid[x][y]->owner == 1)
+    else if (bomb_grid[x][y].owner == 1)
     {
         color.p2_bomb = 0x0;
         color.p1_state &= mask;
