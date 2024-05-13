@@ -343,11 +343,13 @@ void drawPlayers(void){
         }
 
         if (i==0){
+            color.p1_state &= ~0x7;
             color.p1_coordinate = coordinate;
             color.p1_state |= state;
             //set_background_color(&color);
         }
         else{
+            color.p2_state &= ~0x7;
             color.p2_coordinate = coordinate;
             color.p2_state |= state;
             //set_background_color(&color);
@@ -505,13 +507,13 @@ void redrawTile(uint32_t x, uint32_t y) {
 	case BOMB_TYPE_NORMAL:
 		//bomb_coordinate = (((y << 4 - y) << 10) | (x << 4 - x));
 		bomb_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
-        if((!bomb_grid[x][y].used) && (bomb_grid[x][y].owner == 0)){
+        if((!bomb_grid[x][y].used) && (bomb_grid[x][y].owner == 0) && ((color.p1_state & 0x8) != 0x8 )){
             color.p1_bomb = bomb_coordinate;
             color.p1_state |= 0x8;
             bomb_grid[x][y].used = 1;
             set_background_color(&color);
         }
-        else if((!bomb_grid[x][y].used) && (bomb_grid[x][y].owner == 1))
+        else if((!bomb_grid[x][y].used) && (bomb_grid[x][y].owner == 1) && ((color.p1_state & 0x8) != 0x8 ))
             {
             color.p2_bomb = bomb_coordinate;
             color.p2_state |= 0x8;
@@ -1063,7 +1065,7 @@ void explodeBomb(Bomb *bomb) {
     Explosion *explosion_D = &(bomb->explosion);
     
     /* Decrement corresponding player bomb count */
-    //players[bomb->owner].current_bomb_number--;
+    players[bomb->owner].current_bomb_number--;
 
     /* Remove bomb and explode tile */
     bomb_grid[x][y].type = BOMB_EMPTY;
