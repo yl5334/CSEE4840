@@ -505,13 +505,13 @@ void redrawTile(uint32_t x, uint32_t y) {
 	case BOMB_TYPE_NORMAL:
 		//bomb_coordinate = (((y << 4 - y) << 10) | (x << 4 - x));
 		bomb_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
-        if((!bomb_grid[x][y].used) && ((color.p1_state & 0x8) != 0x8)){
+        if((!bomb_grid[x][y].used) && (bomb_grid[x][y]->owner == 0)){
             color.p1_bomb = bomb_coordinate;
             color.p1_state |= 0x8;
             bomb_grid[x][y].used = 1;
             set_background_color(&color);
         }
-        else if((!bomb_grid[x][y].used) && ((color.p2_state & 0x8) != 0x8))
+        else if((!bomb_grid[x][y].used) && (bomb_grid[x][y]->owner == 1))
             {
             color.p2_bomb = bomb_coordinate;
             color.p2_state |= 0x8;
@@ -566,16 +566,17 @@ void redrawTile(uint32_t x, uint32_t y) {
     uint32_t explosion_coordinate = 0;
     Explosion *explosion;
     /* Draw explosions */
+    /*
     switch (explosion_grid[x][y].type) {
 	explosion_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
         case EXPLOSION_EMPTY:
             break;
         case EXPLOSION_TYPE_CENTER:
 	    if (explosion->id == 0) {
-                    color.p1_firecenter = explosion_coordinate;
+            color.p1_firecenter = explosion_coordinate;
 		    set_background_color(&color);
                 } else {
-                    color.p2_firecenter = explosion_coordinate;
+            color.p2_firecenter = explosion_coordinate;
 		    set_background_color(&color);
                 }
             break;
@@ -621,9 +622,9 @@ void redrawTile(uint32_t x, uint32_t y) {
             break;
         
         default:
-            /* This shouldn't happen */
             break;
-    }
+
+    }*/
 }
 
 void move(Player *player, direction dir) {
@@ -1066,6 +1067,23 @@ void explodeBomb(Bomb *bomb) {
 
     /* Remove bomb and explode tile */
     bomb_grid[x][y].type = BOMB_EMPTY;
+    unsigned int mask = ~(1 << 3); 
+    if (bomb_grid[x][y]->owner == 0)
+    {
+        color.p1_bomb = 0x0;
+        color.p1_state &= mask;
+        bomb_grid[x][y].used = 0;
+        set_background_color(&color);
+    }
+    else if (bomb_grid[x][y]->owner == 1)
+    {
+        color.p2_bomb = 0x0;
+        color.p1_state &= mask;
+        bomb_grid[x][y].used = 0;
+        set_background_color(&color);
+    }
+    
+    
     explodeTile(x, y, explosion);
 
     /* Explode tiles on the horizontal and vertical that are in range but
