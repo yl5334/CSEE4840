@@ -564,7 +564,7 @@ void redrawTile(uint32_t x, uint32_t y) {
     */
     
     uint32_t explosion_coordinate = 0;
-    Explosion *explosion;
+    
     /* Draw explosions */
     /*
     switch (explosion_grid[x][y].type) {
@@ -572,8 +572,8 @@ void redrawTile(uint32_t x, uint32_t y) {
         case EXPLOSION_EMPTY:
             break;
         case EXPLOSION_TYPE_CENTER:
-	    if (explosion->id == 0) {
-            color.p1_firecenter = explosion_coordinate;
+	    if (bomb_grid[x][y].owner == PLAYER_ONE) {
+                    color.p1_firecenter = explosion_coordinate;
 		    set_background_color(&color);
                 } else {
             color.p2_firecenter = explosion_coordinate;
@@ -582,7 +582,7 @@ void redrawTile(uint32_t x, uint32_t y) {
             break;
 
         case EXPLOSION_TYPE_UP:
-            if (explosion->id == 0) {
+            if (bomb_grid[x][y].owner == PLAYER_ONE) {
                     color.p1_fireup = explosion_coordinate;
 		    set_background_color(&color);
                 } else {
@@ -592,7 +592,7 @@ void redrawTile(uint32_t x, uint32_t y) {
             break;
 	
 	case EXPLOSION_TYPE_DOWN:
-            if (explosion->id == 0) {
+            if (bomb_grid[x][y].owner == PLAYER_ONE) {
                     color.p1_firedown = explosion_coordinate;
 		    set_background_color(&color);
                 } else {
@@ -602,7 +602,7 @@ void redrawTile(uint32_t x, uint32_t y) {
             break;
 
 	case EXPLOSION_TYPE_LEFT:
-            if (explosion->id == 0) {
+            if (bomb_grid[x][y].owner == PLAYER_ONE) {
                     color.p1_fireleft = explosion_coordinate;
 		    set_background_color(&color);
                 } else {
@@ -612,7 +612,7 @@ void redrawTile(uint32_t x, uint32_t y) {
             break;
 
 	case EXPLOSION_TYPE_RIGHT:
-            if (explosion->id == 0) {
+            if (bomb_grid[x][y].owner == PLAYER_ONE) {
                     color.p1_fireright = explosion_coordinate;
 		    set_background_color(&color);
                 } else {
