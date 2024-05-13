@@ -573,52 +573,66 @@ void redrawTile(uint32_t x, uint32_t y) {
 	explosion_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
         case EXPLOSION_EMPTY:
             break;
-        case EXPLOSION_TYPE_CENTER:
+        case EXPLOSION_TYPE_NORMAL:
 	    if (bomb_grid[x][y].owner == PLAYER_ONE) {
                     color.p1_firecenter = explosion_coordinate;
+                    color.p1_state |= 0x16;
 		    set_background_color(&color);
                 } else {
             color.p2_firecenter = explosion_coordinate;
+             color.p2_state |= 0x16;
+
 		    set_background_color(&color);
                 }
             break;
 
         case EXPLOSION_TYPE_UP:
-            if (bomb_grid[x][y].owner == PLAYER_ONE) {
+            if (bomb_grid[x][y+1].owner == PLAYER_ONE) {
                     color.p1_fireup = explosion_coordinate;
+                    color.p1_state |= 0x32;
 		    set_background_color(&color);
                 } else {
                     color.p2_fireup = explosion_coordinate;
+                    color.p2_state |= 0x32;
 		    set_background_color(&color);
                 }
             break;
 	
 	case EXPLOSION_TYPE_DOWN:
-            if (bomb_grid[x][y].owner == PLAYER_ONE) {
+            if (bomb_grid[x][y-1].owner == PLAYER_ONE) {
                     color.p1_firedown = explosion_coordinate;
+                    color.p1_state |= 0x64;
 		    set_background_color(&color);
                 } else {
                     color.p2_firedown = explosion_coordinate;
+                    color.p2_state |= 0x64;
 		    set_background_color(&color);
                 }
             break;
 
 	case EXPLOSION_TYPE_LEFT:
-            if (bomb_grid[x][y].owner == PLAYER_ONE) {
+            if (bomb_grid[x+1][y].owner == PLAYER_ONE) {
                     color.p1_fireleft = explosion_coordinate;
+                    color.p1_state |= 0x128;
+
 		    set_background_color(&color);
                 } else {
                     color.p2_fireleft = explosion_coordinate;
+                    color.p2_state |= 0x128;
+
 		    set_background_color(&color);
                 }
             break;
 
 	case EXPLOSION_TYPE_RIGHT:
-            if (bomb_grid[x][y].owner == PLAYER_ONE) {
+            if (bomb_grid[x-1][y].owner == PLAYER_ONE) {
                     color.p1_fireright = explosion_coordinate;
+                    color.p1_state |= 0x256;
 		    set_background_color(&color);
                 } else {
                     color.p2_fireright = explosion_coordinate;
+                     color.p2_state |= 0x256;
+
 		    set_background_color(&color);
                 }
             break;
