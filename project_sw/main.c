@@ -122,10 +122,7 @@ int main(){
     for(;;){
         runGame();
     }
-    free(explosion_L);
-    free(explosion_R);
-    free(explosion_D);
-    free(explosion_U);
+
     
 
 }
@@ -1088,10 +1085,10 @@ void explodeBomb(Bomb *bomb) {
     Explosion *explosion_D = malloc(sizeof(Explosion));
     Explosion *explosion_U = malloc(sizeof(Explosion));
 
-    Explosion *explosion_L = bomb->explosion;
-    Explosion *explosion_R = bomb->explosion;
-    Explosion *explosion_D = bomb->explosion;
-    Explosion *explosion_U = bomb->explosion;
+    *explosion_L = bomb->explosion;
+    *explosion_R = bomb->explosion;
+    *explosion_D = bomb->explosion;
+    *explosion_U = bomb->explosion;
       
     explosion_L.type = EXPLOSION_TYPE_LEFT;
     explosion_R.type = EXPLOSION_TYPE_RIGHT;
