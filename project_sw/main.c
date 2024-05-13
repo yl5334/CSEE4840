@@ -1164,6 +1164,8 @@ void explodeBomb(Bomb *bomb) {
                     break;
                 case TERRAIN_GROUND:
                     explodeTile(x + i, y, explosion_R);
+                    printf("explosition type = %d\n", explosion_grid[x+i][y].type);
+
                     break;
             }
         }
