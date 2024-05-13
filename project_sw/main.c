@@ -1080,7 +1080,7 @@ void explodeBomb(Bomb *bomb) {
     else if (bomb_grid[x][y].owner == 1)
     {
         color.p2_bomb = 0x0;
-        color.p1_state &= mask;
+        color.p2_state &= mask;
         bomb_grid[x][y].used = 0;
         set_background_color(&color);
     }
@@ -1201,7 +1201,16 @@ void killPlayersInExplosion(void) {
     for (int i = 0; i < PLAYER_NUM; i++) {
         if (explosion_grid[players[i].tile_position.x][players[i].tile_position.y].type != EXPLOSION_EMPTY) {
             players[i].alive = false;
-            
+            if (i==0)
+            {
+                color.p1_state = 0x0;
+                set_background_color(&color);
+            }
+            else {
+                color.p2_state = 0x0;
+                set_background_color(&color);
+            }
+
             printf("players die\n");
 
             getOccupiedTiles(&(players[i]), &pos_1, &pos_2);
