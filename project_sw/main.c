@@ -1063,6 +1063,14 @@ void explodeBomb(Bomb *bomb) {
     Explosion *explosion_L = &(bomb->explosion);
     Explosion *explosion_R = &(bomb->explosion);
     Explosion *explosion_D = &(bomb->explosion);
+    Explosion *explosion_U = &(bomb->explosion);
+
+    *explosion_L->type = EXPLOSION_TYPE_LEFT;
+    *explosion_R->type = EXPLOSION_TYPE_RIGHT;
+    *explosion_U->type = EXPLOSION_TYPE_UP;
+    *explosion_D->type = EXPLOSION_TYPE_DOWN;
+
+
     
     /* Decrement corresponding player bomb count */
     players[bomb->owner].current_bomb_number--;
@@ -1105,11 +1113,11 @@ void explodeBomb(Bomb *bomb) {
                     break;
                 case TERRAIN_WALL_BREAKABLE:
 
-                    explodeTile(x, y + i, explosion);
+                    explodeTile(x, y + i, explosion_U);
                     up_blocked = true;
                     break;
                 case TERRAIN_GROUND:
-                    explodeTile(x, y + i, explosion);
+                    explodeTile(x, y + i, explosion_U);
                     break;
             }
         }
@@ -1120,11 +1128,11 @@ void explodeBomb(Bomb *bomb) {
                     down_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-                    explodeTile(x, y - i, explosion);
+                    explodeTile(x, y - i, explosion_D);
                     down_blocked = true;
                     break;
                 case TERRAIN_GROUND:
-                    explodeTile(x, y - i, explosion);
+                    explodeTile(x, y - i, explosion_D);
                     break;
             }
         }
@@ -1135,11 +1143,11 @@ void explodeBomb(Bomb *bomb) {
                     right_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-                    explodeTile(x + i, y, explosion);
+                    explodeTile(x + i, y, explosion_R);
                     right_blocked = true;
                     break;
                 case TERRAIN_GROUND:
-                    explodeTile(x + i, y, explosion);
+                    explodeTile(x + i, y, explosion_R);
                     break;
             }
         }
@@ -1150,11 +1158,11 @@ void explodeBomb(Bomb *bomb) {
                     left_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-                    explodeTile(x - i, y, explosion);
+                    explodeTile(x - i, y, explosion_L);
                     left_blocked = true;
                     break;
                 case TERRAIN_GROUND:
-                    explodeTile(x - i, y, explosion);
+                    explodeTile(x - i, y, explosion_L);
                     break;
             }
         }
