@@ -122,7 +122,6 @@ int main(){
     for(;;){
         runGame();
     }
-
     
 
 }
@@ -282,7 +281,12 @@ void setupPlayers(void) {
         players[i].bomb.type  = DEFAULT_BOMB_TYPE;
         players[i].bomb.current_frame  = 0;
         players[i].bomb.explosion.type = EXPLOSION_TYPE_NORMAL;
-        players[i].bomb.explosion.timer = 40;
+        players[i].bomb.explosion.timer = 0;
+        players[i].bomb.explosion.up = 0;
+        players[i].bomb.explosion.down = 0
+        players[i].bomb.explosion.right = 0;
+        players[i].bomb.explosion.left = 0;
+
         players[i].bomb.used = 0;
 
         players[i].moving          = false;
@@ -567,9 +571,76 @@ void redrawTile(uint32_t x, uint32_t y) {
     */
     
     uint32_t explosion_coordinate = 0;
+
+    switch (explosion_grid[x][y].type) {
+	    explosion_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
+        case EXPLOSION_EMPTY:
+            break;
+        case EXPLOSION_TYPE_NORMAL:
+	    if (bomb_grid[x][y].owner == PLAYER_ONE) {
+                    color.p1_firecenter = explosion_coordinate;
+                    color.p1_state |= 0x16;
+                    if (explosion_grid.up == 1)
+                    {   
+                        explosion_coordinate = (((y-1) * TILE_SIZE) << 10 | x * TILE_SIZE );
+                        color.p1_fireup = explosion_coordinate;
+                        color.p1_state |= 0x32;
+                    }
+                    if (explosion_grid.down == 1)
+                    {   
+                        explosion_coordinate = (((y+1) * TILE_SIZE) << 10 | x * TILE_SIZE );
+                        color.p1_firedown = explosion_coordinate;
+                        color.p1_state |= 0x64;
+                    }
+                    if (explosion_grid.left == 1)
+                    {   
+                        explosion_coordinate = ((y * TILE_SIZE) << 10 | (x-1) * TILE_SIZE );
+                        color.p1_fireleft = explosion_coordinate;
+                        color.p1_state |= 0x128;
+                    }
+                    if (explosion_grid.right == 1)
+                    {   
+                        explosion_coordinate = ((y * TILE_SIZE) << 10 | (x+1) * TILE_SIZE );
+                        color.p1_fireright = explosion_coordinate;
+                        color.p1_state |= 0x256;
+                    }
+                        set_background_color(&color);
+                } else if (bomb_grid[x][y].owner == PLAYER_TWO)
+                {
+                    color.p2_firecenter = explosion_coordinate;
+                    color.p2_state |= 0x16;
+                    if (explosion_grid.up == 1)
+                    {   
+                        explosion_coordinate = (((y-1) * TILE_SIZE) << 10 | x * TILE_SIZE );
+                        color.p2_fireup = explosion_coordinate;
+                        color.p2_state |= 0x32;
+                    }
+                    if (explosion_grid.down == 1)
+                    {   
+                        explosion_coordinate = (((y+1) * TILE_SIZE) << 10 | x * TILE_SIZE );
+                        color.p2_firedown = explosion_coordinate;
+                        color.p2_state |= 0x64;
+                    }
+                    if (explosion_grid.left == 1)
+                    {   
+                        explosion_coordinate = ((y * TILE_SIZE) << 10 | (x-1) * TILE_SIZE );
+                        color.p2_fireleft = explosion_coordinate;
+                        color.p2_state |= 0x128;
+                    }
+                    if (explosion_grid.right == 1)
+                    {   
+                        explosion_coordinate = ((y * TILE_SIZE) << 10 | (x+1) * TILE_SIZE );
+                        color.p2_fireright = explosion_coordinate;
+                        color.p2_state |= 0x256;
+                    }
+                        set_background_color(&color);
+                }
+            break;
+    }
+
     
     /* Draw explosions */
-    
+    /*
     switch (explosion_grid[x][y].type) {
 	explosion_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
         case EXPLOSION_EMPTY:
@@ -581,7 +652,7 @@ void redrawTile(uint32_t x, uint32_t y) {
 		    set_background_color(&color);
                 } else {
             color.p2_firecenter = explosion_coordinate;
-             color.p2_state |= 0x16;
+             color.p2_state |= 0x32;
 
 		    set_background_color(&color);
                 }
@@ -590,7 +661,7 @@ void redrawTile(uint32_t x, uint32_t y) {
         case EXPLOSION_TYPE_UP:
             if (bomb_grid[x][y+1].owner == PLAYER_ONE) {
                     color.p1_fireup = explosion_coordinate;
-                    color.p1_state |= 0x32;
+                    color.p1_state |= 0x;
 		    set_background_color(&color);
                 } else {
                     color.p2_fireup = explosion_coordinate;
@@ -642,6 +713,7 @@ void redrawTile(uint32_t x, uint32_t y) {
             break;
 
     }
+    */
 }
 
 void move(Player *player, direction dir) {
@@ -1075,28 +1147,18 @@ void explodeBomb(Bomb *bomb) {
     int8_t y = bomb->position.y;
     int8_t range = bomb->range;
 
-
+    /*
     Explosion *explosion = &(bomb->explosion);
-    
-    
-    //Explosion *explosion = malloc(sizeof(Explosion));
-    Explosion *explosion_L = malloc(sizeof(Explosion));
-    Explosion *explosion_R = malloc(sizeof(Explosion));
-    Explosion *explosion_D = malloc(sizeof(Explosion));
-    Explosion *explosion_U = malloc(sizeof(Explosion));
+    Explosion *explosion_L = &(bomb->explosion);
+    Explosion *explosion_R = &(bomb->explosion);
+    Explosion *explosion_D = &(bomb->explosion);
+    Explosion *explosion_U = &(bomb->explosion);
 
-    *explosion_L = bomb->explosion;
-    *explosion_R = bomb->explosion;
-    *explosion_D = bomb->explosion;
-    *explosion_U = bomb->explosion;
-      
-    explosion_L.type = EXPLOSION_TYPE_LEFT;
-    explosion_R.type = EXPLOSION_TYPE_RIGHT;
-    explosion_U.type = EXPLOSION_TYPE_UP;
-    explosion_D.type = EXPLOSION_TYPE_DOWN;
-
-
-    
+    explosion_L->type = EXPLOSION_TYPE_LEFT;
+    explosion_R->type = EXPLOSION_TYPE_RIGHT;
+    explosion_U->type = EXPLOSION_TYPE_UP;
+    explosion_D->type = EXPLOSION_TYPE_DOWN;
+    */
 
 
     
@@ -1141,11 +1203,12 @@ void explodeBomb(Bomb *bomb) {
                     break;
                 case TERRAIN_WALL_BREAKABLE:
 
-                    explodeTile(x, y + i, explosion_U);
+                    explodeTile(x, y + i, explosion);
                     up_blocked = true;
                     break;
                 case TERRAIN_GROUND:
-                    explodeTile(x, y + i, explosion_U);
+                    //explodeTile(x, y + i, explosion);
+                    explosion.up = 1;
                     break;
             }
         }
@@ -1156,13 +1219,13 @@ void explodeBomb(Bomb *bomb) {
                     down_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-                    explodeTile(x, y - i, explosion_D);
+                    explodeTile(x, y - i, explosion);
                     down_blocked = true;
                     break;
                 case TERRAIN_GROUND:
-                    explodeTile(x, y - i, explosion_D);
-                    printf("explosition type = %d\n", explosion_grid[x][y-i].type);
-
+                    //explodeTile(x, y - i, explosion);
+                    //printf("explosition type = %d\n", explosion_grid[x][y-i].type);
+                    explosion.down = 1;
                     break;
             }
         }
@@ -1173,13 +1236,13 @@ void explodeBomb(Bomb *bomb) {
                     right_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-                    explodeTile(x + i, y, explosion_R);
+                    explodeTile(x + i, y, explosion);
                     right_blocked = true;
                     break;
                 case TERRAIN_GROUND:
-                    explodeTile(x + i, y, explosion_R);
-                    printf("explosition type = %d\n", explosion_grid[x+i][y].type);
-
+                    //explodeTile(x + i, y, explosion);
+                    //printf("explosition type = %d\n", explosion_grid[x+i][y].type);
+                    explosion.right = 1;
                     break;
             }
         }
@@ -1190,11 +1253,12 @@ void explodeBomb(Bomb *bomb) {
                     left_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-                    explodeTile(x - i, y, explosion_L);
+                    explodeTile(x - i, y, explosion);
                     left_blocked = true;
                     break;
                 case TERRAIN_GROUND:
-                    explodeTile(x - i, y, explosion_L);
+                    //explodeTile(x - i, y, explosion);
+                    explosion.left = 1;
                     break;
             }
         }
@@ -1258,8 +1322,6 @@ void killPlayersInExplosion(void) {
             /* Render both tiles the player occupied */
             changed_tiles[pos_1.x][pos_1.y] = true;
             changed_tiles[pos_2.x][pos_2.y] = true;
-
-        
 
             /* Render changes in sidebar */
 	    /*

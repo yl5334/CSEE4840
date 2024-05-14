@@ -94,6 +94,10 @@ typedef enum {
 typedef struct {
     explosion_type type;
     int32_t timer;
+    bool up;
+    bool down;
+    bool right;
+    bool left;
 } Explosion;
 
 
