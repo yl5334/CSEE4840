@@ -79,6 +79,7 @@ typedef enum {
 } bomb_type;
 
 /*explosition.h*/
+#define DEFAULT_EXPLOSION_TIMER 100
 typedef enum {
     EXPLOSION_EMPTY,
     EXPLOSION_TYPE_NORMAL,
@@ -94,6 +95,7 @@ typedef enum {
 typedef struct {
     explosion_type type;
     int32_t timer;
+    int owner;       // todo make a player_id
     bool up;
     bool down;
     bool right;

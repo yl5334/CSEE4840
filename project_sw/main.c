@@ -250,6 +250,10 @@ void setupGrids(void) {
 
             explosion_grid[i][j].type = EXPLOSION_EMPTY;
             explosion_grid[i][j].timer = 0;
+            explosion_grid[i][j].up = 0;
+            explosion_grid[i][j].down = 0;
+            explosion_grid[i][j].left = 0;
+            explosion_grid[i][j].right = 0;
 
             changed_tiles[i][j] = false;
 
@@ -265,11 +269,13 @@ void setupPlayers(void) {
         {
             players[i].screen_position.x = 0;
             players[i].screen_position.y = 0;
+	    players[i].id = 0;
         }
         else
         {
             players[i].screen_position.x = (MAP_SIZE_H - 1) * TILE_SIZE + 1;
             players[i].screen_position.y = (MAP_SIZE_V - 1) * TILE_SIZE + 1;
+	    players[i].id = 1;
         }
         
         
@@ -279,6 +285,7 @@ void setupPlayers(void) {
         players[i].bomb.timer = DEFAULT_BOMB_TIMER;
         players[i].bomb.range = DEFAULT_BOMB_RANGE;
         players[i].bomb.type  = DEFAULT_BOMB_TYPE;
+	players[i].bomb.owner = players[i].id;
         players[i].bomb.current_frame  = 0;
         players[i].bomb.explosion.type = EXPLOSION_TYPE_NORMAL;
         players[i].bomb.explosion.timer = 0;
@@ -409,7 +416,7 @@ player_id playRound(void) {
         }
     */
    
-        //countdownExplosions();
+
     
         if (plantBombs()) {
             //snd_play_plant();
@@ -419,6 +426,8 @@ player_id playRound(void) {
         if (countdownBombs()) {
             //snd_play_explosion();
         }
+
+	countdownExplosions();
         
 
         render();
@@ -573,65 +582,84 @@ void redrawTile(uint32_t x, uint32_t y) {
     uint32_t explosion_coordinate = 0;
 
     switch (explosion_grid[x][y].type) {
-	    explosion_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
+	    //printf("explode position = %d\n", explosion_coordinate);
+	    //explosion_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
         case EXPLOSION_EMPTY:
             break;
         case EXPLOSION_TYPE_NORMAL:
-	    if (bomb_grid[x][y].owner == PLAYER_ONE) {
+	    if (explosion_grid[x][y].owner == 0) {
+		  explosion_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
                     color.p1_firecenter = explosion_coordinate;
-                    color.p1_state |= 0x16;
+                    color.p1_state |= 0x10;
                     if (explosion_grid[x][y].up == 1)
                     {   
                         explosion_coordinate = (((y-1) * TILE_SIZE) << 10 | x * TILE_SIZE );
+			explosion_grid[x][y-1].type = EXPLOSION_TYPE_UP;
+			//printf("down cor = %d\n", explosion_coordinate);
+			//printf("%d, %d\n", x, y);
                         color.p1_fireup = explosion_coordinate;
-                        color.p1_state |= 0x32;
+                        color.p1_state |= 0x20;
                     }
                     if (explosion_grid[x][y].down == 1)
                     {   
                         explosion_coordinate = (((y+1) * TILE_SIZE) << 10 | x * TILE_SIZE );
+			explosion_grid[x][y+1].type = EXPLOSION_TYPE_DOWN;
+			//printf("down cor = %d\n", explosion_coordinate);
+			//printf("%d, %d\n", x, y);
                         color.p1_firedown = explosion_coordinate;
-                        color.p1_state |= 0x64;
+                        color.p1_state |= 0x40;
                     }
                     if (explosion_grid[x][y].left == 1)
                     {   
                         explosion_coordinate = ((y * TILE_SIZE) << 10 | (x-1) * TILE_SIZE );
+			explosion_grid[x-1][y].type = EXPLOSION_TYPE_LEFT;
                         color.p1_fireleft = explosion_coordinate;
-                        color.p1_state |= 0x128;
+                        color.p1_state |= 0x80;
                     }
                     if (explosion_grid[x][y].right == 1)
                     {   
                         explosion_coordinate = ((y * TILE_SIZE) << 10 | (x+1) * TILE_SIZE );
+			explosion_grid[x+1][y].type = EXPLOSION_TYPE_RIGHT;
                         color.p1_fireright = explosion_coordinate;
-                        color.p1_state |= 0x256;
+                        color.p1_state |= 0x100;
                     }
                         set_background_color(&color);
-                } else if (bomb_grid[x][y].owner == PLAYER_TWO)
+                } else if (explosion_grid[x][y].owner == 1)
                 {
+		    explosion_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
                     color.p2_firecenter = explosion_coordinate;
-                    color.p2_state |= 0x16;
+                    color.p2_state |= 0x10;
                     if (explosion_grid[x][y].up == 1)
                     {   
                         explosion_coordinate = (((y-1) * TILE_SIZE) << 10 | x * TILE_SIZE );
+			explosion_grid[x][y-1].type = EXPLOSION_TYPE_UP;
                         color.p2_fireup = explosion_coordinate;
-                        color.p2_state |= 0x32;
+                        color.p2_state |= 0x20;
                     }
                     if (explosion_grid[x][y].down == 1)
                     {   
                         explosion_coordinate = (((y+1) * TILE_SIZE) << 10 | x * TILE_SIZE );
+			explosion_grid[x][y+1].type = EXPLOSION_TYPE_DOWN;
                         color.p2_firedown = explosion_coordinate;
-                        color.p2_state |= 0x64;
+			//printf("player 2\n");
+			//printf("%d\n", explosion_grid[x][y].left);
+                        color.p2_state |= 0x40;
                     }
                     if (explosion_grid[x][y].left == 1)
                     {   
+			//printf(" in the switch");
                         explosion_coordinate = ((y * TILE_SIZE) << 10 | (x-1) * TILE_SIZE );
+			explosion_grid[x-1][y].type = EXPLOSION_TYPE_LEFT;
                         color.p2_fireleft = explosion_coordinate;
-                        color.p2_state |= 0x128;
+                        color.p2_state |= 0x80;
+			//printf("%d",color.p2_state);
                     }
                     if (explosion_grid[x][y].right == 1)
                     {   
                         explosion_coordinate = ((y * TILE_SIZE) << 10 | (x+1) * TILE_SIZE );
+			explosion_grid[x+1][y].type = EXPLOSION_TYPE_RIGHT;
                         color.p2_fireright = explosion_coordinate;
-                        color.p2_state |= 0x256;
+                        color.p2_state |= 0x100;
                     }
                         set_background_color(&color);
                 }
@@ -1053,9 +1081,44 @@ void countdownExplosions(void) {
 
             if (explosion->type == EXPLOSION_TYPE_NORMAL) {
                 explosion->timer--;
+	    printf("explosion owner = %d\n", explosion->owner);
+	    printf("explosion timer = %d\n", explosion->timer);
+		
 
                 if (explosion->timer == 0) {
-                    explosion_grid[x][y].type = EXPLOSION_EMPTY; 
+                    explosion_grid[x][y].type = EXPLOSION_EMPTY;
+		    printf("%d\n", explosion_grid[x][y].type);
+		    if(explosion_grid[x][y].up == 1){
+			explosion_grid[x][y-1].type = EXPLOSION_EMPTY;
+			printf("%d\n", explosion_grid[x][y-1].type);
+			explosion_grid[x][y].up = 0;
+		    }
+		    if(explosion_grid[x][y].down == 1){
+			explosion_grid[x][y+1].type = EXPLOSION_EMPTY;
+			printf("%d\n", explosion_grid[x][y+1].type);
+			explosion_grid[x][y].down = 0;
+		    }
+		    if(explosion_grid[x][y].left == 1){
+			explosion_grid[x-1][y].type = EXPLOSION_EMPTY;
+			printf("%d\n", explosion_grid[x-1][y].type);
+			explosion_grid[x][y].left = 0;
+		    }
+		    if(explosion_grid[x][y].right == 1){
+			explosion_grid[x+1][y].type = EXPLOSION_EMPTY;
+			printf("%d\n", explosion_grid[x+1][y].type);
+			explosion_grid[x][y].right = 0;
+		    }
+		  
+		  //  printf("explosion owner = %d\n", explosion->owner);
+		   int mask = 0xFFFFFE0F;
+		   if(explosion->owner == 0){
+			color.p1_state &= mask;
+		    }
+		   else if (explosion->owner == 1){
+			color.p2_state &= mask;
+			printf("explosion disapper\n");
+		    }
+ 
 
                     /* Set the terrain on this tile to be ground - destroy breakable wall */
                     terrain_grid[x][y] = TERRAIN_GROUND;
@@ -1130,7 +1193,7 @@ void plantBomb(Player *player) {
     Bomb bomb = player->bomb;
     bomb.position = player->tile_position;
     bomb_grid[x][y] = bomb;
-    printf("bomb x position = %d, bomb y position = %d\n", x, y);
+    printf("bomb x position = %d, bomb y position = %d, owner = %d\n", x, y, bomb.owner);
     /* Update the changed tiles so bomb is rendered */
     changed_tiles[x][y] = true;
 
@@ -1146,9 +1209,14 @@ void explodeBomb(Bomb *bomb) {
     int8_t x = bomb->position.x;
     int8_t y = bomb->position.y;
     int8_t range = bomb->range;
+    printf("bomb position x = %d, y = %d", x, y);
 
     
     Explosion *explosion = &(bomb->explosion);
+    explosion->owner = bomb->owner;
+    explosion->timer = DEFAULT_EXPLOSION_TIMER;
+    
+    //printf("owner = %d", explosion->owner);
     /*
     Explosion *explosion_L = &(bomb->explosion);
     Explosion *explosion_R = &(bomb->explosion);
@@ -1184,8 +1252,12 @@ void explodeBomb(Bomb *bomb) {
         set_background_color(&color);
     }
     
-    
-    explodeTile(x, y, explosion);
+
+    explosion_grid[x][y] = *explosion;
+    printf("bomb owner = %d, explosion owner = %d", bomb_grid[x][y].owner, explosion_grid[x][y].owner); 
+    //explodeTile(x, y, explosion);
+
+    //printf("explode position x = %d, y = %d\n", x, y);
 
     /* Explode tiles on the horizontal and vertical that are in range but
      * don't explode past an unbreakable wall */
@@ -1198,35 +1270,60 @@ void explodeBomb(Bomb *bomb) {
     for (int i = 1; i <= range; i++) {
 
         if (!(up_blocked)) {
-            switch (terrain_grid[x][y + i]) {
+            switch (terrain_grid[x][y - i]) {
                 case TERRAIN_WALL_UNBREAKABLE:
+		    explosion_grid[x][y].up = 0;
                     up_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-
-                    explodeTile(x, y + i, explosion);
+			explosion->up = 0;
+                    //explodeTile(x, y + i, explosion);
                     up_blocked = true;
                     break;
                 case TERRAIN_GROUND:
                     //explodeTile(x, y + i, explosion);
-                    explosion->up = 1;
+		    
+                    explosion_grid[x][y].up = 1;
+		    
                     break;
             }
         }
 
         if (!(down_blocked)) {
-            switch (terrain_grid[x][y - i]) {
+            switch (terrain_grid[x][y + i]) {
                 case TERRAIN_WALL_UNBREAKABLE:
+		    explosion_grid[x][y].down = 0;
                     down_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
                     explodeTile(x, y - i, explosion);
+			explosion->down = 0;
                     down_blocked = true;
                     break;
                 case TERRAIN_GROUND:
                     //explodeTile(x, y - i, explosion);
                     //printf("explosition type = %d\n", explosion_grid[x][y-i].type);
-                    explosion->down = 1;
+                    explosion_grid[x][y].down = 1;
+                    break;
+            }
+        }
+
+	if (!(left_blocked)) {
+            switch (terrain_grid[x - i][y]) {
+                case TERRAIN_WALL_UNBREAKABLE:
+                    //explosion_grid[x][y].left = 0;
+                    left_blocked = true;
+                    break;
+                case TERRAIN_WALL_BREAKABLE:
+                    explodeTile(x - i, y, explosion);
+                    explosion->left = 0;
+                    left_blocked = true;
+                    break;
+                case TERRAIN_GROUND:
+                    //explodeTile(x - i, y, explosion);
+		    
+                    explosion_grid[x][y].left = 1;
+		    printf("left is not block, %d\n", explosion_grid[x][y].left);
                     break;
             }
         }
@@ -1234,36 +1331,26 @@ void explodeBomb(Bomb *bomb) {
         if (!(right_blocked)) {
             switch (terrain_grid[x + i][y]) {
                 case TERRAIN_WALL_UNBREAKABLE:
+		    explosion_grid[x][y].right = 0;
                     right_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
                     explodeTile(x + i, y, explosion);
+			explosion->right = 0;
                     right_blocked = true;
                     break;
                 case TERRAIN_GROUND:
                     //explodeTile(x + i, y, explosion);
                     //printf("explosition type = %d\n", explosion_grid[x+i][y].type);
-                    explosion->right = 1;
+		   
+                    explosion_grid[x][y].right = 1;
                     break;
             }
         }
 
-        if (!(left_blocked)) {
-            switch (terrain_grid[x - i][y]) {
-                case TERRAIN_WALL_UNBREAKABLE:
-                    left_blocked = true;
-                    break;
-                case TERRAIN_WALL_BREAKABLE:
-                    explodeTile(x - i, y, explosion);
-                    left_blocked = true;
-                    break;
-                case TERRAIN_GROUND:
-                    //explodeTile(x - i, y, explosion);
-                    explosion->left = 1;
-                    break;
-            }
-        }
+        
     }
+    changed_tiles[x][y] = true;
 }
 
 void explodeTile(int8_t x, int8_t y, Explosion *explosion) {
@@ -1294,7 +1381,7 @@ void explodeTile(int8_t x, int8_t y, Explosion *explosion) {
     }
     */
     /* Update the changed tiles so changes are rendered */
-    changed_tiles[x][y] = true;
+
 
 }
 
