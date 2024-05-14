@@ -580,25 +580,25 @@ void redrawTile(uint32_t x, uint32_t y) {
 	    if (bomb_grid[x][y].owner == PLAYER_ONE) {
                     color.p1_firecenter = explosion_coordinate;
                     color.p1_state |= 0x16;
-                    if (explosion_grid.up == 1)
+                    if (explosion_grid[x][y].up == 1)
                     {   
                         explosion_coordinate = (((y-1) * TILE_SIZE) << 10 | x * TILE_SIZE );
                         color.p1_fireup = explosion_coordinate;
                         color.p1_state |= 0x32;
                     }
-                    if (explosion_grid.down == 1)
+                    if (explosion_grid[x][y].down == 1)
                     {   
                         explosion_coordinate = (((y+1) * TILE_SIZE) << 10 | x * TILE_SIZE );
                         color.p1_firedown = explosion_coordinate;
                         color.p1_state |= 0x64;
                     }
-                    if (explosion_grid.left == 1)
+                    if (explosion_grid[x][y].left == 1)
                     {   
                         explosion_coordinate = ((y * TILE_SIZE) << 10 | (x-1) * TILE_SIZE );
                         color.p1_fireleft = explosion_coordinate;
                         color.p1_state |= 0x128;
                     }
-                    if (explosion_grid.right == 1)
+                    if (explosion_grid[x][y].right == 1)
                     {   
                         explosion_coordinate = ((y * TILE_SIZE) << 10 | (x+1) * TILE_SIZE );
                         color.p1_fireright = explosion_coordinate;
@@ -609,25 +609,25 @@ void redrawTile(uint32_t x, uint32_t y) {
                 {
                     color.p2_firecenter = explosion_coordinate;
                     color.p2_state |= 0x16;
-                    if (explosion_grid.up == 1)
+                    if (explosion_grid[x][y].up == 1)
                     {   
                         explosion_coordinate = (((y-1) * TILE_SIZE) << 10 | x * TILE_SIZE );
                         color.p2_fireup = explosion_coordinate;
                         color.p2_state |= 0x32;
                     }
-                    if (explosion_grid.down == 1)
+                    if (explosion_grid[x][y].down == 1)
                     {   
                         explosion_coordinate = (((y+1) * TILE_SIZE) << 10 | x * TILE_SIZE );
                         color.p2_firedown = explosion_coordinate;
                         color.p2_state |= 0x64;
                     }
-                    if (explosion_grid.left == 1)
+                    if (explosion_grid[x][y].left == 1)
                     {   
                         explosion_coordinate = ((y * TILE_SIZE) << 10 | (x-1) * TILE_SIZE );
                         color.p2_fireleft = explosion_coordinate;
                         color.p2_state |= 0x128;
                     }
-                    if (explosion_grid.right == 1)
+                    if (explosion_grid[x][y].right == 1)
                     {   
                         explosion_coordinate = ((y * TILE_SIZE) << 10 | (x+1) * TILE_SIZE );
                         color.p2_fireright = explosion_coordinate;
