@@ -1209,7 +1209,7 @@ void explodeBomb(Bomb *bomb) {
                     break;
                 case TERRAIN_GROUND:
                     //explodeTile(x, y + i, explosion);
-                    explosion.up = 1;
+                    explosion->up = 1;
                     break;
             }
         }
@@ -1226,7 +1226,7 @@ void explodeBomb(Bomb *bomb) {
                 case TERRAIN_GROUND:
                     //explodeTile(x, y - i, explosion);
                     //printf("explosition type = %d\n", explosion_grid[x][y-i].type);
-                    explosion.down = 1;
+                    explosion->down = 1;
                     break;
             }
         }
@@ -1243,7 +1243,7 @@ void explodeBomb(Bomb *bomb) {
                 case TERRAIN_GROUND:
                     //explodeTile(x + i, y, explosion);
                     //printf("explosition type = %d\n", explosion_grid[x+i][y].type);
-                    explosion.right = 1;
+                    explosion->right = 1;
                     break;
             }
         }
@@ -1259,7 +1259,7 @@ void explodeBomb(Bomb *bomb) {
                     break;
                 case TERRAIN_GROUND:
                     //explodeTile(x - i, y, explosion);
-                    explosion.left = 1;
+                    explosion->left = 1;
                     break;
             }
         }
