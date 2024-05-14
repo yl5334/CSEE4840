@@ -62,8 +62,6 @@ module soc_system (
 		inout  wire        hps_hps_io_gpio_inst_GPIO53,                      //                                            .hps_io_gpio_inst_GPIO53
 		inout  wire        hps_hps_io_gpio_inst_GPIO54,                      //                                            .hps_io_gpio_inst_GPIO54
 		inout  wire        hps_hps_io_gpio_inst_GPIO61,                      //                                            .hps_io_gpio_inst_GPIO61
-		input  wire [31:0] hps_0_f2h_irq0_irq,                               //                              hps_0_f2h_irq0.irq
-		input  wire [31:0] hps_0_f2h_irq1_irq,                               //                              hps_0_f2h_irq1.irq
 		output wire [14:0] hps_ddr3_mem_a,                                   //                                    hps_ddr3.mem_a
 		output wire [2:0]  hps_ddr3_mem_ba,                                  //                                            .mem_ba
 		output wire        hps_ddr3_mem_ck,                                  //                                            .mem_ck
@@ -136,11 +134,11 @@ module soc_system (
 	wire         mm_interconnect_0_vga_ball_0_avalon_slave_0_chipselect; // mm_interconnect_0:vga_ball_0_avalon_slave_0_chipselect -> vga_ball_0:chipselect
 	wire   [4:0] mm_interconnect_0_vga_ball_0_avalon_slave_0_address;    // mm_interconnect_0:vga_ball_0_avalon_slave_0_address -> vga_ball_0:address
 	wire         mm_interconnect_0_vga_ball_0_avalon_slave_0_write;      // mm_interconnect_0:vga_ball_0_avalon_slave_0_write -> vga_ball_0:write
-	wire  [15:0] mm_interconnect_0_vga_ball_0_avalon_slave_0_writedata;  // mm_interconnect_0:vga_ball_0_avalon_slave_0_writedata -> vga_ball_0:writedata
+	wire  [31:0] mm_interconnect_0_vga_ball_0_avalon_slave_0_writedata;  // mm_interconnect_0:vga_ball_0_avalon_slave_0_writedata -> vga_ball_0:writedata
 	wire         mm_interconnect_0_p1_unit_s1_chipselect;                // mm_interconnect_0:p1_unit_s1_chipselect -> p1_unit:chipselect
 	wire  [15:0] mm_interconnect_0_p1_unit_s1_readdata;                  // p1_unit:readdata -> mm_interconnect_0:p1_unit_s1_readdata
 	wire         mm_interconnect_0_p1_unit_s1_debugaccess;               // mm_interconnect_0:p1_unit_s1_debugaccess -> p1_unit:debugaccess
-	wire   [8:0] mm_interconnect_0_p1_unit_s1_address;                   // mm_interconnect_0:p1_unit_s1_address -> p1_unit:address
+	wire   [9:0] mm_interconnect_0_p1_unit_s1_address;                   // mm_interconnect_0:p1_unit_s1_address -> p1_unit:address
 	wire   [1:0] mm_interconnect_0_p1_unit_s1_byteenable;                // mm_interconnect_0:p1_unit_s1_byteenable -> p1_unit:byteenable
 	wire         mm_interconnect_0_p1_unit_s1_write;                     // mm_interconnect_0:p1_unit_s1_write -> p1_unit:write
 	wire  [15:0] mm_interconnect_0_p1_unit_s1_writedata;                 // mm_interconnect_0:p1_unit_s1_writedata -> p1_unit:writedata
@@ -148,7 +146,7 @@ module soc_system (
 	wire         mm_interconnect_0_p1_die_s1_chipselect;                 // mm_interconnect_0:p1_die_s1_chipselect -> p1_die:chipselect
 	wire  [15:0] mm_interconnect_0_p1_die_s1_readdata;                   // p1_die:readdata -> mm_interconnect_0:p1_die_s1_readdata
 	wire         mm_interconnect_0_p1_die_s1_debugaccess;                // mm_interconnect_0:p1_die_s1_debugaccess -> p1_die:debugaccess
-	wire   [6:0] mm_interconnect_0_p1_die_s1_address;                    // mm_interconnect_0:p1_die_s1_address -> p1_die:address
+	wire   [7:0] mm_interconnect_0_p1_die_s1_address;                    // mm_interconnect_0:p1_die_s1_address -> p1_die:address
 	wire   [1:0] mm_interconnect_0_p1_die_s1_byteenable;                 // mm_interconnect_0:p1_die_s1_byteenable -> p1_die:byteenable
 	wire         mm_interconnect_0_p1_die_s1_write;                      // mm_interconnect_0:p1_die_s1_write -> p1_die:write
 	wire  [15:0] mm_interconnect_0_p1_die_s1_writedata;                  // mm_interconnect_0:p1_die_s1_writedata -> p1_die:writedata
@@ -156,7 +154,7 @@ module soc_system (
 	wire         mm_interconnect_0_p2_unit_s1_chipselect;                // mm_interconnect_0:p2_unit_s1_chipselect -> p2_unit:chipselect
 	wire  [15:0] mm_interconnect_0_p2_unit_s1_readdata;                  // p2_unit:readdata -> mm_interconnect_0:p2_unit_s1_readdata
 	wire         mm_interconnect_0_p2_unit_s1_debugaccess;               // mm_interconnect_0:p2_unit_s1_debugaccess -> p2_unit:debugaccess
-	wire   [8:0] mm_interconnect_0_p2_unit_s1_address;                   // mm_interconnect_0:p2_unit_s1_address -> p2_unit:address
+	wire   [9:0] mm_interconnect_0_p2_unit_s1_address;                   // mm_interconnect_0:p2_unit_s1_address -> p2_unit:address
 	wire   [1:0] mm_interconnect_0_p2_unit_s1_byteenable;                // mm_interconnect_0:p2_unit_s1_byteenable -> p2_unit:byteenable
 	wire         mm_interconnect_0_p2_unit_s1_write;                     // mm_interconnect_0:p2_unit_s1_write -> p2_unit:write
 	wire  [15:0] mm_interconnect_0_p2_unit_s1_writedata;                 // mm_interconnect_0:p2_unit_s1_writedata -> p2_unit:writedata
@@ -164,7 +162,7 @@ module soc_system (
 	wire         mm_interconnect_0_fix_s1_chipselect;                    // mm_interconnect_0:fix_s1_chipselect -> fix:chipselect
 	wire  [15:0] mm_interconnect_0_fix_s1_readdata;                      // fix:readdata -> mm_interconnect_0:fix_s1_readdata
 	wire         mm_interconnect_0_fix_s1_debugaccess;                   // mm_interconnect_0:fix_s1_debugaccess -> fix:debugaccess
-	wire   [6:0] mm_interconnect_0_fix_s1_address;                       // mm_interconnect_0:fix_s1_address -> fix:address
+	wire   [7:0] mm_interconnect_0_fix_s1_address;                       // mm_interconnect_0:fix_s1_address -> fix:address
 	wire   [1:0] mm_interconnect_0_fix_s1_byteenable;                    // mm_interconnect_0:fix_s1_byteenable -> fix:byteenable
 	wire         mm_interconnect_0_fix_s1_write;                         // mm_interconnect_0:fix_s1_write -> fix:write
 	wire  [15:0] mm_interconnect_0_fix_s1_writedata;                     // mm_interconnect_0:fix_s1_writedata -> fix:writedata
@@ -172,7 +170,7 @@ module soc_system (
 	wire         mm_interconnect_0_bomb_s1_chipselect;                   // mm_interconnect_0:bomb_s1_chipselect -> bomb:chipselect
 	wire  [15:0] mm_interconnect_0_bomb_s1_readdata;                     // bomb:readdata -> mm_interconnect_0:bomb_s1_readdata
 	wire         mm_interconnect_0_bomb_s1_debugaccess;                  // mm_interconnect_0:bomb_s1_debugaccess -> bomb:debugaccess
-	wire   [6:0] mm_interconnect_0_bomb_s1_address;                      // mm_interconnect_0:bomb_s1_address -> bomb:address
+	wire   [7:0] mm_interconnect_0_bomb_s1_address;                      // mm_interconnect_0:bomb_s1_address -> bomb:address
 	wire   [1:0] mm_interconnect_0_bomb_s1_byteenable;                   // mm_interconnect_0:bomb_s1_byteenable -> bomb:byteenable
 	wire         mm_interconnect_0_bomb_s1_write;                        // mm_interconnect_0:bomb_s1_write -> bomb:write
 	wire  [15:0] mm_interconnect_0_bomb_s1_writedata;                    // mm_interconnect_0:bomb_s1_writedata -> bomb:writedata
@@ -180,7 +178,7 @@ module soc_system (
 	wire         mm_interconnect_0_firecenter_s1_chipselect;             // mm_interconnect_0:firecenter_s1_chipselect -> firecenter:chipselect
 	wire  [15:0] mm_interconnect_0_firecenter_s1_readdata;               // firecenter:readdata -> mm_interconnect_0:firecenter_s1_readdata
 	wire         mm_interconnect_0_firecenter_s1_debugaccess;            // mm_interconnect_0:firecenter_s1_debugaccess -> firecenter:debugaccess
-	wire   [6:0] mm_interconnect_0_firecenter_s1_address;                // mm_interconnect_0:firecenter_s1_address -> firecenter:address
+	wire   [7:0] mm_interconnect_0_firecenter_s1_address;                // mm_interconnect_0:firecenter_s1_address -> firecenter:address
 	wire   [1:0] mm_interconnect_0_firecenter_s1_byteenable;             // mm_interconnect_0:firecenter_s1_byteenable -> firecenter:byteenable
 	wire         mm_interconnect_0_firecenter_s1_write;                  // mm_interconnect_0:firecenter_s1_write -> firecenter:write
 	wire  [15:0] mm_interconnect_0_firecenter_s1_writedata;              // mm_interconnect_0:firecenter_s1_writedata -> firecenter:writedata
@@ -188,7 +186,7 @@ module soc_system (
 	wire         mm_interconnect_0_firehori_s1_chipselect;               // mm_interconnect_0:firehori_s1_chipselect -> firehori:chipselect
 	wire  [15:0] mm_interconnect_0_firehori_s1_readdata;                 // firehori:readdata -> mm_interconnect_0:firehori_s1_readdata
 	wire         mm_interconnect_0_firehori_s1_debugaccess;              // mm_interconnect_0:firehori_s1_debugaccess -> firehori:debugaccess
-	wire   [6:0] mm_interconnect_0_firehori_s1_address;                  // mm_interconnect_0:firehori_s1_address -> firehori:address
+	wire   [7:0] mm_interconnect_0_firehori_s1_address;                  // mm_interconnect_0:firehori_s1_address -> firehori:address
 	wire   [1:0] mm_interconnect_0_firehori_s1_byteenable;               // mm_interconnect_0:firehori_s1_byteenable -> firehori:byteenable
 	wire         mm_interconnect_0_firehori_s1_write;                    // mm_interconnect_0:firehori_s1_write -> firehori:write
 	wire  [15:0] mm_interconnect_0_firehori_s1_writedata;                // mm_interconnect_0:firehori_s1_writedata -> firehori:writedata
@@ -196,7 +194,7 @@ module soc_system (
 	wire         mm_interconnect_0_fireverti_s1_chipselect;              // mm_interconnect_0:fireverti_s1_chipselect -> fireverti:chipselect
 	wire  [15:0] mm_interconnect_0_fireverti_s1_readdata;                // fireverti:readdata -> mm_interconnect_0:fireverti_s1_readdata
 	wire         mm_interconnect_0_fireverti_s1_debugaccess;             // mm_interconnect_0:fireverti_s1_debugaccess -> fireverti:debugaccess
-	wire   [6:0] mm_interconnect_0_fireverti_s1_address;                 // mm_interconnect_0:fireverti_s1_address -> fireverti:address
+	wire   [7:0] mm_interconnect_0_fireverti_s1_address;                 // mm_interconnect_0:fireverti_s1_address -> fireverti:address
 	wire   [1:0] mm_interconnect_0_fireverti_s1_byteenable;              // mm_interconnect_0:fireverti_s1_byteenable -> fireverti:byteenable
 	wire         mm_interconnect_0_fireverti_s1_write;                   // mm_interconnect_0:fireverti_s1_write -> fireverti:write
 	wire  [15:0] mm_interconnect_0_fireverti_s1_writedata;               // mm_interconnect_0:fireverti_s1_writedata -> fireverti:writedata
@@ -204,7 +202,7 @@ module soc_system (
 	wire         mm_interconnect_0_p2_die_s1_chipselect;                 // mm_interconnect_0:p2_die_s1_chipselect -> p2_die:chipselect
 	wire  [15:0] mm_interconnect_0_p2_die_s1_readdata;                   // p2_die:readdata -> mm_interconnect_0:p2_die_s1_readdata
 	wire         mm_interconnect_0_p2_die_s1_debugaccess;                // mm_interconnect_0:p2_die_s1_debugaccess -> p2_die:debugaccess
-	wire   [6:0] mm_interconnect_0_p2_die_s1_address;                    // mm_interconnect_0:p2_die_s1_address -> p2_die:address
+	wire   [7:0] mm_interconnect_0_p2_die_s1_address;                    // mm_interconnect_0:p2_die_s1_address -> p2_die:address
 	wire   [1:0] mm_interconnect_0_p2_die_s1_byteenable;                 // mm_interconnect_0:p2_die_s1_byteenable -> p2_die:byteenable
 	wire         mm_interconnect_0_p2_die_s1_write;                      // mm_interconnect_0:p2_die_s1_write -> p2_die:write
 	wire  [15:0] mm_interconnect_0_p2_die_s1_writedata;                  // mm_interconnect_0:p2_die_s1_writedata -> p2_die:writedata
@@ -216,8 +214,50 @@ module soc_system (
 	wire         mm_interconnect_0_map_unit_s1_write;                    // mm_interconnect_0:map_unit_s1_write -> map_unit:write
 	wire   [7:0] mm_interconnect_0_map_unit_s1_writedata;                // mm_interconnect_0:map_unit_s1_writedata -> map_unit:writedata
 	wire         mm_interconnect_0_map_unit_s1_clken;                    // mm_interconnect_0:map_unit_s1_clken -> map_unit:clken
-	wire         rst_controller_reset_out_reset;                         // rst_controller:reset_out -> [audio_0:reset, audio_and_video_config_0:reset, bomb:reset, firecenter:reset, firehori:reset, fireverti:reset, fix:reset, map_unit:reset, mm_interconnect_0:vga_ball_0_reset_reset_bridge_in_reset_reset, p1_die:reset, p1_unit:reset, p2_die:reset, p2_unit:reset, rst_translator:in_reset, vga_ball_0:reset]
-	wire         rst_controller_reset_out_reset_req;                     // rst_controller:reset_req -> [bomb:reset_req, firecenter:reset_req, firehori:reset_req, fireverti:reset_req, fix:reset_req, map_unit:reset_req, p1_die:reset_req, p1_unit:reset_req, p2_die:reset_req, p2_unit:reset_req, rst_translator:reset_req_in]
+	wire         mm_interconnect_0_explode_sound_s1_chipselect;          // mm_interconnect_0:explode_sound_s1_chipselect -> explode_sound:chipselect
+	wire  [15:0] mm_interconnect_0_explode_sound_s1_readdata;            // explode_sound:readdata -> mm_interconnect_0:explode_sound_s1_readdata
+	wire         mm_interconnect_0_explode_sound_s1_debugaccess;         // mm_interconnect_0:explode_sound_s1_debugaccess -> explode_sound:debugaccess
+	wire  [13:0] mm_interconnect_0_explode_sound_s1_address;             // mm_interconnect_0:explode_sound_s1_address -> explode_sound:address
+	wire   [1:0] mm_interconnect_0_explode_sound_s1_byteenable;          // mm_interconnect_0:explode_sound_s1_byteenable -> explode_sound:byteenable
+	wire         mm_interconnect_0_explode_sound_s1_write;               // mm_interconnect_0:explode_sound_s1_write -> explode_sound:write
+	wire  [15:0] mm_interconnect_0_explode_sound_s1_writedata;           // mm_interconnect_0:explode_sound_s1_writedata -> explode_sound:writedata
+	wire         mm_interconnect_0_explode_sound_s1_clken;               // mm_interconnect_0:explode_sound_s1_clken -> explode_sound:clken
+	wire         mm_interconnect_0_p1_win_s1_chipselect;                 // mm_interconnect_0:p1_win_s1_chipselect -> p1_win:chipselect
+	wire  [15:0] mm_interconnect_0_p1_win_s1_readdata;                   // p1_win:readdata -> mm_interconnect_0:p1_win_s1_readdata
+	wire         mm_interconnect_0_p1_win_s1_debugaccess;                // mm_interconnect_0:p1_win_s1_debugaccess -> p1_win:debugaccess
+	wire  [10:0] mm_interconnect_0_p1_win_s1_address;                    // mm_interconnect_0:p1_win_s1_address -> p1_win:address
+	wire   [1:0] mm_interconnect_0_p1_win_s1_byteenable;                 // mm_interconnect_0:p1_win_s1_byteenable -> p1_win:byteenable
+	wire         mm_interconnect_0_p1_win_s1_write;                      // mm_interconnect_0:p1_win_s1_write -> p1_win:write
+	wire  [15:0] mm_interconnect_0_p1_win_s1_writedata;                  // mm_interconnect_0:p1_win_s1_writedata -> p1_win:writedata
+	wire         mm_interconnect_0_p1_win_s1_clken;                      // mm_interconnect_0:p1_win_s1_clken -> p1_win:clken
+	wire         mm_interconnect_0_p2_win_s1_chipselect;                 // mm_interconnect_0:p2_win_s1_chipselect -> p2_win:chipselect
+	wire  [15:0] mm_interconnect_0_p2_win_s1_readdata;                   // p2_win:readdata -> mm_interconnect_0:p2_win_s1_readdata
+	wire         mm_interconnect_0_p2_win_s1_debugaccess;                // mm_interconnect_0:p2_win_s1_debugaccess -> p2_win:debugaccess
+	wire  [10:0] mm_interconnect_0_p2_win_s1_address;                    // mm_interconnect_0:p2_win_s1_address -> p2_win:address
+	wire   [1:0] mm_interconnect_0_p2_win_s1_byteenable;                 // mm_interconnect_0:p2_win_s1_byteenable -> p2_win:byteenable
+	wire         mm_interconnect_0_p2_win_s1_write;                      // mm_interconnect_0:p2_win_s1_write -> p2_win:write
+	wire  [15:0] mm_interconnect_0_p2_win_s1_writedata;                  // mm_interconnect_0:p2_win_s1_writedata -> p2_win:writedata
+	wire         mm_interconnect_0_p2_win_s1_clken;                      // mm_interconnect_0:p2_win_s1_clken -> p2_win:clken
+	wire         mm_interconnect_0_start_s1_chipselect;                  // mm_interconnect_0:start_s1_chipselect -> start:chipselect
+	wire  [15:0] mm_interconnect_0_start_s1_readdata;                    // start:readdata -> mm_interconnect_0:start_s1_readdata
+	wire         mm_interconnect_0_start_s1_debugaccess;                 // mm_interconnect_0:start_s1_debugaccess -> start:debugaccess
+	wire  [11:0] mm_interconnect_0_start_s1_address;                     // mm_interconnect_0:start_s1_address -> start:address
+	wire   [1:0] mm_interconnect_0_start_s1_byteenable;                  // mm_interconnect_0:start_s1_byteenable -> start:byteenable
+	wire         mm_interconnect_0_start_s1_write;                       // mm_interconnect_0:start_s1_write -> start:write
+	wire  [15:0] mm_interconnect_0_start_s1_writedata;                   // mm_interconnect_0:start_s1_writedata -> start:writedata
+	wire         mm_interconnect_0_start_s1_clken;                       // mm_interconnect_0:start_s1_clken -> start:clken
+	wire         mm_interconnect_0_jingle_sound_s1_chipselect;           // mm_interconnect_0:jingle_sound_s1_chipselect -> jingle_sound:chipselect
+	wire  [15:0] mm_interconnect_0_jingle_sound_s1_readdata;             // jingle_sound:readdata -> mm_interconnect_0:jingle_sound_s1_readdata
+	wire         mm_interconnect_0_jingle_sound_s1_debugaccess;          // mm_interconnect_0:jingle_sound_s1_debugaccess -> jingle_sound:debugaccess
+	wire  [13:0] mm_interconnect_0_jingle_sound_s1_address;              // mm_interconnect_0:jingle_sound_s1_address -> jingle_sound:address
+	wire   [1:0] mm_interconnect_0_jingle_sound_s1_byteenable;           // mm_interconnect_0:jingle_sound_s1_byteenable -> jingle_sound:byteenable
+	wire         mm_interconnect_0_jingle_sound_s1_write;                // mm_interconnect_0:jingle_sound_s1_write -> jingle_sound:write
+	wire  [15:0] mm_interconnect_0_jingle_sound_s1_writedata;            // mm_interconnect_0:jingle_sound_s1_writedata -> jingle_sound:writedata
+	wire         mm_interconnect_0_jingle_sound_s1_clken;                // mm_interconnect_0:jingle_sound_s1_clken -> jingle_sound:clken
+	wire  [31:0] hps_0_f2h_irq0_irq;                                     // irq_mapper:sender_irq -> hps_0:f2h_irq_p0
+	wire  [31:0] hps_0_f2h_irq1_irq;                                     // irq_mapper_001:sender_irq -> hps_0:f2h_irq_p1
+	wire         rst_controller_reset_out_reset;                         // rst_controller:reset_out -> [audio_0:reset, audio_and_video_config_0:reset, bomb:reset, explode_sound:reset, firecenter:reset, firehori:reset, fireverti:reset, fix:reset, jingle_sound:reset, map_unit:reset, mm_interconnect_0:vga_ball_0_reset_reset_bridge_in_reset_reset, p1_die:reset, p1_unit:reset, p1_win:reset, p2_die:reset, p2_unit:reset, p2_win:reset, rst_translator:in_reset, start:reset, vga_ball_0:reset]
+	wire         rst_controller_reset_out_reset_req;                     // rst_controller:reset_req -> [bomb:reset_req, explode_sound:reset_req, firecenter:reset_req, firehori:reset_req, fireverti:reset_req, fix:reset_req, jingle_sound:reset_req, map_unit:reset_req, p1_die:reset_req, p1_unit:reset_req, p1_win:reset_req, p2_die:reset_req, p2_unit:reset_req, p2_win:reset_req, rst_translator:reset_req_in, start:reset_req]
 	wire         rst_controller_001_reset_out_reset;                     // rst_controller_001:reset_out -> mm_interconnect_0:hps_0_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset_reset
 	wire         hps_0_h2f_reset_reset;                                  // hps_0:h2f_rst_n -> rst_controller_001:reset_in0
 
@@ -277,6 +317,21 @@ module soc_system (
 		.reset       (rst_controller_reset_out_reset),        // reset1.reset
 		.reset_req   (rst_controller_reset_out_reset_req),    //       .reset_req
 		.freeze      (1'b0)                                   // (terminated)
+	);
+
+	soc_system_explode_sound explode_sound (
+		.clk         (clk_clk),                                        //   clk1.clk
+		.address     (mm_interconnect_0_explode_sound_s1_address),     //     s1.address
+		.debugaccess (mm_interconnect_0_explode_sound_s1_debugaccess), //       .debugaccess
+		.clken       (mm_interconnect_0_explode_sound_s1_clken),       //       .clken
+		.chipselect  (mm_interconnect_0_explode_sound_s1_chipselect),  //       .chipselect
+		.write       (mm_interconnect_0_explode_sound_s1_write),       //       .write
+		.readdata    (mm_interconnect_0_explode_sound_s1_readdata),    //       .readdata
+		.writedata   (mm_interconnect_0_explode_sound_s1_writedata),   //       .writedata
+		.byteenable  (mm_interconnect_0_explode_sound_s1_byteenable),  //       .byteenable
+		.reset       (rst_controller_reset_out_reset),                 // reset1.reset
+		.reset_req   (rst_controller_reset_out_reset_req),             //       .reset_req
+		.freeze      (1'b0)                                            // (terminated)
 	);
 
 	soc_system_firecenter firecenter (
@@ -527,6 +582,21 @@ module soc_system (
 		.f2h_irq_p1               (hps_0_f2h_irq1_irq)               //          f2h_irq1.irq
 	);
 
+	soc_system_jingle_sound jingle_sound (
+		.clk         (clk_clk),                                       //   clk1.clk
+		.address     (mm_interconnect_0_jingle_sound_s1_address),     //     s1.address
+		.debugaccess (mm_interconnect_0_jingle_sound_s1_debugaccess), //       .debugaccess
+		.clken       (mm_interconnect_0_jingle_sound_s1_clken),       //       .clken
+		.chipselect  (mm_interconnect_0_jingle_sound_s1_chipselect),  //       .chipselect
+		.write       (mm_interconnect_0_jingle_sound_s1_write),       //       .write
+		.readdata    (mm_interconnect_0_jingle_sound_s1_readdata),    //       .readdata
+		.writedata   (mm_interconnect_0_jingle_sound_s1_writedata),   //       .writedata
+		.byteenable  (mm_interconnect_0_jingle_sound_s1_byteenable),  //       .byteenable
+		.reset       (rst_controller_reset_out_reset),                // reset1.reset
+		.reset_req   (rst_controller_reset_out_reset_req),            //       .reset_req
+		.freeze      (1'b0)                                           // (terminated)
+	);
+
 	soc_system_map_unit map_unit (
 		.clk         (clk_clk),                                   //   clk1.clk
 		.address     (mm_interconnect_0_map_unit_s1_address),     //     s1.address
@@ -571,6 +641,21 @@ module soc_system (
 		.freeze      (1'b0)                                      // (terminated)
 	);
 
+	soc_system_p1_win p1_win (
+		.clk         (clk_clk),                                 //   clk1.clk
+		.address     (mm_interconnect_0_p1_win_s1_address),     //     s1.address
+		.debugaccess (mm_interconnect_0_p1_win_s1_debugaccess), //       .debugaccess
+		.clken       (mm_interconnect_0_p1_win_s1_clken),       //       .clken
+		.chipselect  (mm_interconnect_0_p1_win_s1_chipselect),  //       .chipselect
+		.write       (mm_interconnect_0_p1_win_s1_write),       //       .write
+		.readdata    (mm_interconnect_0_p1_win_s1_readdata),    //       .readdata
+		.writedata   (mm_interconnect_0_p1_win_s1_writedata),   //       .writedata
+		.byteenable  (mm_interconnect_0_p1_win_s1_byteenable),  //       .byteenable
+		.reset       (rst_controller_reset_out_reset),          // reset1.reset
+		.reset_req   (rst_controller_reset_out_reset_req),      //       .reset_req
+		.freeze      (1'b0)                                     // (terminated)
+	);
+
 	soc_system_p2_die p2_die (
 		.clk         (clk_clk),                                 //   clk1.clk
 		.address     (mm_interconnect_0_p2_die_s1_address),     //     s1.address
@@ -599,6 +684,36 @@ module soc_system (
 		.reset       (rst_controller_reset_out_reset),           // reset1.reset
 		.reset_req   (rst_controller_reset_out_reset_req),       //       .reset_req
 		.freeze      (1'b0)                                      // (terminated)
+	);
+
+	soc_system_p2_win p2_win (
+		.clk         (clk_clk),                                 //   clk1.clk
+		.address     (mm_interconnect_0_p2_win_s1_address),     //     s1.address
+		.debugaccess (mm_interconnect_0_p2_win_s1_debugaccess), //       .debugaccess
+		.clken       (mm_interconnect_0_p2_win_s1_clken),       //       .clken
+		.chipselect  (mm_interconnect_0_p2_win_s1_chipselect),  //       .chipselect
+		.write       (mm_interconnect_0_p2_win_s1_write),       //       .write
+		.readdata    (mm_interconnect_0_p2_win_s1_readdata),    //       .readdata
+		.writedata   (mm_interconnect_0_p2_win_s1_writedata),   //       .writedata
+		.byteenable  (mm_interconnect_0_p2_win_s1_byteenable),  //       .byteenable
+		.reset       (rst_controller_reset_out_reset),          // reset1.reset
+		.reset_req   (rst_controller_reset_out_reset_req),      //       .reset_req
+		.freeze      (1'b0)                                     // (terminated)
+	);
+
+	soc_system_start start (
+		.clk         (clk_clk),                                //   clk1.clk
+		.address     (mm_interconnect_0_start_s1_address),     //     s1.address
+		.debugaccess (mm_interconnect_0_start_s1_debugaccess), //       .debugaccess
+		.clken       (mm_interconnect_0_start_s1_clken),       //       .clken
+		.chipselect  (mm_interconnect_0_start_s1_chipselect),  //       .chipselect
+		.write       (mm_interconnect_0_start_s1_write),       //       .write
+		.readdata    (mm_interconnect_0_start_s1_readdata),    //       .readdata
+		.writedata   (mm_interconnect_0_start_s1_writedata),   //       .writedata
+		.byteenable  (mm_interconnect_0_start_s1_byteenable),  //       .byteenable
+		.reset       (rst_controller_reset_out_reset),         // reset1.reset
+		.reset_req   (rst_controller_reset_out_reset_req),     //       .reset_req
+		.freeze      (1'b0)                                    // (terminated)
 	);
 
 	vga_ball vga_ball_0 (
@@ -672,6 +787,14 @@ module soc_system (
 		.bomb_s1_chipselect                                                  (mm_interconnect_0_bomb_s1_chipselect),                   //                                                              .chipselect
 		.bomb_s1_clken                                                       (mm_interconnect_0_bomb_s1_clken),                        //                                                              .clken
 		.bomb_s1_debugaccess                                                 (mm_interconnect_0_bomb_s1_debugaccess),                  //                                                              .debugaccess
+		.explode_sound_s1_address                                            (mm_interconnect_0_explode_sound_s1_address),             //                                              explode_sound_s1.address
+		.explode_sound_s1_write                                              (mm_interconnect_0_explode_sound_s1_write),               //                                                              .write
+		.explode_sound_s1_readdata                                           (mm_interconnect_0_explode_sound_s1_readdata),            //                                                              .readdata
+		.explode_sound_s1_writedata                                          (mm_interconnect_0_explode_sound_s1_writedata),           //                                                              .writedata
+		.explode_sound_s1_byteenable                                         (mm_interconnect_0_explode_sound_s1_byteenable),          //                                                              .byteenable
+		.explode_sound_s1_chipselect                                         (mm_interconnect_0_explode_sound_s1_chipselect),          //                                                              .chipselect
+		.explode_sound_s1_clken                                              (mm_interconnect_0_explode_sound_s1_clken),               //                                                              .clken
+		.explode_sound_s1_debugaccess                                        (mm_interconnect_0_explode_sound_s1_debugaccess),         //                                                              .debugaccess
 		.firecenter_s1_address                                               (mm_interconnect_0_firecenter_s1_address),                //                                                 firecenter_s1.address
 		.firecenter_s1_write                                                 (mm_interconnect_0_firecenter_s1_write),                  //                                                              .write
 		.firecenter_s1_readdata                                              (mm_interconnect_0_firecenter_s1_readdata),               //                                                              .readdata
@@ -704,6 +827,14 @@ module soc_system (
 		.fix_s1_chipselect                                                   (mm_interconnect_0_fix_s1_chipselect),                    //                                                              .chipselect
 		.fix_s1_clken                                                        (mm_interconnect_0_fix_s1_clken),                         //                                                              .clken
 		.fix_s1_debugaccess                                                  (mm_interconnect_0_fix_s1_debugaccess),                   //                                                              .debugaccess
+		.jingle_sound_s1_address                                             (mm_interconnect_0_jingle_sound_s1_address),              //                                               jingle_sound_s1.address
+		.jingle_sound_s1_write                                               (mm_interconnect_0_jingle_sound_s1_write),                //                                                              .write
+		.jingle_sound_s1_readdata                                            (mm_interconnect_0_jingle_sound_s1_readdata),             //                                                              .readdata
+		.jingle_sound_s1_writedata                                           (mm_interconnect_0_jingle_sound_s1_writedata),            //                                                              .writedata
+		.jingle_sound_s1_byteenable                                          (mm_interconnect_0_jingle_sound_s1_byteenable),           //                                                              .byteenable
+		.jingle_sound_s1_chipselect                                          (mm_interconnect_0_jingle_sound_s1_chipselect),           //                                                              .chipselect
+		.jingle_sound_s1_clken                                               (mm_interconnect_0_jingle_sound_s1_clken),                //                                                              .clken
+		.jingle_sound_s1_debugaccess                                         (mm_interconnect_0_jingle_sound_s1_debugaccess),          //                                                              .debugaccess
 		.map_unit_s1_address                                                 (mm_interconnect_0_map_unit_s1_address),                  //                                                   map_unit_s1.address
 		.map_unit_s1_write                                                   (mm_interconnect_0_map_unit_s1_write),                    //                                                              .write
 		.map_unit_s1_readdata                                                (mm_interconnect_0_map_unit_s1_readdata),                 //                                                              .readdata
@@ -727,6 +858,14 @@ module soc_system (
 		.p1_unit_s1_chipselect                                               (mm_interconnect_0_p1_unit_s1_chipselect),                //                                                              .chipselect
 		.p1_unit_s1_clken                                                    (mm_interconnect_0_p1_unit_s1_clken),                     //                                                              .clken
 		.p1_unit_s1_debugaccess                                              (mm_interconnect_0_p1_unit_s1_debugaccess),               //                                                              .debugaccess
+		.p1_win_s1_address                                                   (mm_interconnect_0_p1_win_s1_address),                    //                                                     p1_win_s1.address
+		.p1_win_s1_write                                                     (mm_interconnect_0_p1_win_s1_write),                      //                                                              .write
+		.p1_win_s1_readdata                                                  (mm_interconnect_0_p1_win_s1_readdata),                   //                                                              .readdata
+		.p1_win_s1_writedata                                                 (mm_interconnect_0_p1_win_s1_writedata),                  //                                                              .writedata
+		.p1_win_s1_byteenable                                                (mm_interconnect_0_p1_win_s1_byteenable),                 //                                                              .byteenable
+		.p1_win_s1_chipselect                                                (mm_interconnect_0_p1_win_s1_chipselect),                 //                                                              .chipselect
+		.p1_win_s1_clken                                                     (mm_interconnect_0_p1_win_s1_clken),                      //                                                              .clken
+		.p1_win_s1_debugaccess                                               (mm_interconnect_0_p1_win_s1_debugaccess),                //                                                              .debugaccess
 		.p2_die_s1_address                                                   (mm_interconnect_0_p2_die_s1_address),                    //                                                     p2_die_s1.address
 		.p2_die_s1_write                                                     (mm_interconnect_0_p2_die_s1_write),                      //                                                              .write
 		.p2_die_s1_readdata                                                  (mm_interconnect_0_p2_die_s1_readdata),                   //                                                              .readdata
@@ -743,10 +882,38 @@ module soc_system (
 		.p2_unit_s1_chipselect                                               (mm_interconnect_0_p2_unit_s1_chipselect),                //                                                              .chipselect
 		.p2_unit_s1_clken                                                    (mm_interconnect_0_p2_unit_s1_clken),                     //                                                              .clken
 		.p2_unit_s1_debugaccess                                              (mm_interconnect_0_p2_unit_s1_debugaccess),               //                                                              .debugaccess
+		.p2_win_s1_address                                                   (mm_interconnect_0_p2_win_s1_address),                    //                                                     p2_win_s1.address
+		.p2_win_s1_write                                                     (mm_interconnect_0_p2_win_s1_write),                      //                                                              .write
+		.p2_win_s1_readdata                                                  (mm_interconnect_0_p2_win_s1_readdata),                   //                                                              .readdata
+		.p2_win_s1_writedata                                                 (mm_interconnect_0_p2_win_s1_writedata),                  //                                                              .writedata
+		.p2_win_s1_byteenable                                                (mm_interconnect_0_p2_win_s1_byteenable),                 //                                                              .byteenable
+		.p2_win_s1_chipselect                                                (mm_interconnect_0_p2_win_s1_chipselect),                 //                                                              .chipselect
+		.p2_win_s1_clken                                                     (mm_interconnect_0_p2_win_s1_clken),                      //                                                              .clken
+		.p2_win_s1_debugaccess                                               (mm_interconnect_0_p2_win_s1_debugaccess),                //                                                              .debugaccess
+		.start_s1_address                                                    (mm_interconnect_0_start_s1_address),                     //                                                      start_s1.address
+		.start_s1_write                                                      (mm_interconnect_0_start_s1_write),                       //                                                              .write
+		.start_s1_readdata                                                   (mm_interconnect_0_start_s1_readdata),                    //                                                              .readdata
+		.start_s1_writedata                                                  (mm_interconnect_0_start_s1_writedata),                   //                                                              .writedata
+		.start_s1_byteenable                                                 (mm_interconnect_0_start_s1_byteenable),                  //                                                              .byteenable
+		.start_s1_chipselect                                                 (mm_interconnect_0_start_s1_chipselect),                  //                                                              .chipselect
+		.start_s1_clken                                                      (mm_interconnect_0_start_s1_clken),                       //                                                              .clken
+		.start_s1_debugaccess                                                (mm_interconnect_0_start_s1_debugaccess),                 //                                                              .debugaccess
 		.vga_ball_0_avalon_slave_0_address                                   (mm_interconnect_0_vga_ball_0_avalon_slave_0_address),    //                                     vga_ball_0_avalon_slave_0.address
 		.vga_ball_0_avalon_slave_0_write                                     (mm_interconnect_0_vga_ball_0_avalon_slave_0_write),      //                                                              .write
 		.vga_ball_0_avalon_slave_0_writedata                                 (mm_interconnect_0_vga_ball_0_avalon_slave_0_writedata),  //                                                              .writedata
 		.vga_ball_0_avalon_slave_0_chipselect                                (mm_interconnect_0_vga_ball_0_avalon_slave_0_chipselect)  //                                                              .chipselect
+	);
+
+	soc_system_irq_mapper irq_mapper (
+		.clk        (),                   //       clk.clk
+		.reset      (),                   // clk_reset.reset
+		.sender_irq (hps_0_f2h_irq0_irq)  //    sender.irq
+	);
+
+	soc_system_irq_mapper irq_mapper_001 (
+		.clk        (),                   //       clk.clk
+		.reset      (),                   // clk_reset.reset
+		.sender_irq (hps_0_f2h_irq1_irq)  //    sender.irq
 	);
 
 	altera_reset_controller #(

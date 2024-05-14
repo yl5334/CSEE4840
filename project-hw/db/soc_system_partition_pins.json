@@ -4,15 +4,19 @@
 			"name" : "Top",
 			"pins" : [
 				{
+					"name" : "VGA_B[4]",
+					"strict" : false
+				},
+				{
+					"name" : "VGA_B[5]",
+					"strict" : false
+				},
+				{
 					"name" : "ADC_DIN",
 					"strict" : false
 				},
 				{
 					"name" : "ADC_SCLK",
-					"strict" : false
-				},
-				{
-					"name" : "AUD_DACDAT",
 					"strict" : false
 				},
 				{
@@ -109,10 +113,6 @@
 				},
 				{
 					"name" : "FAN_CTRL",
-					"strict" : false
-				},
-				{
-					"name" : "FPGA_I2C_SCLK",
 					"strict" : false
 				},
 				{
@@ -324,27 +324,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "VGA_B[0]",
+					"name" : "AUD_DACDAT",
 					"strict" : false
 				},
 				{
-					"name" : "VGA_B[1]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_B[2]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_B[3]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_B[4]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_B[5]",
+					"name" : "FPGA_I2C_SCLK",
 					"strict" : false
 				},
 				{
@@ -361,22 +345,6 @@
 				},
 				{
 					"name" : "VGA_CLK",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_G[0]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_G[1]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_G[2]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_G[3]",
 					"strict" : false
 				},
 				{
@@ -397,22 +365,6 @@
 				},
 				{
 					"name" : "VGA_HS",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_R[0]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_R[1]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_R[2]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_R[3]",
 					"strict" : false
 				},
 				{
@@ -437,14 +389,6 @@
 				},
 				{
 					"name" : "ADC_CS_N",
-					"strict" : false
-				},
-				{
-					"name" : "AUD_BCLK",
-					"strict" : false
-				},
-				{
-					"name" : "AUD_DACLRCK",
 					"strict" : false
 				},
 				{
@@ -509,10 +453,6 @@
 				},
 				{
 					"name" : "DRAM_DQ[15]",
-					"strict" : false
-				},
-				{
-					"name" : "FPGA_I2C_SDAT",
 					"strict" : false
 				},
 				{
@@ -820,6 +760,22 @@
 					"strict" : false
 				},
 				{
+					"name" : "AUD_BCLK",
+					"strict" : false
+				},
+				{
+					"name" : "FPGA_I2C_SDAT",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_DACLRCK",
+					"strict" : false
+				},
+				{
+					"name" : "CLOCK_50",
+					"strict" : false
+				},
+				{
 					"name" : "SW[0]",
 					"strict" : false
 				},
@@ -849,10 +805,6 @@
 				},
 				{
 					"name" : "SW[7]",
-					"strict" : false
-				},
-				{
-					"name" : "CLOCK_50",
 					"strict" : false
 				}
 			]

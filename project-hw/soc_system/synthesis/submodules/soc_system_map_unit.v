@@ -36,7 +36,7 @@ module soc_system_map_unit (
                            )
 ;
 
-  parameter INIT_FILE = "/user/stud/fall23/ym3000/EE4840/project-hw/8bit_mif/map.mif";
+  parameter INIT_FILE = "/user/stud/fall23/ym3000/EE4840/project-hw/16bit_mif/fix_map.mif";
 
 
   output  [  7: 0] readdata;
