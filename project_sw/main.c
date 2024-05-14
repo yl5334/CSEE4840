@@ -171,15 +171,20 @@ bool readyScreen(void) {
         updateControls();
         uint8_t p1_ab = controller1.ab;
         uint8_t p2_ab = controller2.ab;
+        uint32_t mask = 1 << 31;
         
         if(!player1_ready && (p1_ab == 79 || p1_ab == 95 || p1_ab == 207 || p1_ab == 223)) {
             //drawPlayerReady(PLAYER_ONE);
+            color.p1_state |= mask;
             player1_ready = true;
             //snd_play_pickup();
+            set_background_color(&color);
         }
         if(!player2_ready && (p2_ab == 79 || p1_ab == 95 || p1_ab == 207 || p1_ab == 223)) {
             //drawPlayerReady(PLAYER_TWO);
+            color.p2_state |= mask;
             player2_ready = true;
+            set_background_color(&color);
             //snd_play_pickup();
         }
         //update_sound();
