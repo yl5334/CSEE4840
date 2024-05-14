@@ -1147,8 +1147,9 @@ void explodeBomb(Bomb *bomb) {
     int8_t y = bomb->position.y;
     int8_t range = bomb->range;
 
-    /*
+    
     Explosion *explosion = &(bomb->explosion);
+    /*
     Explosion *explosion_L = &(bomb->explosion);
     Explosion *explosion_R = &(bomb->explosion);
     Explosion *explosion_D = &(bomb->explosion);
