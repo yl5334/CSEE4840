@@ -237,7 +237,7 @@ void setupGrids(void) {
                 terrain_grid[i][j] = TERRAIN_GROUND;
                 break;
             case 1:
-                terrain_grid[i][j] = TERRAIN_WALL_BREAKABLE;
+                terrain_grid[i][j] = TERRAIN_WALL_UNBREAKABLE;
                 break;
             }
             
@@ -1272,11 +1272,11 @@ void explodeBomb(Bomb *bomb) {
         if (!(up_blocked)) {
             switch (terrain_grid[x][y - i]) {
                 case TERRAIN_WALL_UNBREAKABLE:
-		    explosion_grid[x][y].up = 0;
+		            explosion_grid[x][y].up = 0;
                     up_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-			explosion->up = 0;
+			        explosion->up = 0;
                     //explodeTile(x, y + i, explosion);
                     up_blocked = true;
                     break;
@@ -1311,7 +1311,7 @@ void explodeBomb(Bomb *bomb) {
 	if (!(left_blocked)) {
             switch (terrain_grid[x - i][y]) {
                 case TERRAIN_WALL_UNBREAKABLE:
-                    //explosion_grid[x][y].left = 0;
+                    explosion_grid[x][y].left = 0;
                     left_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
@@ -1323,7 +1323,7 @@ void explodeBomb(Bomb *bomb) {
                     //explodeTile(x - i, y, explosion);
 		    
                     explosion_grid[x][y].left = 1;
-		    printf("left is not block, %d\n", explosion_grid[x][y].left);
+		    //printf("left is not block, %d\n", explosion_grid[x][y].left);
                     break;
             }
         }
@@ -1331,7 +1331,7 @@ void explodeBomb(Bomb *bomb) {
         if (!(right_blocked)) {
             switch (terrain_grid[x + i][y]) {
                 case TERRAIN_WALL_UNBREAKABLE:
-		    explosion_grid[x][y].right = 0;
+		        explosion_grid[x][y].right = 0;
                     right_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
