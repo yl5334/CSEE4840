@@ -1398,13 +1398,15 @@ void killPlayersInExplosion(void) {
     for (int i = 0; i < PLAYER_NUM; i++) {
         if (explosion_grid[players[i].tile_position.x][players[i].tile_position.y].type != EXPLOSION_EMPTY) {
             players[i].alive = false;
+            uint32_t mask = (1 << 31);    // Set the 32nd bit
+            mask |= (0x1F << 4);          // Set the 5th to 9th bits (0x1F = 00011111 in binary)
             if (i==0)
             {
-                color.p1_state = 0x0;
+                color.p1_state &= mask;
                 set_background_color(&color);
             }
             else {
-                color.p2_state = 0x0;
+                color.p2_state &= mask;
                 set_background_color(&color);
             }
 
