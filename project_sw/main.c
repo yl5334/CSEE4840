@@ -283,7 +283,7 @@ void setupPlayers(void) {
         players[i].bomb.explosion.type = EXPLOSION_TYPE_NORMAL;
         players[i].bomb.explosion.timer = 0;
         players[i].bomb.explosion.up = 0;
-        players[i].bomb.explosion.down = 0
+        players[i].bomb.explosion.down = 0;
         players[i].bomb.explosion.right = 0;
         players[i].bomb.explosion.left = 0;
 
