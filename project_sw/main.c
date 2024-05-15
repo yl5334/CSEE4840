@@ -1110,8 +1110,8 @@ void countdownExplosions(void) {
 
             if (explosion->type == EXPLOSION_TYPE_NORMAL) {
                 explosion->timer--;
-	    printf("explosion owner = %d\n", explosion->owner);
-	    printf("explosion timer = %d\n", explosion->timer);
+	    //printf("explosion owner = %d\n", explosion->owner);
+	    //printf("explosion timer = %d\n", explosion->timer);
 		
 
         if (explosion->timer == 0) {
@@ -1150,7 +1150,7 @@ void countdownExplosions(void) {
 		    }
 		   else if (explosion->owner == 1){
 			color.p2_state &= mask;
-			printf("explosion disapper\n");
+			//printf("explosion disapper\n");
 		    }
  
 
@@ -1227,7 +1227,7 @@ void plantBomb(Player *player) {
     Bomb bomb = player->bomb;
     bomb.position = player->tile_position;
     bomb_grid[x][y] = bomb;
-    printf("bomb x position = %d, bomb y position = %d, owner = %d\n", x, y, bomb.owner);
+    //printf("bomb x position = %d, bomb y position = %d, owner = %d\n", x, y, bomb.owner);
     /* Update the changed tiles so bomb is rendered */
     changed_tiles[x][y] = true;
 
@@ -1243,7 +1243,7 @@ void explodeBomb(Bomb *bomb) {
     int8_t x = bomb->position.x;
     int8_t y = bomb->position.y;
     int8_t range = bomb->range;
-    printf("bomb position x = %d, y = %d", x, y);
+    //printf("bomb position x = %d, y = %d", x, y);
 
     
     Explosion *explosion = &(bomb->explosion);
@@ -1288,7 +1288,7 @@ void explodeBomb(Bomb *bomb) {
     
 
     explosion_grid[x][y] = *explosion;
-    printf("bomb owner = %d, explosion owner = %d", bomb_grid[x][y].owner, explosion_grid[x][y].owner); 
+    //printf("bomb owner = %d, explosion owner = %d", bomb_grid[x][y].owner, explosion_grid[x][y].owner); 
     //explodeTile(x, y, explosion);
 
     //printf("explode position x = %d, y = %d\n", x, y);
