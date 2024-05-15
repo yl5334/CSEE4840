@@ -529,7 +529,7 @@ void redrawTile(uint32_t x, uint32_t y) {
         case TERRAIN_WALL_BREAKABLE_B:
             map_info |= 0x80000000;
             map_info |= 0x40000000;
-            map_info |= 0x2;
+            //map_info |= 0x2;
             map_address = x + y*40;
             map_info |= (map_address << 8);
             color.map_info |= map_info;
