@@ -36,11 +36,11 @@ int map[40][30] = {
     {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
@@ -244,6 +244,8 @@ void setupGrids(void) {
             case 1:
                 terrain_grid[i][j] = TERRAIN_WALL_UNBREAKABLE;
                 break;
+            case 2:
+                terrain_grid[i][j] = TERRAIN_WALL_BREAKABLE;
             }
             
 
@@ -290,7 +292,7 @@ void setupPlayers(void) {
         players[i].bomb.timer = DEFAULT_BOMB_TIMER;
         players[i].bomb.range = DEFAULT_BOMB_RANGE;
         players[i].bomb.type  = DEFAULT_BOMB_TYPE;
-	players[i].bomb.owner = players[i].id;
+	    players[i].bomb.owner = players[i].id;
         players[i].bomb.current_frame  = 0;
         players[i].bomb.explosion.type = EXPLOSION_TYPE_NORMAL;
         players[i].bomb.explosion.timer = 0;
@@ -508,17 +510,31 @@ void redrawTile(uint32_t x, uint32_t y) {
     if (x >= MAP_SIZE_H || y >= MAP_SIZE_V) { return; }
 
     uint32_t bomb_coordinate = 0;
+    uint32_t map_info = 0;
+    uint32_t map_address = 0;
     /* Draw ground regardless */
     //drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_terrain, (x+y)%2);
 
     switch (terrain_grid[x][y]) {
         case TERRAIN_GROUND:
+            color.map_info = 0;
+            set_background_color(&color);
             break;
         case TERRAIN_WALL_BREAKABLE:
 
             break;
         case TERRAIN_WALL_UNBREAKABLE:
             //drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_terrain, 2);
+            break;
+        case TERRAIN_WALL_BREAKABLE_B:
+            map_info |= 0x80000000;
+            map_info |= 0x40000000;
+            map_info |= 0x2;
+            map_address = x + y*40;
+            map_info |= (map_address << 8);
+            color.map_info |= map_info;
+            set_background_color(&color);
+            terrain_grid[x][y] = TERRAIN_GROUND;
             break;
     }
 
@@ -1090,26 +1106,31 @@ void countdownExplosions(void) {
 	    printf("explosion timer = %d\n", explosion->timer);
 		
 
-                if (explosion->timer == 0) {
-                    explosion_grid[x][y].type = EXPLOSION_EMPTY;
+        if (explosion->timer == 0) {
+            explosion_grid[x][y].type = EXPLOSION_EMPTY;
 		    printf("%d\n", explosion_grid[x][y].type);
 		    if(explosion_grid[x][y].up == 1){
 			explosion_grid[x][y-1].type = EXPLOSION_EMPTY;
+            terrain_grid[x][y-1].type = TERRAIN_WALL_BREAKABLE_B;
 			printf("%d\n", explosion_grid[x][y-1].type);
 			explosion_grid[x][y].up = 0;
 		    }
 		    if(explosion_grid[x][y].down == 1){
 			explosion_grid[x][y+1].type = EXPLOSION_EMPTY;
+            terrain_grid[x][y+1].type = TERRAIN_WALL_BREAKABLE_B;
+
 			printf("%d\n", explosion_grid[x][y+1].type);
 			explosion_grid[x][y].down = 0;
 		    }
 		    if(explosion_grid[x][y].left == 1){
 			explosion_grid[x-1][y].type = EXPLOSION_EMPTY;
+            terrain_grid[x-1][y].type = TERRAIN_WALL_BREAKABLE_B;
 			printf("%d\n", explosion_grid[x-1][y].type);
 			explosion_grid[x][y].left = 0;
 		    }
 		    if(explosion_grid[x][y].right == 1){
 			explosion_grid[x+1][y].type = EXPLOSION_EMPTY;
+            terrain_grid[x+1][y].type = TERRAIN_WALL_BREAKABLE_B;
 			printf("%d\n", explosion_grid[x+1][y].type);
 			explosion_grid[x][y].right = 0;
 		    }

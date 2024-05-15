@@ -72,6 +72,8 @@ static void write_game_state(vga_ball_color_t *game_state)
 	iowrite32(game_state->p2_firedown, dev.virtbase + 0x38);
 	iowrite32(game_state->p2_fireleft, dev.virtbase + 0x3C);
 	iowrite32(game_state->p2_fireright, dev.virtbase + 0x40);
+	iowrite32(game_state->map_info, dev.virtbase + 0x44);
+
         
         dev.game_state = *game_state;
 
