@@ -517,7 +517,7 @@ void redrawTile(uint32_t x, uint32_t y) {
 
     switch (terrain_grid[x][y]) {
         case TERRAIN_GROUND:
-            //color.map_info = 0;
+            color.map_info = 0;
             //set_background_color(&color);
             /*
             if (x== && y==2)
@@ -1119,26 +1119,26 @@ void countdownExplosions(void) {
 		    printf("%d\n", explosion_grid[x][y].type);
 		    if(explosion_grid[x][y].up == 1){
 			explosion_grid[x][y-1].type = EXPLOSION_EMPTY;
-            terrain_grid[x][y-1] = TERRAIN_WALL_BREAKABLE_B;
+            terrain_grid[x][y-1] = TERRAIN_GROUND;
 			printf("%d\n", explosion_grid[x][y-1].type);
 			explosion_grid[x][y].up = 0;
 		    }
 		    if(explosion_grid[x][y].down == 1){
 			explosion_grid[x][y+1].type = EXPLOSION_EMPTY;
-            terrain_grid[x][y+1] = TERRAIN_WALL_BREAKABLE_B;
+            terrain_grid[x][y+1] = TERRAIN_GROUND;
 
 			printf("%d\n", explosion_grid[x][y+1].type);
 			explosion_grid[x][y].down = 0;
 		    }
 		    if(explosion_grid[x][y].left == 1){
 			explosion_grid[x-1][y].type = EXPLOSION_EMPTY;
-            terrain_grid[x-1][y] = TERRAIN_WALL_BREAKABLE_B;
+            terrain_grid[x-1][y] = TERRAIN_GROUND;
 			printf("%d\n", explosion_grid[x-1][y].type);
 			explosion_grid[x][y].left = 0;
 		    }
 		    if(explosion_grid[x][y].right == 1){
 			explosion_grid[x+1][y].type = EXPLOSION_EMPTY;
-            terrain_grid[x+1][y] = TERRAIN_WALL_BREAKABLE_B;
+            terrain_grid[x+1][y] = TERRAIN_GROUND;
 			printf("%d\n", explosion_grid[x+1][y].type);
 			explosion_grid[x][y].right = 0;
 		    }
@@ -1310,7 +1310,8 @@ void explodeBomb(Bomb *bomb) {
                     up_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-			        explosion->up = 0;
+                    explosion_grid[x][y].up = 1;
+                    terrain_grid[x][y-i] = TERRAIN_WALL_BREAKABLE_B;
                     //explodeTile(x, y + i, explosion);
                     up_blocked = true;
                     break;
@@ -1330,8 +1331,10 @@ void explodeBomb(Bomb *bomb) {
                     down_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-                    explodeTile(x, y - i, explosion);
-			explosion->down = 0;
+                    explosion_grid[x][y].down = 1;
+                    terrain_grid[x][y+i] = TERRAIN_WALL_BREAKABLE_B;
+                    //explodeTile(x, y - i, explosion);
+			        //explosion->down = 0;
                     down_blocked = true;
                     break;
                 case TERRAIN_GROUND:
@@ -1349,8 +1352,9 @@ void explodeBomb(Bomb *bomb) {
                     left_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-                    explodeTile(x - i, y, explosion);
-                    explosion->left = 0;
+                    explosion_grid[x][y].left = 1;
+                    terrain_grid[x-i][y] = TERRAIN_WALL_BREAKABLE_B;
+                    //explodeTile(x, y + i, explosion);
                     left_blocked = true;
                     break;
                 case TERRAIN_GROUND:
@@ -1369,8 +1373,10 @@ void explodeBomb(Bomb *bomb) {
                     right_blocked = true;
                     break;
                 case TERRAIN_WALL_BREAKABLE:
-                    explodeTile(x + i, y, explosion);
-			explosion->right = 0;
+                    explosion_grid[x][y].right = 1;
+                    terrain_grid[x+i][y] = TERRAIN_WALL_BREAKABLE_B;
+                    //explodeTile(x, y + i, explosion);
+                    up_blocked = true;
                     right_blocked = true;
                     break;
                 case TERRAIN_GROUND:
