@@ -538,7 +538,7 @@ void redrawTile(uint32_t x, uint32_t y) {
             map_info |= 0x40000000;
             //map_info |= 0x2;
             map_address = x + y*40;
-            map_info |= (map_address << 8);
+            map_info |= (map_address << 20);
             color.map_info |= map_info;
             set_background_color(&color);
             terrain_grid[x][y] = TERRAIN_GROUND;
@@ -1116,30 +1116,30 @@ void countdownExplosions(void) {
 
         if (explosion->timer == 0) {
             explosion_grid[x][y].type = EXPLOSION_EMPTY;
-		    printf("%d\n", explosion_grid[x][y].type);
+		    //printf("%d\n", explosion_grid[x][y].type);
 		    if(explosion_grid[x][y].up == 1){
 			explosion_grid[x][y-1].type = EXPLOSION_EMPTY;
             terrain_grid[x][y-1] = TERRAIN_GROUND;
-			printf("%d\n", explosion_grid[x][y-1].type);
+			//printf("%d\n", explosion_grid[x][y-1].type);
 			explosion_grid[x][y].up = 0;
 		    }
 		    if(explosion_grid[x][y].down == 1){
 			explosion_grid[x][y+1].type = EXPLOSION_EMPTY;
             terrain_grid[x][y+1] = TERRAIN_GROUND;
 
-			printf("%d\n", explosion_grid[x][y+1].type);
+			//printf("%d\n", explosion_grid[x][y+1].type);
 			explosion_grid[x][y].down = 0;
 		    }
 		    if(explosion_grid[x][y].left == 1){
 			explosion_grid[x-1][y].type = EXPLOSION_EMPTY;
             terrain_grid[x-1][y] = TERRAIN_GROUND;
-			printf("%d\n", explosion_grid[x-1][y].type);
+			//printf("%d\n", explosion_grid[x-1][y].type);
 			explosion_grid[x][y].left = 0;
 		    }
 		    if(explosion_grid[x][y].right == 1){
 			explosion_grid[x+1][y].type = EXPLOSION_EMPTY;
             terrain_grid[x+1][y] = TERRAIN_GROUND;
-			printf("%d\n", explosion_grid[x+1][y].type);
+			//printf("%d\n", explosion_grid[x+1][y].type);
 			explosion_grid[x][y].right = 0;
 		    }
 		  
