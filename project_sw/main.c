@@ -113,7 +113,7 @@ int main(){
     return -1;
   }
 
-
+    initialisemap();
     initialisePlayers();
     setupRound();
 
@@ -146,6 +146,24 @@ void runGame(void){
 
     }
     */
+
+}
+
+
+void initialisemap(void){
+    for (int i = 0; i < MAP_SIZE_H; i++) {
+        for (int j = 0; j < MAP_SIZE_V; j++) {
+            color.map_info = 0x0;
+            map_info |= 0x80000000;
+            map_info |= 0x40000000;
+            map_info |= map[i][j];
+            map_address = i + j*40;
+            map_info |= (map_address << 19);
+            color.map_info |= map_info;
+            set_background_color(&color);
+        }
+    }
+    map_info |= 0x80000000;
 
 }
 
@@ -445,6 +463,8 @@ player_id playRound(void) {
 
     //return getWinner();
 }
+
+
 
 
 void applyPlayerInput(void) {

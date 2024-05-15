@@ -25,7 +25,7 @@
 #define PLAYER_NUM 2
 //#define CONTROLLER_SIGNALS_NUM 10
 
-
+void initialisemap(void);
 
 typedef enum {
     TERRAIN_GROUND,
