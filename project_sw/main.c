@@ -156,6 +156,7 @@ void initialisemap(void){
     for (int i = 0; i < MAP_SIZE_H; i++) {
         for (int j = 0; j < MAP_SIZE_V; j++) {
             color.map_info = 0x0;
+            map_info = 0x0;
             map_info |= 0x80000000;
             map_info |= 0x40000000;
             map_info |= map[i][j];
