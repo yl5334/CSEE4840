@@ -543,8 +543,11 @@ void redrawTile(uint32_t x, uint32_t y) {
             map_info |= (map_address << 20);
             color.map_info |= map_info;
             set_background_color(&color);
+            
             terrain_grid[x][y] = TERRAIN_GROUND;
             printf("breakable: map_info = %d, x= %d, y = %d\n", color.map_info, x, y);
+            usleep(20);
+            
             break;
     }
 
