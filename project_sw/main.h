@@ -70,7 +70,7 @@ typedef enum {
 
 
 /*Bomb.h*/
-#define DEFAULT_BOMB_TIMER 50
+#define DEFAULT_BOMB_TIMER 100
 #define DEFAULT_BOMB_RANGE 1
 #define DEFAULT_BOMB_TYPE BOMB_TYPE_NORMAL
 
