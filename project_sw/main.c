@@ -151,6 +151,7 @@ void runGame(void){
 
 
 void initialisemap(void){
+    uint32_t map_info;
     for (int i = 0; i < MAP_SIZE_H; i++) {
         for (int j = 0; j < MAP_SIZE_V; j++) {
             color.map_info = 0x0;
