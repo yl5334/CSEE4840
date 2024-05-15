@@ -1120,17 +1120,17 @@ void countdownExplosions(void) {
             terrain_grid[x][y+1] = TERRAIN_WALL_BREAKABLE_B;
 
 			printf("%d\n", explosion_grid[x][y+1].type);
-			explosion_grid[x][y] = 0;
+			explosion_grid[x][y].down = 0;
 		    }
 		    if(explosion_grid[x][y].left == 1){
 			explosion_grid[x-1][y].type = EXPLOSION_EMPTY;
-            terrain_grid[x-1][y].type = TERRAIN_WALL_BREAKABLE_B;
+            terrain_grid[x-1][y] = TERRAIN_WALL_BREAKABLE_B;
 			printf("%d\n", explosion_grid[x-1][y].type);
-			explosion_grid[x][y] = 0;
+			explosion_grid[x][y].left = 0;
 		    }
 		    if(explosion_grid[x][y].right == 1){
 			explosion_grid[x+1][y].type = EXPLOSION_EMPTY;
-            terrain_grid[x+1][y].type = TERRAIN_WALL_BREAKABLE_B;
+            terrain_grid[x+1][y] = TERRAIN_WALL_BREAKABLE_B;
 			printf("%d\n", explosion_grid[x+1][y].type);
 			explosion_grid[x][y].right = 0;
 		    }
