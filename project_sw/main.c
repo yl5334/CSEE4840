@@ -519,7 +519,13 @@ void redrawTile(uint32_t x, uint32_t y) {
         case TERRAIN_GROUND:
             //color.map_info = 0;
             //set_background_color(&color);
-            printf("in the ground: map_info = %d, x= %d, y = %d\n", color.map_info, x, y);
+            /*
+            if (x== && y==2)
+            {
+            
+            }
+            */
+            //printf("in the ground: map_info = %d, x= %d, y = %d\n", color.map_info, x, y);
             break;
         case TERRAIN_WALL_BREAKABLE:
 
@@ -536,7 +542,7 @@ void redrawTile(uint32_t x, uint32_t y) {
             color.map_info |= map_info;
             set_background_color(&color);
             terrain_grid[x][y] = TERRAIN_GROUND;
-            printf("breadable: map_info = %d, x= %d, y = %d\n", color.map_info, x, y);
+            printf("breakable: map_info = %d, x= %d, y = %d\n", color.map_info, x, y);
             break;
     }
 
