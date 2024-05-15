@@ -650,8 +650,13 @@ void redrawTile(uint32_t x, uint32_t y) {
                     color.p1_state |= 0x10;
                     if (explosion_grid[x][y].up == 1)
                     {   
+
                         explosion_coordinate = (((y-1) * TILE_SIZE) << 10 | x * TILE_SIZE );
-			explosion_grid[x][y-1].type = EXPLOSION_TYPE_UP;
+                        if (explosion_grid[x][y-1].type != EXPLOSION_TYPE_NORMAL)
+                        {
+			                explosion_grid[x][y-1].type = EXPLOSION_TYPE_UP;
+                        }
+                        
 			//printf("down cor = %d\n", explosion_coordinate);
 			//printf("%d, %d\n", x, y);
                         color.p1_fireup = explosion_coordinate;
@@ -660,7 +665,11 @@ void redrawTile(uint32_t x, uint32_t y) {
                     if (explosion_grid[x][y].down == 1)
                     {   
                         explosion_coordinate = (((y+1) * TILE_SIZE) << 10 | x * TILE_SIZE );
-			explosion_grid[x][y+1].type = EXPLOSION_TYPE_DOWN;
+			            
+                        if (explosion_grid[x][y+1].type != EXPLOSION_TYPE_NORMAL)
+                        {
+                            explosion_grid[x][y+1].type = EXPLOSION_TYPE_DOWN;        
+                        }
 			//printf("down cor = %d\n", explosion_coordinate);
 			//printf("%d, %d\n", x, y);
                         color.p1_firedown = explosion_coordinate;
@@ -669,14 +678,20 @@ void redrawTile(uint32_t x, uint32_t y) {
                     if (explosion_grid[x][y].left == 1)
                     {   
                         explosion_coordinate = ((y * TILE_SIZE) << 10 | (x-1) * TILE_SIZE );
-			explosion_grid[x-1][y].type = EXPLOSION_TYPE_LEFT;
+                        if (explosion_grid[x-1][y].type != EXPLOSION_TYPE_NORMAL)
+                        {
+			                explosion_grid[x-1][y].type = EXPLOSION_TYPE_LEFT;
+                        }
                         color.p1_fireleft = explosion_coordinate;
                         color.p1_state |= 0x80;
                     }
                     if (explosion_grid[x][y].right == 1)
                     {   
                         explosion_coordinate = ((y * TILE_SIZE) << 10 | (x+1) * TILE_SIZE );
-			explosion_grid[x+1][y].type = EXPLOSION_TYPE_RIGHT;
+                        if (explosion_grid[x+1][y].type != EXPLOSION_TYPE_NORMAL)
+                        {
+			                explosion_grid[x+1][y].type = EXPLOSION_TYPE_RIGHT;
+                        }
                         color.p1_fireright = explosion_coordinate;
                         color.p1_state |= 0x100;
                     }
