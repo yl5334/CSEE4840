@@ -376,7 +376,7 @@ void drawPlayers(void){
         set_background_color(&color);
         usleep(30000);
 
-        printf("player %d, x position = %d, y position = %d, dir = %u\n", i, players[i].screen_position.x, players[i].screen_position.y, players[i].move_direction);
+        //printf("player %d, x position = %d, y position = %d, dir = %u\n", i, players[i].screen_position.x, players[i].screen_position.y, players[i].move_direction);
 	
         /*
         uint8_t anim_frame_offset = num_of_frames * i;
