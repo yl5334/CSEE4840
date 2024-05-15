@@ -1,4 +1,4 @@
-scp ./* root@128.59.65.21:~/project_sw_copy
+scp ./* root@128.59.65.42:~/project_sw_copy
 
 #scp ./vga_ball.c  root@128.59.65.172:~/project_sw_copy
 
