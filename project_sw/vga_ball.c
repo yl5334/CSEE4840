@@ -51,11 +51,11 @@ struct vga_ball_dev {
 
 static void write_game_state(vga_ball_color_t *game_state) 
 {
-	printk("%d %d player 1  \n", game_state->p1_coordinate, game_state->p1_state);
-	printk("%d bomb 1 \n", game_state->p1_bomb);
-	printk("%d bomb 2 \n", game_state->p2_bomb);
-	printk("%d %d player 2  \n", game_state->p2_coordinate, game_state->p2_state);
-	printk("%d fire 1 %d fire 2 \n", game_state->p1_firedown, game_state->p2_firedown);
+	//printk("%d %d player 1  \n", game_state->p1_coordinate, game_state->p1_state);
+	//printk("%d bomb 1 \n", game_state->p1_bomb);
+	//printk("%d bomb 2 \n", game_state->p2_bomb);
+	//printk("%d %d player 2  \n", game_state->p2_coordinate, game_state->p2_state);
+	//printk("%d fire 1 %d fire 2 \n", game_state->p1_firedown, game_state->p2_firedown);
 	printk("%d map_info\n", game_state->map_info);
 	iowrite32(game_state->p1_coordinate, dev.virtbase + 0x04);
         iowrite32(game_state->p1_state, dev.virtbase + 0x08);
