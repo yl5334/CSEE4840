@@ -1312,6 +1312,8 @@ void explodeBomb(Bomb *bomb) {
                 case TERRAIN_WALL_BREAKABLE:
                     explosion_grid[x][y].up = 1;
                     terrain_grid[x][y-i] = TERRAIN_WALL_BREAKABLE_B;
+                    printf("up");
+
                     //explodeTile(x, y + i, explosion);
                     up_blocked = true;
                     break;
@@ -1333,6 +1335,7 @@ void explodeBomb(Bomb *bomb) {
                 case TERRAIN_WALL_BREAKABLE:
                     explosion_grid[x][y].down = 1;
                     terrain_grid[x][y+i] = TERRAIN_WALL_BREAKABLE_B;
+                    printf("down");
                     //explodeTile(x, y - i, explosion);
 			        //explosion->down = 0;
                     down_blocked = true;
@@ -1340,6 +1343,7 @@ void explodeBomb(Bomb *bomb) {
                 case TERRAIN_GROUND:
                     //explodeTile(x, y - i, explosion);
                     //printf("explosition type = %d\n", explosion_grid[x][y-i].type);
+                    printf("inside ground");
                     explosion_grid[x][y].down = 1;
                     break;
             }
