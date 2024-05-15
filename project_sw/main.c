@@ -517,6 +517,8 @@ void redrawTile(uint32_t x, uint32_t y) {
 
     switch (terrain_grid[x][y]) {
         case TERRAIN_GROUND:
+            map_info &= 0x80000000;
+
             //color.map_info = 0;
             //set_background_color(&color);
             /*
