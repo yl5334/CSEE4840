@@ -121,7 +121,7 @@ int main(){
 
     generateMatrix(map, ratio0, ratio1, ratio2);
 
-    initialisemap();
+    initialisemap(map);
     initialisePlayers();
     setupRound();
 
@@ -196,7 +196,7 @@ void runGame(void){
 }
 
 
-void initialisemap(void){
+void initialisemap(int map[MAP_SIZE_H][MAP_SIZE_V]){
     uint32_t map_info;
     uint32_t map_address;
     for (int i = 0; i < MAP_SIZE_H; i++) {
