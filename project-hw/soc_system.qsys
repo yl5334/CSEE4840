@@ -512,7 +512,7 @@
   <parameter name="enPRInitMode" value="false" />
   <parameter name="enableDiffWidth" value="false" />
   <parameter name="initMemContent" value="true" />
-  <parameter name="initializationFileName">/user/stud/fall23/ym3000/EE4840/project-hw/mif/tank_explode.mif</parameter>
+  <parameter name="initializationFileName">/user/stud/fall23/ym3000/EE4840/project-hw/mif/explode.mif</parameter>
   <parameter name="instanceID" value="NONE" />
   <parameter name="memorySize" value="24218" />
   <parameter name="readDuringWriteMode" value="DONT_CARE" />

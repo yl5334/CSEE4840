@@ -85,7 +85,7 @@ module vga_ball(input logic        clk,
 			R_VALID <= 1;
 
 
-		        // Setting Flags
+		        //Flags
 		        if (p1_firecenter_on == 1 && explode_ready1 == 1) begin
 
 				if (playing_explode2 == 0 && playing_jingle1 == 0 && playing_jingle2 == 0) begin
@@ -144,11 +144,7 @@ module vga_ball(input logic        clk,
 
 			end
 
-				
-			// These _on flags represent when in game events are "on" or occuring
-			// Only allow the audio to play again once they drop to 0, so that there is 1 audio per event
-
-
+                        //Play audio once per instant
 			if (p1_firecenter_on == 0) begin
 
 				explode_ready1 <= 1;
@@ -175,7 +171,6 @@ module vga_ball(input logic        clk,
 				
 
 			// Playing Audio
-
 			if (playing_explode1 == 1) begin
 				if (explode_address > 15000) begin
 					explode_address <= 0;
@@ -317,7 +312,6 @@ module vga_ball(input logic        clk,
     logic p2_die_en;
 
     logic p2_die_on;
-write
 
     //fixed wall
     logic [7:0] fix_address;
@@ -353,8 +347,6 @@ write
 
     logic [9:0] p2bomb_x;
     logic [9:0] p2bomb_y;
-
-
 
     //p1_fire
     logic [7:0] p1_firecenter_address;write
