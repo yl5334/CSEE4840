@@ -197,6 +197,11 @@ void runGame(void){
 
     while (readyScreen()) {
         player_id winner = playRound();
+        if (PLAYER_NUM<1)
+        {
+            /* code */
+        }
+        
    }
     //initialisePlayers();
     //setupRound();
@@ -487,7 +492,12 @@ player_id playRound(void) {
     int final_countdown_count = 0;
     //color.p1_bomb = 0x100;
 
-    
+    if (players[0].alive = false || players[1].alive = false)
+    {
+        exit(1);
+    }
+        
+
     while(players_alive > 1) {
 
         updateControls();
@@ -530,7 +540,7 @@ player_id playRound(void) {
         //update_sound();
     }
 
-    exit(1);
+    
     //return getWinner();
 }
 
