@@ -151,7 +151,7 @@ int main(){
         runGame();
         if (players[0].alive == false || players[1].alive == false)
             {
-        exit(1);
+                exit(1);
             }
     }
     
@@ -1433,7 +1433,7 @@ void explodeBomb(Bomb *bomb) {
                 case TERRAIN_WALL_BREAKABLE:
                     explosion_grid[x][y].up = 1;
                     terrain_grid[x][y-i] = TERRAIN_WALL_BREAKABLE_B;
-                    printf("up");
+                    //printf("up");
 
                     //explodeTile(x, y + i, explosion);
                     up_blocked = true;
@@ -1463,7 +1463,7 @@ void explodeBomb(Bomb *bomb) {
                 case TERRAIN_WALL_BREAKABLE:
                     explosion_grid[x][y].down = 1;
                     terrain_grid[x][y+i] = TERRAIN_WALL_BREAKABLE_B;
-                    printf("down");
+                    //printf("down");
                     //explodeTile(x, y - i, explosion);
 			        //explosion->down = 0;
                     down_blocked = true;
@@ -1597,7 +1597,7 @@ void killPlayersInExplosion(void) {
                 set_background_color(&color);
             }
 
-            printf("players die\n");
+            //printf("players die\n");
 
             getOccupiedTiles(&(players[i]), &pos_1, &pos_2);
 
