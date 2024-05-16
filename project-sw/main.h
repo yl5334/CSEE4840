@@ -25,7 +25,7 @@
 #define MAP_SIZE_V 30
 #define TILE_SIZE 16
 #define PLAYER_NUM 2
-//#define CONTROLLER_SIGNALS_NUM 10
+
 
 //initialise the map
 void generateMap(int matrix[MAP_SIZE_H][MAP_SIZE_V], float ratio0, float ratio1, float ratio2);
@@ -144,7 +144,6 @@ typedef struct {
 
 extern Terrain terrain_grid[MAP_SIZE_H][MAP_SIZE_V];
 extern Bomb bomb_grid[MAP_SIZE_H][MAP_SIZE_V];
-//extern item_type items_grid[MAP_SIZE_H][MAP_SIZE_V];
 extern Explosion explosion_grid[MAP_SIZE_H][MAP_SIZE_V];
 extern bool changed_tiles[MAP_SIZE_H][MAP_SIZE_V];
 extern Player players[PLAYER_NUM];

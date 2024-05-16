@@ -16,55 +16,9 @@ pthread_t p1b, p2b;
 bool player1_ready = false;
 bool player2_ready = false;
 
-// TODO : add a 0(ground), 1(unbreakable), 2(breakable) map to this
-/*
-int map[40][30] = {
-    {0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-};
-*/
 
 Terrain terrain_grid[MAP_SIZE_H][MAP_SIZE_V];
 Bomb bomb_grid[MAP_SIZE_H][MAP_SIZE_V];
-//item_type items_grid[MAP_SIZE_H][MAP_SIZE_V];
 Explosion explosion_grid[MAP_SIZE_H][MAP_SIZE_V];
 bool changed_tiles[MAP_SIZE_H][MAP_SIZE_V];
 Player players[PLAYER_NUM];
@@ -168,7 +122,6 @@ void generateMap(int matrix[MAP_SIZE_H][MAP_SIZE_V], float ratio0, float ratio1,
     int count1 = totalElements * ratio1;
     int count2 = totalElements * ratio2;
 
-    // Create an array with the correct number of 0s, 1s, and 2s
     int *array = (int *)malloc(totalElements * sizeof(int));
     int index = 0;
     
@@ -176,7 +129,6 @@ void generateMap(int matrix[MAP_SIZE_H][MAP_SIZE_V], float ratio0, float ratio1,
     for (int i = 0; i < count1; i++) array[index++] = 1;
     for (int i = 0; i < count2; i++) array[index++] = 2;
 
-    // Shuffle the array
     srand(time(NULL));
     for (int i = totalElements - 1; i > 0; i--) {
         int j = rand() % (i + 1);
@@ -185,7 +137,6 @@ void generateMap(int matrix[MAP_SIZE_H][MAP_SIZE_V], float ratio0, float ratio1,
         array[j] = temp;
     }
 
-    // Fill the matrix with the shuffled array
     index = 0;
     for (int i = 0; i < MAP_SIZE_H; i++) {
         for (int j = 0; j < MAP_SIZE_V; j++) {
@@ -193,22 +144,17 @@ void generateMap(int matrix[MAP_SIZE_H][MAP_SIZE_V], float ratio0, float ratio1,
         }
     }
     int currentRow = 0, currentCol = 0;
-    matrix[currentRow][currentCol] = 0; // Start with 0 at the top-left
+    matrix[currentRow][currentCol] = 0; 
 
     while (currentRow < MAP_SIZE_H - 1 || currentCol < MAP_SIZE_V - 1) {
-        // Randomly decide whether to move right or down
         if (currentRow < MAP_SIZE_H - 1 && (currentCol == MAP_SIZE_V - 1 || rand() % 2)) {
-            // Move down
             currentRow++;
         } else {
-            // Move right
             currentCol++;
         }
-        // Set the current position to either 0 or 2
         matrix[currentRow][currentCol] = (rand() % 2) * 2;
     }
 
-    // Free the allocated memory
     free(array);
 }
 
@@ -225,20 +171,6 @@ void runGame(void){
         }
         
    }
-    //initialisePlayers();
-    //setupRound();
-   /*
-    while(ready_screen()){
-        player_id winner = playRound();
-
-        for(int j = 0; j < PLAYER_NUM; j++) {
-            if(winner == players[j].id) {
-                players[j].number_of_wins++;
-            }
-        }
-
-    }
-    */
 
 }
 
@@ -273,13 +205,10 @@ void initialisePlayers(void) {
 
     }
 }
-//void startGame() { 
-//    gameStarted = true;
-//}
+
 
 bool readyScreen(void) {
-    //drawReadyScreen();
-    //renderFrame();
+    
     
 
     while(!(player1_ready && player2_ready)) {
@@ -289,39 +218,18 @@ bool readyScreen(void) {
         uint32_t mask = 1 << 31;
         
         if(!player1_ready && (p1_ab == 79 || p1_ab == 95 || p1_ab == 207 || p1_ab == 223)) {
-            //drawPlayerReady(PLAYER_ONE);
             color.p1_state |= mask; //mask
             player1_ready = true;
-            //snd_play_pickup();
             set_background_color(&color);
         }
         if(!player2_ready && (p2_ab == 79 || p1_ab == 95 || p1_ab == 207 || p1_ab == 223)) {
-            //drawPlayerReady(PLAYER_TWO);
             color.p2_state |= mask; //mask
             player2_ready = true;
             set_background_color(&color);
-            //snd_play_pickup();
         }
-        //update_sound();
     }
 
-/*
-    while(player1_ready || player2_ready) {
-        updateControls();
-        
-        if(player1_ready && controller_signals[CONTROLLER_ONE_IND_TRIGGER] == 0) {
-            //drawPlayerReady(PLAYER_ONE);
-            player1_ready = false;
-        }
-        if(player2_ready && controller_signals[CONTROLLER_TWO_IND_TRIGGER] == 0) {
-            //drawPlayerReady(PLAYER_TWO);
-            player2_ready = false;
-        }
-        //update_sound();
-        
-    }
-    */
-    //startGame();
+
     return true;
 
 }
@@ -338,13 +246,7 @@ void setupRound(void) {
 
     setupGrids();
     setupPlayers();
-    //drawInitialState();
     drawPlayers();
-    //drawSidebar();
-    //drawPlayerIcons();
-    //drawPlayerScores();
-    //drawFullTimebar();
-    //renderFrame();
 }
 
 void setupGrids(void) {
@@ -380,7 +282,6 @@ void setupGrids(void) {
 
             changed_tiles[i][j] = false;
 
-            //items_grid[i][j] = ITEM_EMPTY;
         }
     }
 }
@@ -426,7 +327,6 @@ void setupPlayers(void) {
         players[i].max_bomb_number     = DEFAULT_MAX_BOMBS;
         players[i].current_bomb_number = 0;
 
-        //players[i].current_frame = A_MOVE_DOWN_FRAMES * i;
     }
 
 	
@@ -451,8 +351,6 @@ void drawPlayers(void){
         }
         uint32_t coordinate = 0;
         uint32_t state = 0;
-        //uint8_t* player_sprite = NULL;
-        //uint8_t num_of_frames  = 0;
 
         switch (players[i].move_direction) {
             case DIRECTION_UP:
@@ -481,40 +379,26 @@ void drawPlayers(void){
             color.p1_state &= ~0x7;
             color.p1_coordinate = coordinate;
             color.p1_state |= state;
-            //set_background_color(&color);
         }
         else{
             color.p2_state &= ~0x7;
             color.p2_coordinate = coordinate;
             color.p2_state |= state;
-            //set_background_color(&color);
         }
         set_background_color(&color);
         usleep(30000);
 
         //printf("player %d, x position = %d, y position = %d, dir = %u\n", i, players[i].screen_position.x, players[i].screen_position.y, players[i].move_direction);
 	
-        /*
-        uint8_t anim_frame_offset = num_of_frames * i;
-
-        if (players[i].moving) {
-            players[i].current_frame = ((players[i].current_frame + 1) % num_of_frames) + anim_frame_offset;
-        } else {
-            players[i].current_frame = anim_frame_offset;
-        }
-        drawAnimFrame(players[i].screen_position.x  + OFFSET_X, players[i].screen_position.y + OFFSET_Y, player_sprite, players[i].current_frame);
-        */
     }
 }
 
 
 player_id playRound(void) {
-    //setupRound(); 
 
     int frames = 0;
     int players_alive = PLAYER_NUM;
     int final_countdown_count = 0;
-    //color.p1_bomb = 0x100;
 
     
         
@@ -522,47 +406,28 @@ player_id playRound(void) {
     while(players_alive > 1) {
 
         updateControls();
-    /*
-        if (frames >= FRAMES_IN_A_ROUND) {
-            if ((frames % FINAL_COUNTDOWN_RATE) == 0) {
-                finalCountdown(final_countdown_count);
-                final_countdown_count++;
-            }
-        } else {
-            updateTimebar((double) ((double) frames / (double) FRAMES_IN_A_ROUND));
-        }
-    */
+    
 	set_background_color(&color);
         applyPlayerInput();
-        //applyAIMovement();
-        /*
-        if (applyItems()) {
-            snd_play_pickup();
-        }
-    */
+        
    
 
     
         if (plantBombs()) {
-            //snd_play_plant();
         }
 
         
         if (countdownBombs()) {
-            //snd_play_explosion();
         }
 
 	countdownExplosions();
         
 
         render();
-        //players_alive = countPlayers();
-        //frames++;
-        //update_sound();
+        
     }
 
     
-    //return getWinner();
 }
 
 
@@ -642,19 +507,11 @@ void render(void) {
     for (int i = 0; i < MAP_SIZE_H; i++) {
         for (int j = 0; j < MAP_SIZE_V; j++) {
 		redrawTile(i, j);
-	/*
-            if (changed_tiles[i][j]) {
-                redrawTile(i, j);
-                changed_tiles[i][j] = false;
-            }
-		*/
         }
     }
     
     drawPlayers();
 
-    /* Call renderFrame at the end of each frame to draw results on screen */
-    //renderFrame();
 }
 
 void redrawTile(uint32_t x, uint32_t y) {
@@ -664,28 +521,15 @@ void redrawTile(uint32_t x, uint32_t y) {
     uint32_t bomb_coordinate = 0;
     uint32_t map_info = 0;
     uint32_t map_address = 0;
-    /* Draw ground regardless */
-    //drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_terrain, (x+y)%2);
+    
 
     switch (terrain_grid[x][y]) {
         case TERRAIN_GROUND:
             color.map_info &= 0x80000000;
-
-            //color.map_info = 0;
-            //set_background_color(&color);
-            /*
-            if (x== && y==2)
-            {
-            
-            }
-            */
-            //printf("in the ground: map_info = %d, x= %d, y = %d\n", color.map_info, x, y);
             break;
         case TERRAIN_WALL_BREAKABLE:
-
             break;
         case TERRAIN_WALL_UNBREAKABLE:
-            //drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_terrain, 2);
             break;
         case TERRAIN_WALL_BREAKABLE_B:
             map_info |= 0x80000000;
@@ -726,44 +570,10 @@ void redrawTile(uint32_t x, uint32_t y) {
 		break;
 	}
     
-     
-    /* Draw items */
-    /*
-    switch (items_grid[x][y]) {
-        case ITEM_SPEED_UP:
-            drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_item_icons, ITEM_SPEED_UP);
-            break;
-        case ITEM_SPEED_DOWN:
-            drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_item_icons, ITEM_SPEED_DOWN);
-            break;
-        case ITEM_RANGE_UP:
-            drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_item_icons, ITEM_RANGE_UP);
-            break;
-        case ITEM_RANGE_DOWN:
-            drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_item_icons, ITEM_RANGE_DOWN);
-            break;
-        case ITEM_BOMBS_UP:
-            drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_item_icons, ITEM_BOMBS_UP);
-            break;
-        case ITEM_BOMBS_DOWN:
-            drawAnimFrame(x * TILE_SIZE + OFFSET_X, y * TILE_SIZE + OFFSET_Y, a_item_icons, ITEM_BOMBS_DOWN);
-            break;
-        
-        default:
-            / This shouldn't happen /
-            break;
-    }
-    */
     
 
     /* Draw bombs */
     int32_t timer = bomb_grid[x][y].timer;
-    //uint8_t* bomb_sprite = a_bomb_neutral;
-    /*
-    if (timer <= BOMB_EXPLODING_THRESHOLD) {
-        bomb_sprite = a_bomb_exploding;
-    }
-    */
     
     uint32_t explosion_coordinate = 0;
 
@@ -867,82 +677,6 @@ void redrawTile(uint32_t x, uint32_t y) {
             break;
     }
 
-    
-    /* Draw explosions */
-    /*
-    switch (explosion_grid[x][y].type) {
-	explosion_coordinate = ((y * TILE_SIZE) << 10 | x * TILE_SIZE );
-        case EXPLOSION_EMPTY:
-            break;
-        case EXPLOSION_TYPE_NORMAL:
-	    if (bomb_grid[x][y].owner == PLAYER_ONE) {
-                    color.p1_firecenter = explosion_coordinate;
-                    color.p1_state |= 0x16;
-		    set_background_color(&color);
-                } else {
-            color.p2_firecenter = explosion_coordinate;
-             color.p2_state |= 0x32;
-
-		    set_background_color(&color);
-                }
-            break;
-
-        case EXPLOSION_TYPE_UP:
-            if (bomb_grid[x][y+1].owner == PLAYER_ONE) {
-                    color.p1_fireup = explosion_coordinate;
-                    color.p1_state |= 0x;
-		    set_background_color(&color);
-                } else {
-                    color.p2_fireup = explosion_coordinate;
-                    color.p2_state |= 0x32;
-		    set_background_color(&color);
-                }
-            break;
-	
-	case EXPLOSION_TYPE_DOWN:
-            if (bomb_grid[x][y-1].owner == PLAYER_ONE) {
-                    color.p1_firedown = explosion_coordinate;
-                    color.p1_state |= 0x64;
-		    set_background_color(&color);
-                } else {
-                    color.p2_firedown = explosion_coordinate;
-                    color.p2_state |= 0x64;
-		    set_background_color(&color);
-                }
-            break;
-
-	case EXPLOSION_TYPE_LEFT:
-            if (bomb_grid[x+1][y].owner == PLAYER_ONE) {
-                    color.p1_fireleft = explosion_coordinate;
-                    color.p1_state |= 0x128;
-
-		    set_background_color(&color);
-                } else {
-                    color.p2_fireleft = explosion_coordinate;
-                    color.p2_state |= 0x128;
-
-		    set_background_color(&color);
-                }
-            break;
-
-	case EXPLOSION_TYPE_RIGHT:
-            if (bomb_grid[x-1][y].owner == PLAYER_ONE) {
-                    color.p1_fireright = explosion_coordinate;
-                    color.p1_state |= 0x256;
-		    set_background_color(&color);
-                } else {
-                    color.p2_fireright = explosion_coordinate;
-                     color.p2_state |= 0x256;
-
-		    set_background_color(&color);
-                }
-            break;
-        
-        default:
-            break;
-
-    }
-    */
 }
 
 void move(Player *player, direction dir) {
@@ -1037,8 +771,7 @@ void move(Player *player, direction dir) {
     setPlayerTilePos(player);
 }
 
-/* Returns the next set of coordinates w.r.t. the given direction, in terms of 
- * -1 and +1 values */
+
 void getNextStep(Position* pos, direction dir) {
     switch (dir) {
         case DIRECTION_UP:
@@ -1059,18 +792,13 @@ void getNextStep(Position* pos, direction dir) {
 }
 
 void getOffsets(Position* next_pos, Position* pixel_offset, Player* player, direction dir) {
-    /* Calculate offset for the 'front' of the character */
     getPixelOffset(pixel_offset, dir);
 
-    /* Get pixel values of the next step */
     getNextStep(next_pos, player->move_direction);
 
 }
 
-/* Snaps the player screen position to the grid. Call this function if
- * (1) The player direction is changing OR
- * (2) The player is stopping 
- * Returns whether the snapping was successful within this frame */
+
 bool snapToGrid(Player* player, direction dir) {
 
     Position pixel_offset = {0, 0};
@@ -1176,8 +904,7 @@ void getPixelOffset(Position* result, direction dir) {
     }
 }
 
-/* Sets the player tile_position attribute to the closest tile
- * PRE: The player is always aligned in at least one dimension */
+
 void setPlayerTilePos(Player* player) {
     int32_t offset_x = player->screen_position.x % TILE_SIZE;
     int32_t offset_y = player->screen_position.y % TILE_SIZE;
@@ -1228,10 +955,8 @@ void screenToTile(Position *pos) {
     }
 }
 
-/* Safe way of setting player screen_coordinates */
 void setPlayerPosition(Player* player, int32_t x, int32_t y) {
 
-    /* Clamp coordinates */
     clamp_x(&x);
     clamp_y(&y);
 
@@ -1400,7 +1125,6 @@ void plantBomb(Player *player) {
     bomb.position = player->tile_position;
     bomb_grid[x][y] = bomb;
     //printf("bomb x position = %d, bomb y position = %d, owner = %d\n", x, y, bomb.owner);
-    /* Update the changed tiles so bomb is rendered */
     changed_tiles[x][y] = true;
 
     player->current_bomb_number++;
@@ -1624,15 +1348,7 @@ void explodeTile(int8_t x, int8_t y, Explosion *explosion) {
     /* Set any bombs on this tile to explode on the next round */
     bomb_grid[x][y].timer = 1;
 
-    /* Destroy any item on this tile, unless covered by a breakable wall */
-    /*
-    if (terrain_grid[x][y] != TERRAIN_WALL_BREAKABLE) {
-        items_grid[x][y] = ITEM_EMPTY;
-    } else {
-        items_grid[x][y] = generateRandomItem();
-    }
-    */
-    /* Update the changed tiles so changes are rendered */
+   
 
 
 }
@@ -1665,11 +1381,6 @@ void killPlayersInExplosion(void) {
             changed_tiles[pos_1.x][pos_1.y] = true;
             changed_tiles[pos_2.x][pos_2.y] = true;
 
-            /* Render changes in sidebar */
-	    /*
-            drawPlayerIcons();
-            drawPlayerScores();
-	    */
         }
     }
 }

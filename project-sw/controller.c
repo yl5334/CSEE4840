@@ -27,7 +27,6 @@ struct controller_list open_controllers() {
                 exit(1);
         }
 
-        //printf("Detected %d devices...\n", num_devs);
         int connection_count = 0;
         for (int i = 0; i < num_devs; i++) {
 
@@ -38,19 +37,15 @@ struct controller_list open_controllers() {
                         exit(1);
                 }
 
-                // Our controllers have idProduct of 17
+                // Our controllers have idProduct of 0x11
                 if (desc.idProduct == 0x11) {
 
-                        //printf("FOUND: idProduct-%d ", desc.idProduct);
                         struct libusb_config_descriptor *config;
                         if ((libusb_get_config_descriptor(dev, 0, &config)) < 0) {
                                 printf("\nERROR: bad config descriptor.");
                                 exit(1);
                         }
-                        //printf("interfaces-%d\n", config->bNumInterfaces);
-
-                        // Our controllers only have a single interface, no need for looping
-                        // This interface also only has one .num_altsetting, no need for looping
+                       
 
                         int r;
                         const struct libusb_interface_descriptor *inter = config->interface[0].altsetting;
@@ -76,7 +71,6 @@ struct controller_list open_controllers() {
                         } else {
                                 devices.device2 = controller;
                                 devices.device2_addr = endpoint_address;
-                                //printf("%d:%d,%d:%d\n",devices.device1,devices.device1_addr,devices.device2,devices.device2_addr)                                goto found;
                         }
                 }
         }
@@ -95,7 +89,6 @@ struct controller_list open_controllers() {
 
 void detect_presses(struct controller_pkt pkt, char *buttons, int mode) {
 
-        // Choose whether you want human-readable or binary output
         char vals[] = "LRUDA";
         if (mode == 1) {
                 strcpy(buttons, "00000");
@@ -104,27 +97,23 @@ void detect_presses(struct controller_pkt pkt, char *buttons, int mode) {
                 strcpy(buttons, "_____");
         }
 
-        // Check left/right arrows (can only be one at a time)
         if (pkt.dir_x == 0) {
                 buttons[0] = vals[0];
         } else if (pkt.dir_x == 0xff) {
                 buttons[1] = vals[1];
         }
 
-        // Check up/down arrows (can only be one at a time)
         if (pkt.dir_y == 0x00) {
                 buttons[2] = vals[2];
         } else if (pkt.dir_y == 0xff) {
                 buttons[3] = vals[3];
         }
 
-        // Check if shoot button (A) is pressed
+        // Check if button (A) is pressed
         uint8_t a = pkt.ab;
         if (a == 47 || a == 63 || a == 111 || a == 127 || a == 175 || a == 191 || a == 239 || a == 255) {
                 buttons[4] = vals[4];
         }
-
-        //printf("\n%s", buttons);
 
 }
 
