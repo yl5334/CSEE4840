@@ -1362,8 +1362,15 @@ void explodeBomb(Bomb *bomb) {
                     break;
                 case TERRAIN_GROUND:
                     //explodeTile(x, y + i, explosion);
-		    
-                    explosion_grid[x][y].up = 1;
+                    if (bomb_grid[x][y-i].type == BOMB_TYPE_NORMAL || explosion_grid[x][y-i].type == EXPLOSION_TYPE_NORMAL)
+                    {
+                        explosion_grid[x][y].up = 0;
+                        up_blocked = true;
+                    }
+                    else{
+                        explosion_grid[x][y].up = 1;
+
+                    }
 		    
                     break;
             }
@@ -1386,8 +1393,15 @@ void explodeBomb(Bomb *bomb) {
                 case TERRAIN_GROUND:
                     //explodeTile(x, y - i, explosion);
                     //printf("explosition type = %d\n", explosion_grid[x][y-i].type);
-                    printf("inside ground");
-                    explosion_grid[x][y].down = 1;
+                    if (bomb_grid[x][y+i].type == BOMB_TYPE_NORMAL || explosion_grid[x][y+i].type == EXPLOSION_TYPE_NORMAL)
+                    {
+                         explosion_grid[x][y].down = 0;
+                        down_blocked = true;
+                    }
+                    else{
+                        explosion_grid[x][y].down = 1;
+                    }
+                    
                     break;
             }
         }
@@ -1406,8 +1420,15 @@ void explodeBomb(Bomb *bomb) {
                     break;
                 case TERRAIN_GROUND:
                     //explodeTile(x - i, y, explosion);
+                    if (bomb_grid[x - i][y].type == BOMB_TYPE_NORMAL || explosion_grid[x - i][y].type == EXPLOSION_TYPE_NORMAL)
+                    {
+                         explosion_grid[x][y].left = 0;
+                        left_blocked = true;
+                    }
+                    else{
+                        explosion_grid[x][y].left = 1;
+                    }
 		    
-                    explosion_grid[x][y].left = 1;
 		    //printf("left is not block, %d\n", explosion_grid[x][y].left);
                     break;
             }
@@ -1429,8 +1450,14 @@ void explodeBomb(Bomb *bomb) {
                 case TERRAIN_GROUND:
                     //explodeTile(x + i, y, explosion);
                     //printf("explosition type = %d\n", explosion_grid[x+i][y].type);
-		   
-                    explosion_grid[x][y].right = 1;
+		        if (bomb_grid[x + i][y].type == BOMB_TYPE_NORMAL || explosion_grid[x + i][y].type == EXPLOSION_TYPE_NORMAL)
+                    {
+                        explosion_grid[x][y].right = 0;
+                        right_blocked = true;
+                    }
+                    else{
+                        explosion_grid[x][y].right = 1;
+                    }
                     break;
             }
         }
