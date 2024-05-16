@@ -121,7 +121,7 @@ int main(){
 
     float ratio0 = 0.5, ratio1 = 0.3, ratio2 = 0.2; // 0 for ground, 1 for unbreakable wall, 2 for breakable wall
 
-    generateMatrix(map, ratio0, ratio1, ratio2);
+    generateMap(map, ratio0, ratio1, ratio2);
 
     initialisemap();
     initialisePlayers();
