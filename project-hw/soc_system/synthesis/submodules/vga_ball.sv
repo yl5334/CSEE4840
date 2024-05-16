@@ -23,7 +23,7 @@ module vga_ball(input logic        clk,
 
    logic [7:0] 	   background_r, background_g, background_b;
 
-   logic [31:0]    p1_coordinate, p1_state, p1_bomb, p1_firecenter, p1_fireup, p1_firedown, p1_fireleft, p1_fireright, p2_coordinate, p2_state, p2_bomb, p2_firecenter, p2_fireup, p2_firedown, p2_fireleft, p2_fireright;
+   logic [31:0]    p1_coordinate, p1_state, p1_bomb, p1_firecenter, p1_fireup, p1_firedown, p1_fireleft, p1_fireright, p2_coordinate, p2_state, p2_bomb, p2_firecenter, p2_fireup, p2_firedown, p2_fireleft, p2_fireright, map_info;
 	
    vga_counters counters(.clk50(clk), .*);
 
@@ -239,7 +239,7 @@ module vga_ball(input logic        clk,
       background_g <= 8'h80;
       background_b <= 8'h00;
 
-	//added
+      //initialization
       p1_coordinate <= 32'd0;   
       p1_state <= 32'd0;        
       p1_bomb <= 32'd0;         
@@ -276,7 +276,9 @@ module vga_ball(input logic        clk,
         5'b01101 : p2_fireup <= writedata;       
         5'b01110 : p2_firedown <= writedata;     
         5'b01111 : p2_fireleft <= writedata;     
-        5'b10000 : p2_fireright <= writedata;    
+        5'b10000 : p2_fireright <= writedata;
+
+        5'b10001 : map_info <= writedata;    
        endcase
      end
    end
@@ -322,6 +324,12 @@ module vga_ball(input logic        clk,
     logic [15:0] fix_output;
     soc_system_fix fix(.address(fix_address),.clk(clk),.clken(1),.reset_req(0),.readdata(fix_output));
     logic fix_en;
+
+    //Destroyable wall
+    logic [7:0] wall_address;
+    logic [15:0] wall_output;
+    soc_system_wall wall(.address(wall_address),.clk(clk),.clken(1),.reset_req(0),.readdata(wall_output));
+    logic wall_en;
     
 
     //p1_bomb
@@ -395,8 +403,6 @@ module vga_ball(input logic        clk,
     logic [9:0] p1fireright_x;
     logic [9:0] p1fireright_y;
 
-
-
     //p2_fire
     logic [7:0] p2_firecenter_address;
     logic [15:0] p2_firecenter_output;
@@ -446,8 +452,12 @@ module vga_ball(input logic        clk,
 
     //map
     logic [10:0] map_address;
+    logic map_chipselect;
+    logic map_write;
+    logic [7:0] map_input;
     logic [7:0] map_output;
-    soc_system_map_unit map_unit(.address(map_address),.clk(clk),.clken(1),.reset_req(0),.readdata(map_output));
+    soc_system_map_unit map_unit(.address(map_address),.clk(clk),.clken(1),.reset_req(0),.chipselect(map_chipselect),.write(map_write),.writedata(map_input),.readdata(map_output));
+    logic map_en;
 
     //p1_win
     logic [10:0] p1_win_address;
@@ -541,14 +551,24 @@ module vga_ball(input logic        clk,
       //tile
       tile16_x = hcount[10:1] >> 4; //divide by 16 to get the x coordinate. 640/16 = 40
       tile16_y = vcount[9:0] >> 4; //divide by 16 to get the y coordinate. 480/16 = 30
+
       //map
-      map_address = tile16_x + tile16_y * 40;
+      map_chipselect = map_info[31];
+      map_write = map_info[30];
+      if (map_chipselect == 1 & map_write == 1) begin
+        map_en = 0;
+	map_address = map_info[29:19];
+        map_input = map_info[7:0];
+      end
+      else begin
+      	map_en = 1;
+	map_address = tile16_x + tile16_y * 40;
+	map_input = 0;
+      end
 
       //start
       start_on = p1_state[31] & p2_state[31];
       
-
-
     // dir:
     // 2'b00 --> down
     // 2'b01 --> up
@@ -873,10 +893,10 @@ module vga_ball(input logic        clk,
 
     end
 
-    //fixed map
+    //map
     always_ff @(posedge clk) begin
 
-      if (map_output) begin
+      if (map_en == 1 && map_output == 1) begin
 
         fix_en <= 1;
         fix_address <= hcount[4:1] + vcount[3:0] * 16;
@@ -886,6 +906,23 @@ module vga_ball(input logic        clk,
       else begin
 
         fix_en <= 0;
+
+      end
+
+    end
+
+    always_ff @(posedge clk) begin
+
+      if (map_en == 1 && map_output == 2) begin
+
+        wall_en <= 1;
+        wall_address <= hcount[4:1] + vcount[3:0] * 16;
+
+      end
+
+      else begin
+
+        wall_en <= 0;
 
       end
 
@@ -967,12 +1004,6 @@ module vga_ball(input logic        clk,
         else if (fix_en) begin
           {VGA_R, VGA_G, VGA_B} = {fix_output[15:12], 4'b0000, fix_output[11:8], 4'b0000, fix_output[7:4], 4'b0000};
         end
-        else if (p1_bomb_en) begin
-	  {VGA_R, VGA_G, VGA_B} = {p1_bomb_output[15:12], 4'b0000, p1_bomb_output[11:8], 4'b0000, p1_bomb_output[7:4], 4'b0000};
-        end
-        else if (p2_bomb_en) begin
-  	  {VGA_R, VGA_G, VGA_B} = {p2_bomb_output[15:12], 4'b0000, p2_bomb_output[11:8], 4'b0000, p2_bomb_output[7:4], 4'b0000};
-        end
         else if (p1_en) begin
           {VGA_R, VGA_G, VGA_B} = {p1_output[15:12], 4'b0000, p1_output[11:8], 4'b0000, p1_output[7:4], 4'b0000};
         end
@@ -1008,6 +1039,15 @@ module vga_ball(input logic        clk,
         end
         else if (p2_fireright_en) begin
           {VGA_R, VGA_G, VGA_B} = {p2_fireright_output[15:12], 4'b0000, p2_fireright_output[11:8], 4'b0000, p2_fireright_output[7:4], 4'b0000};
+        end
+        else if (wall_en) begin
+	  {VGA_R, VGA_G, VGA_B} = {wall_output[15:12], 4'b0000, wall_output[11:8], 4'b0000, wall_output[7:4], 4'b0000};
+        end
+        else if (p1_bomb_en) begin
+	  {VGA_R, VGA_G, VGA_B} = {p1_bomb_output[15:12], 4'b0000, p1_bomb_output[11:8], 4'b0000, p1_bomb_output[7:4], 4'b0000};
+        end
+        else if (p2_bomb_en) begin
+  	  {VGA_R, VGA_G, VGA_B} = {p2_bomb_output[15:12], 4'b0000, p2_bomb_output[11:8], 4'b0000, p2_bomb_output[7:4], 4'b0000};
         end
 
       end

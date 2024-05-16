@@ -209,7 +209,6 @@ module soc_system (
 	wire         mm_interconnect_0_p2_die_s1_clken;                      // mm_interconnect_0:p2_die_s1_clken -> p2_die:clken
 	wire         mm_interconnect_0_map_unit_s1_chipselect;               // mm_interconnect_0:map_unit_s1_chipselect -> map_unit:chipselect
 	wire   [7:0] mm_interconnect_0_map_unit_s1_readdata;                 // map_unit:readdata -> mm_interconnect_0:map_unit_s1_readdata
-	wire         mm_interconnect_0_map_unit_s1_debugaccess;              // mm_interconnect_0:map_unit_s1_debugaccess -> map_unit:debugaccess
 	wire  [10:0] mm_interconnect_0_map_unit_s1_address;                  // mm_interconnect_0:map_unit_s1_address -> map_unit:address
 	wire         mm_interconnect_0_map_unit_s1_write;                    // mm_interconnect_0:map_unit_s1_write -> map_unit:write
 	wire   [7:0] mm_interconnect_0_map_unit_s1_writedata;                // mm_interconnect_0:map_unit_s1_writedata -> map_unit:writedata
@@ -254,10 +253,18 @@ module soc_system (
 	wire         mm_interconnect_0_jingle_sound_s1_write;                // mm_interconnect_0:jingle_sound_s1_write -> jingle_sound:write
 	wire  [15:0] mm_interconnect_0_jingle_sound_s1_writedata;            // mm_interconnect_0:jingle_sound_s1_writedata -> jingle_sound:writedata
 	wire         mm_interconnect_0_jingle_sound_s1_clken;                // mm_interconnect_0:jingle_sound_s1_clken -> jingle_sound:clken
+	wire         mm_interconnect_0_wall_s1_chipselect;                   // mm_interconnect_0:wall_s1_chipselect -> wall:chipselect
+	wire  [15:0] mm_interconnect_0_wall_s1_readdata;                     // wall:readdata -> mm_interconnect_0:wall_s1_readdata
+	wire         mm_interconnect_0_wall_s1_debugaccess;                  // mm_interconnect_0:wall_s1_debugaccess -> wall:debugaccess
+	wire   [7:0] mm_interconnect_0_wall_s1_address;                      // mm_interconnect_0:wall_s1_address -> wall:address
+	wire   [1:0] mm_interconnect_0_wall_s1_byteenable;                   // mm_interconnect_0:wall_s1_byteenable -> wall:byteenable
+	wire         mm_interconnect_0_wall_s1_write;                        // mm_interconnect_0:wall_s1_write -> wall:write
+	wire  [15:0] mm_interconnect_0_wall_s1_writedata;                    // mm_interconnect_0:wall_s1_writedata -> wall:writedata
+	wire         mm_interconnect_0_wall_s1_clken;                        // mm_interconnect_0:wall_s1_clken -> wall:clken
 	wire  [31:0] hps_0_f2h_irq0_irq;                                     // irq_mapper:sender_irq -> hps_0:f2h_irq_p0
 	wire  [31:0] hps_0_f2h_irq1_irq;                                     // irq_mapper_001:sender_irq -> hps_0:f2h_irq_p1
-	wire         rst_controller_reset_out_reset;                         // rst_controller:reset_out -> [audio_0:reset, audio_and_video_config_0:reset, bomb:reset, explode_sound:reset, firecenter:reset, firehori:reset, fireverti:reset, fix:reset, jingle_sound:reset, map_unit:reset, mm_interconnect_0:vga_ball_0_reset_reset_bridge_in_reset_reset, p1_die:reset, p1_unit:reset, p1_win:reset, p2_die:reset, p2_unit:reset, p2_win:reset, rst_translator:in_reset, start:reset, vga_ball_0:reset]
-	wire         rst_controller_reset_out_reset_req;                     // rst_controller:reset_req -> [bomb:reset_req, explode_sound:reset_req, firecenter:reset_req, firehori:reset_req, fireverti:reset_req, fix:reset_req, jingle_sound:reset_req, map_unit:reset_req, p1_die:reset_req, p1_unit:reset_req, p1_win:reset_req, p2_die:reset_req, p2_unit:reset_req, p2_win:reset_req, rst_translator:reset_req_in, start:reset_req]
+	wire         rst_controller_reset_out_reset;                         // rst_controller:reset_out -> [audio_0:reset, audio_and_video_config_0:reset, bomb:reset, explode_sound:reset, firecenter:reset, firehori:reset, fireverti:reset, fix:reset, jingle_sound:reset, map_unit:reset, mm_interconnect_0:vga_ball_0_reset_reset_bridge_in_reset_reset, p1_die:reset, p1_unit:reset, p1_win:reset, p2_die:reset, p2_unit:reset, p2_win:reset, rst_translator:in_reset, start:reset, vga_ball_0:reset, wall:reset]
+	wire         rst_controller_reset_out_reset_req;                     // rst_controller:reset_req -> [bomb:reset_req, explode_sound:reset_req, firecenter:reset_req, firehori:reset_req, fireverti:reset_req, fix:reset_req, jingle_sound:reset_req, map_unit:reset_req, p1_die:reset_req, p1_unit:reset_req, p1_win:reset_req, p2_die:reset_req, p2_unit:reset_req, p2_win:reset_req, rst_translator:reset_req_in, start:reset_req, wall:reset_req]
 	wire         rst_controller_001_reset_out_reset;                     // rst_controller_001:reset_out -> mm_interconnect_0:hps_0_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset_reset
 	wire         hps_0_h2f_reset_reset;                                  // hps_0:h2f_rst_n -> rst_controller_001:reset_in0
 
@@ -598,17 +605,16 @@ module soc_system (
 	);
 
 	soc_system_map_unit map_unit (
-		.clk         (clk_clk),                                   //   clk1.clk
-		.address     (mm_interconnect_0_map_unit_s1_address),     //     s1.address
-		.debugaccess (mm_interconnect_0_map_unit_s1_debugaccess), //       .debugaccess
-		.clken       (mm_interconnect_0_map_unit_s1_clken),       //       .clken
-		.chipselect  (mm_interconnect_0_map_unit_s1_chipselect),  //       .chipselect
-		.write       (mm_interconnect_0_map_unit_s1_write),       //       .write
-		.readdata    (mm_interconnect_0_map_unit_s1_readdata),    //       .readdata
-		.writedata   (mm_interconnect_0_map_unit_s1_writedata),   //       .writedata
-		.reset       (rst_controller_reset_out_reset),            // reset1.reset
-		.reset_req   (rst_controller_reset_out_reset_req),        //       .reset_req
-		.freeze      (1'b0)                                       // (terminated)
+		.clk        (clk_clk),                                  //   clk1.clk
+		.address    (mm_interconnect_0_map_unit_s1_address),    //     s1.address
+		.clken      (mm_interconnect_0_map_unit_s1_clken),      //       .clken
+		.chipselect (mm_interconnect_0_map_unit_s1_chipselect), //       .chipselect
+		.write      (mm_interconnect_0_map_unit_s1_write),      //       .write
+		.readdata   (mm_interconnect_0_map_unit_s1_readdata),   //       .readdata
+		.writedata  (mm_interconnect_0_map_unit_s1_writedata),  //       .writedata
+		.reset      (rst_controller_reset_out_reset),           // reset1.reset
+		.reset_req  (rst_controller_reset_out_reset_req),       //       .reset_req
+		.freeze     (1'b0)                                      // (terminated)
 	);
 
 	soc_system_p1_die p1_die (
@@ -739,6 +745,21 @@ module soc_system (
 		.R_VALID     (vga_ball_0_avalon_streaming_source_r_valid)              //                          .valid
 	);
 
+	soc_system_wall wall (
+		.clk         (clk_clk),                               //   clk1.clk
+		.address     (mm_interconnect_0_wall_s1_address),     //     s1.address
+		.debugaccess (mm_interconnect_0_wall_s1_debugaccess), //       .debugaccess
+		.clken       (mm_interconnect_0_wall_s1_clken),       //       .clken
+		.chipselect  (mm_interconnect_0_wall_s1_chipselect),  //       .chipselect
+		.write       (mm_interconnect_0_wall_s1_write),       //       .write
+		.readdata    (mm_interconnect_0_wall_s1_readdata),    //       .readdata
+		.writedata   (mm_interconnect_0_wall_s1_writedata),   //       .writedata
+		.byteenable  (mm_interconnect_0_wall_s1_byteenable),  //       .byteenable
+		.reset       (rst_controller_reset_out_reset),        // reset1.reset
+		.reset_req   (rst_controller_reset_out_reset_req),    //       .reset_req
+		.freeze      (1'b0)                                   // (terminated)
+	);
+
 	soc_system_mm_interconnect_0 mm_interconnect_0 (
 		.hps_0_h2f_lw_axi_master_awid                                        (hps_0_h2f_lw_axi_master_awid),                           //                                       hps_0_h2f_lw_axi_master.awid
 		.hps_0_h2f_lw_axi_master_awaddr                                      (hps_0_h2f_lw_axi_master_awaddr),                         //                                                              .awaddr
@@ -841,7 +862,6 @@ module soc_system (
 		.map_unit_s1_writedata                                               (mm_interconnect_0_map_unit_s1_writedata),                //                                                              .writedata
 		.map_unit_s1_chipselect                                              (mm_interconnect_0_map_unit_s1_chipselect),               //                                                              .chipselect
 		.map_unit_s1_clken                                                   (mm_interconnect_0_map_unit_s1_clken),                    //                                                              .clken
-		.map_unit_s1_debugaccess                                             (mm_interconnect_0_map_unit_s1_debugaccess),              //                                                              .debugaccess
 		.p1_die_s1_address                                                   (mm_interconnect_0_p1_die_s1_address),                    //                                                     p1_die_s1.address
 		.p1_die_s1_write                                                     (mm_interconnect_0_p1_die_s1_write),                      //                                                              .write
 		.p1_die_s1_readdata                                                  (mm_interconnect_0_p1_die_s1_readdata),                   //                                                              .readdata
@@ -901,7 +921,15 @@ module soc_system (
 		.vga_ball_0_avalon_slave_0_address                                   (mm_interconnect_0_vga_ball_0_avalon_slave_0_address),    //                                     vga_ball_0_avalon_slave_0.address
 		.vga_ball_0_avalon_slave_0_write                                     (mm_interconnect_0_vga_ball_0_avalon_slave_0_write),      //                                                              .write
 		.vga_ball_0_avalon_slave_0_writedata                                 (mm_interconnect_0_vga_ball_0_avalon_slave_0_writedata),  //                                                              .writedata
-		.vga_ball_0_avalon_slave_0_chipselect                                (mm_interconnect_0_vga_ball_0_avalon_slave_0_chipselect)  //                                                              .chipselect
+		.vga_ball_0_avalon_slave_0_chipselect                                (mm_interconnect_0_vga_ball_0_avalon_slave_0_chipselect), //                                                              .chipselect
+		.wall_s1_address                                                     (mm_interconnect_0_wall_s1_address),                      //                                                       wall_s1.address
+		.wall_s1_write                                                       (mm_interconnect_0_wall_s1_write),                        //                                                              .write
+		.wall_s1_readdata                                                    (mm_interconnect_0_wall_s1_readdata),                     //                                                              .readdata
+		.wall_s1_writedata                                                   (mm_interconnect_0_wall_s1_writedata),                    //                                                              .writedata
+		.wall_s1_byteenable                                                  (mm_interconnect_0_wall_s1_byteenable),                   //                                                              .byteenable
+		.wall_s1_chipselect                                                  (mm_interconnect_0_wall_s1_chipselect),                   //                                                              .chipselect
+		.wall_s1_clken                                                       (mm_interconnect_0_wall_s1_clken),                        //                                                              .clken
+		.wall_s1_debugaccess                                                 (mm_interconnect_0_wall_s1_debugaccess)                   //                                                              .debugaccess
 	);
 
 	soc_system_irq_mapper irq_mapper (

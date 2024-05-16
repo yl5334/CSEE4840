@@ -24,7 +24,6 @@ module soc_system_map_unit (
                               chipselect,
                               clk,
                               clken,
-                              debugaccess,
                               freeze,
                               reset,
                               reset_req,
@@ -44,7 +43,6 @@ module soc_system_map_unit (
   input            chipselect;
   input            clk;
   input            clken;
-  input            debugaccess;
   input            freeze;
   input            reset;
   input            reset_req;
@@ -55,7 +53,7 @@ module soc_system_map_unit (
 wire             clocken0;
 wire    [  7: 0] readdata;
 wire             wren;
-  assign wren = chipselect & write & debugaccess;
+  assign wren = chipselect & write;
   assign clocken0 = clken & ~reset_req;
   altsyncram the_altsyncram
     (
