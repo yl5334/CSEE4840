@@ -149,6 +149,10 @@ int main(){
 
     for(;;){
         runGame();
+        if (players[0].alive == false || players[1].alive == false)
+            {
+        exit(1);
+            }
     }
     
 
@@ -492,10 +496,7 @@ player_id playRound(void) {
     int final_countdown_count = 0;
     //color.p1_bomb = 0x100;
 
-    if (players[0].alive == false || players[1].alive == false)
-    {
-        exit(1);
-    }
+    
         
 
     while(players_alive > 1) {
