@@ -162,8 +162,8 @@ void generateMap(int matrix[MAP_SIZE_H][MAP_SIZE_V], float ratio0, float ratio1,
 
     // Fill the matrix with the shuffled array
     index = 0;
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLS; j++) {
+    for (int i = 0; i < MAP_SIZE_H; i++) {
+        for (int j = 0; j < MAP_SIZE_V; j++) {
             matrix[i][j] = array[index++];
         }
     }
