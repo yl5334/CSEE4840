@@ -1467,6 +1467,15 @@ void explodeBomb(Bomb *bomb) {
 
     /* Explode tiles on the horizontal and vertical that are in range but
      * don't explode past an unbreakable wall */
+    switch (terrain_grid[x][y])
+    {
+    case TERRAIN_WALL_BREAKABLE:
+        terrain_grid[x][y] = TERRAIN_WALL_BREAKABLE_B;
+        break;
+    
+    default:
+        break;
+    }
 
     bool left_blocked  = false;
     bool right_blocked = false;
