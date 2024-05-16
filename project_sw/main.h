@@ -15,6 +15,8 @@
 #include <pthread.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <time.h>
+
 
 
 
@@ -25,6 +27,8 @@
 #define PLAYER_NUM 2
 //#define CONTROLLER_SIGNALS_NUM 10
 
+//initialise the map
+void generateMap(int matrix[MAP_SIZE_H][MAP_SIZE_V], float ratio0, float ratio1, float ratio2);
 void initialisemap(void);
 
 typedef enum {

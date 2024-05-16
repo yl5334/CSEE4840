@@ -14,6 +14,7 @@ vga_ball_color_t color = {0};
 pthread_t p1b, p2b;
 
 // TODO : add a 0(ground), 1(unbreakable), 2(breakable) map to this
+/*
 int map[40][30] = {
     {0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
     {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -56,7 +57,7 @@ int map[40][30] = {
     {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 };
-
+*/
 
 Terrain terrain_grid[MAP_SIZE_H][MAP_SIZE_V];
 Bomb bomb_grid[MAP_SIZE_H][MAP_SIZE_V];
@@ -113,6 +114,13 @@ int main(){
     return -1;
   }
 
+
+
+    int map[MAP_SIZE_H][MAP_SIZE_V];
+    float ratio0 = 0.5, ratio1 = 0.3, ratio2 = 0.2; // 0 for ground, 1 for unbreakable wall, 2 for breakable wall
+
+    generateMatrix(map, ratio0, ratio1, ratio2);
+
     initialisemap();
     initialisePlayers();
     setupRound();
@@ -125,6 +133,44 @@ int main(){
     
 
 }
+
+
+void generateMap(int matrix[MAP_SIZE_H][MAP_SIZE_V], float ratio0, float ratio1, float ratio2) {
+    int totalElements = MAP_SIZE_H * MAP_SIZE_V;
+    int count0 = totalElements * ratio0;
+    int count1 = totalElements * ratio1;
+    int count2 = totalElements * ratio2;
+
+    // Create an array with the correct number of 0s, 1s, and 2s
+    int *array = (int *)malloc(totalElements * sizeof(int));
+    int index = 0;
+    
+    for (int i = 0; i < count0; i++) array[index++] = 0;
+    for (int i = 0; i < count1; i++) array[index++] = 1;
+    for (int i = 0; i < count2; i++) array[index++] = 2;
+
+    // Shuffle the array
+    srand(time(NULL));
+    for (int i = totalElements - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    // Fill the matrix with the shuffled array
+    index = 0;
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            matrix[i][j] = array[index++];
+        }
+    }
+
+    // Free the allocated memory
+    free(array);
+}
+
+
 
 void runGame(void){
 
