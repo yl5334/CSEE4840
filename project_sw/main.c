@@ -13,6 +13,9 @@ vga_ball_color_t color = {0};
 
 pthread_t p1b, p2b;
 
+bool player1_ready = false;
+bool player2_ready = false;
+
 // TODO : add a 0(ground), 1(unbreakable), 2(breakable) map to this
 /*
 int map[40][30] = {
@@ -255,13 +258,14 @@ void initialisePlayers(void) {
 
     }
 }
+//void startGame() { 
+//    gameStarted = true;
+//}
 
 bool readyScreen(void) {
-    
     //drawReadyScreen();
     //renderFrame();
-    bool player1_ready = false;
-    bool player2_ready = false;
+    
 
     while(!(player1_ready && player2_ready)) {
         updateControls();
@@ -271,14 +275,14 @@ bool readyScreen(void) {
         
         if(!player1_ready && (p1_ab == 79 || p1_ab == 95 || p1_ab == 207 || p1_ab == 223)) {
             //drawPlayerReady(PLAYER_ONE);
-            color.p1_state |= mask;
+            color.p1_state |= mask; //mask
             player1_ready = true;
             //snd_play_pickup();
             set_background_color(&color);
         }
         if(!player2_ready && (p2_ab == 79 || p1_ab == 95 || p1_ab == 207 || p1_ab == 223)) {
             //drawPlayerReady(PLAYER_TWO);
-            color.p2_state |= mask;
+            color.p2_state |= mask; //mask
             player2_ready = true;
             set_background_color(&color);
             //snd_play_pickup();
@@ -302,6 +306,7 @@ bool readyScreen(void) {
         
     }
     */
+    //startGame();
     return true;
 
 }
@@ -549,9 +554,26 @@ player_id playRound(void) {
 
 
 void applyPlayerInput(void) {
-
+   uint32_t p1_wall;
+   uint32_t p2_wall;
+   
     if (controller1.ab == 47 | controller1.ab == 63 | controller1.ab == 175 | controller1.ab == 191) {
         players[PLAYER_ONE].plant_bomb = true;
+    } else if ((player1_ready == true) && (player2_ready == true) && (controller1.ab == 79 | controller1.ab == 95 | controller1.ab == 207 | controller1.ab == 223)) { 
+        int x = players[PLAYER_ONE].tile_position.x;
+        int y = players[PLAYER_ONE].tile_position.y;
+        if (terrain_grid[x][y] == TERRAIN_GROUND) {
+            
+            changed_tiles[x][y] = true;
+	    p1_wall = (x + y * MAP_SIZE_H);
+	    uint32_t map_info = 0x80000000 | 0x40000000 | 0x2;
+            map_info |= (p1_wall << 19);
+	    if(p1_wall != 0){
+	    terrain_grid[x][y] = TERRAIN_WALL_BREAKABLE;
+            color.map_info = map_info;
+            set_background_color(&color);
+	}
+        }
     }
   
     if (controller1.dir_x == 255) {
@@ -568,6 +590,21 @@ void applyPlayerInput(void) {
   
     if (controller2.ab == 47 | controller2.ab == 63 | controller2.ab == 175 | controller2.ab == 191) {
         players[PLAYER_TWO].plant_bomb = true;
+    } else if ((player1_ready == true) && (player2_ready == true) && (controller2.ab == 79 | controller2.ab == 95 | controller2.ab == 207 | controller2.ab == 223)) { 
+        int x = players[PLAYER_TWO].tile_position.x;
+        int y = players[PLAYER_TWO].tile_position.y;
+        if (terrain_grid[x][y] == TERRAIN_GROUND) {
+
+            changed_tiles[x][y] = true;
+	    p2_wall = (x + y * MAP_SIZE_H);
+	    uint32_t map_info = 0x80000000 | 0x40000000 | 0x2;
+            map_info |= (p2_wall << 19);
+	   if(p2_wall != 0x4AF){
+	    terrain_grid[x][y] = TERRAIN_WALL_BREAKABLE;
+            color.map_info = map_info;
+            set_background_color(&color);
+	}
+        }
     }
   
     if (controller2.dir_x == 255) {
@@ -581,7 +618,6 @@ void applyPlayerInput(void) {
     } else {
         move(&players[PLAYER_TWO], DIRECTION_IDLE);
     }
-
     
 }
 
