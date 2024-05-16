@@ -360,7 +360,7 @@ player_id playRound(void) {
         //update_sound();
     }
 
-    return getWinner();
+    //return getWinner();
 }
 
 

@@ -123,6 +123,24 @@ int main(){
 
     generateMap(map, ratio0, ratio1, ratio2);
 
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            map[i][j] = 0;
+        }
+        
+    }
+    for (int i = 37; i < 39; i++)
+    {
+        for (int j = 27; j < 29; j++)
+        {
+            map[i][j] = 0;
+        }
+        
+    }
+    
+
     initialisemap();
     initialisePlayers();
     setupRound();
