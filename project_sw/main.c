@@ -66,6 +66,9 @@ Explosion explosion_grid[MAP_SIZE_H][MAP_SIZE_V];
 bool changed_tiles[MAP_SIZE_H][MAP_SIZE_V];
 Player players[PLAYER_NUM];
 
+int map[MAP_SIZE_H][MAP_SIZE_V];
+
+
 struct controller_list devices;
 struct controller_pkt controller1, controller2;
 int fields1, fields2;
@@ -116,12 +119,11 @@ int main(){
 
 
 
-    int map[MAP_SIZE_H][MAP_SIZE_V];
     float ratio0 = 0.5, ratio1 = 0.3, ratio2 = 0.2; // 0 for ground, 1 for unbreakable wall, 2 for breakable wall
 
     generateMatrix(map, ratio0, ratio1, ratio2);
 
-    initialisemap(map);
+    initialisemap();
     initialisePlayers();
     setupRound();
 
@@ -196,7 +198,7 @@ void runGame(void){
 }
 
 
-void initialisemap(int map[MAP_SIZE_H][MAP_SIZE_V]){
+void initialisemap(void){
     uint32_t map_info;
     uint32_t map_address;
     for (int i = 0; i < MAP_SIZE_H; i++) {

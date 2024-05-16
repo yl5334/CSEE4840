@@ -29,7 +29,7 @@
 
 //initialise the map
 void generateMap(int matrix[MAP_SIZE_H][MAP_SIZE_V], float ratio0, float ratio1, float ratio2);
-void initialisemap(int map[MAP_SIZE_H][MAP_SIZE_V]);
+void initialisemap(void);
 
 typedef enum {
     TERRAIN_GROUND,
