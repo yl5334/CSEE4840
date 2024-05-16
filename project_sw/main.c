@@ -192,6 +192,21 @@ void generateMap(int matrix[MAP_SIZE_H][MAP_SIZE_V], float ratio0, float ratio1,
             matrix[i][j] = array[index++];
         }
     }
+    int currentRow = 0, currentCol = 0;
+    matrix[currentRow][currentCol] = 0; // Start with 0 at the top-left
+
+    while (currentRow < MAP_SIZE_H - 1 || currentCol < MAP_SIZE_V - 1) {
+        // Randomly decide whether to move right or down
+        if (currentRow < MAP_SIZE_H - 1 && (currentCol == MAP_SIZE_V - 1 || rand() % 2)) {
+            // Move down
+            currentRow++;
+        } else {
+            // Move right
+            currentCol++;
+        }
+        // Set the current position to either 0 or 2
+        matrix[currentRow][currentCol] = (rand() % 2) * 2;
+    }
 
     // Free the allocated memory
     free(array);
