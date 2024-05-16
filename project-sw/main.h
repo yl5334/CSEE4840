@@ -40,7 +40,7 @@ typedef enum {
 
 
 
-#define DEFAULT_MOVE_SPEED 3
+#define DEFAULT_MOVE_SPEED 2
 #define DEFAULT_DIRECTION DIRECTION_RIGHT
 #define DEFAULT_MAX_BOMBS 1
 
@@ -74,7 +74,7 @@ typedef enum {
 
 
 /*Bomb.h*/
-#define DEFAULT_BOMB_TIMER 100
+#define DEFAULT_BOMB_TIMER 20
 #define DEFAULT_BOMB_RANGE 1
 #define DEFAULT_BOMB_TYPE BOMB_TYPE_NORMAL
 
@@ -84,7 +84,7 @@ typedef enum {
 } bomb_type;
 
 /*explosition.h*/
-#define DEFAULT_EXPLOSION_TIMER 100
+#define DEFAULT_EXPLOSION_TIMER 20
 typedef enum {
     EXPLOSION_EMPTY,
     EXPLOSION_TYPE_NORMAL,
