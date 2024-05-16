@@ -131,9 +131,9 @@ int main(){
         }
         
     }
-    for (int i = 37; i < 39; i++)
+    for (int i = MAP_SIZE_H-3; i < MAP_SIZE_H; i++)
     {
-        for (int j = 27; j < 29; j++)
+        for (int j = MAP_SIZE_V-3; j < MAP_SIZE_V; j++)
         {
             map[i][j] = 0;
         }
@@ -530,6 +530,7 @@ player_id playRound(void) {
         //update_sound();
     }
 
+    exit(1);
     //return getWinner();
 }
 
