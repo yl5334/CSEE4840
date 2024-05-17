@@ -1,6 +1,6 @@
 # CSEE4840
 
-## This project is developed by the Yuqi Lin, Yelin Mao and Ken
+## This project is developed by the Yuqi Lin, Yelin Mao and Hongkuan Yu
 
 ## Project 1
 Digital Number Display
@@ -11,3 +11,8 @@ Using C, Linux, Sockets, and usb
 
 ## Project 3
 VGA Ball
+
+## Final Project
+Two-Players Bomberman Game
+
+##![Example Image](images/example.png)
