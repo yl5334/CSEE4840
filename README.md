@@ -15,8 +15,6 @@ VGA Ball
 ## Final Project
 Two-Players Bomberman Game
 
-![Start Screen](Images/startscreen.jpg)
-
 <div align="center">
   <img src="Images/startscreen.jpg" alt="Start Screen" />
   <p>Start Screen</p>
