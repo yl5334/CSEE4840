@@ -15,4 +15,4 @@ VGA Ball
 ## Final Project
 Two-Players Bomberman Game
 
-##![Example Image](images/example.png)
+![Start Screen](images/startscreen.jpg)
