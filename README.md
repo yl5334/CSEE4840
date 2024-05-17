@@ -1,4 +1,4 @@
-# CSEE4840
+# CSEE4840 Embedded System
 
 ## This project is developed by the Yuqi Lin, Yelin Mao and Hongkuan Yu
 
