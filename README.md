@@ -19,3 +19,9 @@ Two-Players Bomberman Game
   <img src="Images/startscreen.jpg" alt="Start Screen" />
   <p>Start Screen</p>
 </div>
+
+
+<div align="center">
+  <img src="Images/initial start map.jpg" alt="Map" />
+  <p>Game</p>
+</div>
